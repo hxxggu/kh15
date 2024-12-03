@@ -1,6 +1,6 @@
 package data;
 
-public class Test예제 {
+public class Test03영화요금계산기 {
 
 	public static void main(String[] args) {
 		int audult = 15000;
