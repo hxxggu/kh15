@@ -21,8 +21,7 @@ public class Test03만나이계산기 {
 		boolean vote = age>=18;
 		//출력
 		System.out.println(y+"년 "+m+"월생의 만 나이는 "+age+"살입니다.");
-		
-		boolean ableAge = age > 18;
+
 		System.out.println(vote);
 	}
 }
