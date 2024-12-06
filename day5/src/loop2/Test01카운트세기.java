@@ -9,7 +9,7 @@ public class Test01카운트세기 {
 
 		for(int i=1; i<=100; i++) {
 			if(i%2==0) {
-				cnt++;
+				cnt++; //카운트 증가
 			}
 		}
 		System.out.println("짝수의 개수 : "+cnt);
