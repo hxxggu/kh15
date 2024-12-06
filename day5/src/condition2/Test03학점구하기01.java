@@ -9,7 +9,7 @@ public class Test03학점구하기01 {
 		int score = 95;
 		int ten = score/10;
 		
-		switch(score) {
+		switch(ten) {
 		case 10:
 			System.out.println("학점 : A+");
 			break;
