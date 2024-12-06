@@ -1,13 +1,16 @@
 package condition;
 
+import java.util.Scanner;
+
 public class Test06여행사프로모션02 {
 
 	public static void main(String[] args) {
-		//할인율만 구현
-		
+		Scanner sc = new Scanner(System.in);
 		
 		//입력
-		int month = 5;
+		System.out.println("여행가는 달을 입력하세요 : ");
+		int month = sc.nextInt();
+		System.out.println("여행");
 		int price = 100000;
 		
 		//처리
