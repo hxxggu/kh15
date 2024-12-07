@@ -23,7 +23,7 @@ public class Test05구구단게임 {
 			
 			if(inputNum == answer) {
 				combo++;
-				if(num1>6) {
+				if(num1<6) {
 					totalScore += easyScore*combo;
 				} else {
 					totalScore += hardScore*combo;
