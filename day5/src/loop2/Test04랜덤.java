@@ -24,5 +24,4 @@ public class Test04랜덤 {
 		int otp = r.nextInt(900000)+100000; //otp(100000부터 999999까지/6자리 정수)
 		System.out.println("otp : "+otp);
 	}
-
 }
