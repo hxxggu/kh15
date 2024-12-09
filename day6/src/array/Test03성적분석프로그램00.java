@@ -2,7 +2,7 @@ package array;
 
 import java.util.Arrays;
 
-public class Test03성적분석프로그램 {
+public class Test03성적분석프로그램00 {
 
 	public static void main(String[] args) {
 		int[] score = new int[] {77, 82, 95, 91, 65, 87, 68, 85, 82, 90};
@@ -35,12 +35,17 @@ public class Test03성적분석프로그램 {
 		System.out.print("전체 학생의 점수 평균 : "+avg+"점\n");
 		
 		//추가문제
-		int stdScore = 85, grade = 1;
+		//score[] = 85;
+		System.out.println(Arrays.toString(score));
+		//큰 순서대로 정렬
 		for(int i=0; i<score.length; i++) {
-			if(score[i] > stdScore) {
-				grade++;
+			int target = score[i];
+			for(int j=1; j<score.length; j++) {
+				while(target<score[j]) {
+					score[j] = score[j-1];
+				}
 			}
-		}
-		System.out.println("전학생의 예상 등수는 "+grade+"등 입니다.");
+		} System.out.println(Arrays.toString(score));
+		
 	}
 }
