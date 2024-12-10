@@ -1,4 +1,4 @@
-#markdown
+# markdown
 
 Markdown은 Markup의 반대말  
 마크업(Markup)은 태그(tag)를 이용해서 구조를 표현하는 방식을 말함  
