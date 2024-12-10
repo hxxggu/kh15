@@ -79,14 +79,24 @@ System.out.println("Hello World");
 ## 이미지
 
 문서 내에 이미지의 주소를 넣어서 해당 이미지를 표현할 수 있다.
-(단, 반드시 이미지를 볼 수 있는 주소가 존재해야 한다. 내 컴퓨터에 있는건 안됨.)
+(단, 반드시 이미지를 볼 수 있는 주소가 존재해야 한다. 내 컴퓨터에 있는건 안됨)
 
 ```
 ![설명](주소)
 ```
-![KH정보교육원로고]https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsMVZFbqzbFT8FzEa8PbR0lrWpNzbqGQAcEw&s
 
+![KH정보교육원로고](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsMVZFbqzbFT8FzEa8PbR0lrWpNzbqGQAcEw&s)
 
 만약 내가 가진 이미지를 표시하고 싶다면 저장소에 이미지를 미리 업로드하여 주소를 확보해야한다.
 
-![내가올린이미지](주소)_
+![내가올린이미지](https://raw.githubusercontent.com/hxxggu/kh15/refs/heads/main/%ED%95%B4%EC%82%90.jpg?token=GHSAT0AAAAAAC3JPZNVMENFYJKTKWQUSJYQZ2X7F5Q)
+
+
+
+
+
+
+
+
+
+
