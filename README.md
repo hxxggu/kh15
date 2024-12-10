@@ -91,6 +91,35 @@ System.out.println("Hello World");
 
 ![내가올린이미지](https://raw.githubusercontent.com/hxxggu/kh15/refs/heads/main/%ED%95%B4%EC%82%90.jpg?token=GHSAT0AAAAAAC3JPZNVMENFYJKTKWQUSJYQZ2X7F5Q)
 
+이미지가 같은 위치에 있다면 풀주소가 아니라 상대적인 경로로도 작성이 가능하다
+
+![내가올린이미지](./해삐.jpg)
+
+
+## 하이퍼링크
+
+하이퍼링크란 다른 페이지로 연결되는 연결고리를 말한다.
+클릭을 하면 이동할 수 있도록 표시 및 처리된다.
+
+```
+[표시할글자](이동할주소)
+```
+
+[구글로 이동](https://www.google.co.kr/)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
