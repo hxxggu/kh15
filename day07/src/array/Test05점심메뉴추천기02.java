@@ -7,7 +7,6 @@ public class Test05점심메뉴추천기02 {
 
 	public static void main(String[] args) {
 		
-		
 		//5칸의 배열에 사용자가 입력하는 메뉴 넣기
 		Scanner sc = new Scanner(System.in);
 		
