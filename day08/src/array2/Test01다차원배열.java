@@ -1,4 +1,4 @@
-package array;
+package array2;
 
 public class Test01다차원배열 {
 
