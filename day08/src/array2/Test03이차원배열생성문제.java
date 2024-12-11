@@ -20,12 +20,13 @@ public class Test03이차원배열생성문제 {
 			{"안녕", "goodbye"}
 		};
 		
+		//출력방법1
 		for(int i=0; i<3; i++) {
 			for(int j=0; j<2; j++) {
 				System.out.println(a[i][j]);			
 			}
 		}
-		
+		//출력방법2
 		for(int i=0; i<a.length; i++) {
 			for(int j=0; j<a[i].length; j++) {
 				System.out.println(a[i][j]);			
