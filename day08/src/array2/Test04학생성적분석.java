@@ -44,8 +44,8 @@ public class Test04학생성적분석 {
 		//4. 반마다 평균 점수 구하여 출력
 		float sum = 0, avg = 0;
 		for(int i=0; i<classroom.length; i++) {
-			sum = 0;
 			System.out.println("[ 반 평균 ]");
+			sum = 0;
 			for(int j=0; j<classroom[i].length; j++) {
 				sum = sum + classroom[i][j];
 			}
