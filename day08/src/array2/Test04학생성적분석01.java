@@ -20,7 +20,8 @@ public class Test04학생성적분석01 {
 		}
 		
 		//2. 반마다 성적 우수자만 출력
-		for(int i=0; i<scoreList.length; i++) {
+		for(int i=0; i<scoreList.length; 
+				i++) {
 			System.out.println("< 성적 우수자 정보 >");
 			for(int j=0; j<scoreList[i].length; j++) {
 				if(scoreList[i][j] >= 90) {
