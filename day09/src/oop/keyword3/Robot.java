@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 public class Robot {
 	
+	//일회용 메서드만 보관할 것이라면 생성을 못하게 잠금 처리
+	private Robot() {}
 	
 	//두 수의 곱을 구하는 메서드 구현
 	public static int multiple(int a, int b) {
