@@ -9,6 +9,7 @@ public class Test01생성자 {
 //		a.show();
 		
 		Car a = new Car("소나타", "블랙", 20000000, 200);
+		a.show();
 	}
 
 }
