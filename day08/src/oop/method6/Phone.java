@@ -48,6 +48,7 @@ public class Phone {
 	
 	String getCompany() {
 		return this.company;
+	}
 	
 	int getPrice() {
 		return this.price;
@@ -72,6 +73,5 @@ public class Phone {
 			} else {
 				System.out.println("약정 개월 : 미설정");
 			}
-		}
 	}
 }
