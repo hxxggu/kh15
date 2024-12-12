@@ -40,6 +40,17 @@ public class Phone {
 			return;
 		}
 		this.term = term;
+<<<<<<< HEAD
+=======
+	}
+	
+	String getName() {
+		return this.name;
+	}
+	
+	String getCompany() {
+		return this.company;
+>>>>>>> branch 'main' of https://github.com/hxxggu/kh15.git
 	}
 	
 	String getName() {
@@ -72,6 +83,13 @@ public class Phone {
 			} else {
 				System.out.println("약정 개월 : 미설정");
 			}
+<<<<<<< HEAD
 		}
+=======
+>>>>>>> branch 'main' of https://github.com/hxxggu/kh15.git
 	}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> branch 'main' of https://github.com/hxxggu/kh15.git
