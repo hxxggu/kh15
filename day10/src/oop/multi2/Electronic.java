@@ -1,7 +1,6 @@
 package oop.multi2;
 
 public class Electronic extends Transportation { //드론, 전동킥보드 / 핵심상속
-	private int num;
 	
 	
 	
