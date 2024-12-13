@@ -1,4 +1,4 @@
-package opp.inherit2;
+package oop.inherit2;
 
 public class Chrome extends Browser {
 	

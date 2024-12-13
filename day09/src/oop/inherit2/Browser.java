@@ -1,4 +1,4 @@
-package opp.inherit2;
+package oop.inherit2;
 
 //공통 내용에 대한 클래스(수퍼클래스, 상위클래스, 부모 클래스)
 public class Browser {
