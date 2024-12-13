@@ -40,8 +40,6 @@ public class Phone {
 			return;
 		}
 		this.term = term;
-<<<<<<< HEAD
-=======
 	}
 	
 	String getName() {
@@ -50,15 +48,7 @@ public class Phone {
 	
 	String getCompany() {
 		return this.company;
->>>>>>> branch 'main' of https://github.com/hxxggu/kh15.git
 	}
-	
-	String getName() {
-		return this.name;
-	}
-	
-	String getCompany() {
-		return this.company;
 	
 	int getPrice() {
 		return this.price;
@@ -71,7 +61,8 @@ public class Phone {
 	float getPay() {
 		return (float)this.getPrice()/this.getTerm();
 	}
-		
+	
+	
 	void show() {
 		System.out.println("[ 기기 정보 ]");
 		System.out.println("이름 : "+this.getName());
@@ -83,13 +74,5 @@ public class Phone {
 			} else {
 				System.out.println("약정 개월 : 미설정");
 			}
-<<<<<<< HEAD
 		}
-=======
->>>>>>> branch 'main' of https://github.com/hxxggu/kh15.git
 	}
-<<<<<<< HEAD
-}
-=======
-}
->>>>>>> branch 'main' of https://github.com/hxxggu/kh15.git
