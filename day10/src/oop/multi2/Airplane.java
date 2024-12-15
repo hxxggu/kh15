@@ -2,6 +2,15 @@ package oop.multi2;
 
 public class Airplane extends Transportation implements Flyable, Reserve {
 
+	public Airplane(int num) {
+		super(num);
+		if(num == 3) {
+			move();
+			fly();
+			reservation();
+		}
+	}
+
 	public void move() {
 		System.out.println("비행기가 이동합니다");
 	}

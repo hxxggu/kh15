@@ -2,6 +2,16 @@ package oop.multi2;
 
 public class Drone extends Transportation implements Flyable, Electronic {
 	
+	public Drone(int num) {
+		super(num);
+		if(num == 1) {
+			move();
+			fly();
+			on();
+			off();
+		}
+	}
+
 	public void move() {
 		System.out.println("드론이 이동합니다");
 	}

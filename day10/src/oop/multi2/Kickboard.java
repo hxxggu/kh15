@@ -2,6 +2,15 @@ package oop.multi2;
 
 public class Kickboard extends Transportation implements Electronic {
 	
+	public Kickboard(int num) {
+		super(num);
+		if(num == 5) {
+			move();
+			on();
+			off();
+		}
+	}
+
 	public void move() {
 		System.out.println("킥보드가 이동합니다");
 	}
