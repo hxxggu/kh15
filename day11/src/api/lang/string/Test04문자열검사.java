@@ -1,4 +1,4 @@
-package api.lang.object;
+package api.lang.string;
 
 public class Test04문자열검사 {
 	public static void main(String[] args) {

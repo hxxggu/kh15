@@ -1,4 +1,6 @@
-package api.lang.object;
+package api.lang.string;
+
+import api.lang.object.Student;
 
 public class Test02내가만든클래스 {
 

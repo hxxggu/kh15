@@ -1,4 +1,4 @@
-package api.lang.object;
+package api.lang.string;
 
 import java.util.Scanner;
 

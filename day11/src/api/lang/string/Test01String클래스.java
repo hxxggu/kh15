@@ -1,4 +1,4 @@
-package api.lang.object;
+package api.lang.string;
 
 public class Test01String클래스 {
 
