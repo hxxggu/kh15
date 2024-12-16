@@ -19,5 +19,4 @@ public class Test05쿵쿵따게임00 {
 			given = input; //제시어 교체
 		}
 	}
-
 }
