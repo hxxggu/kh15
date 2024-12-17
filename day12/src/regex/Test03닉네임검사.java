@@ -2,7 +2,8 @@ package regex;
 
 public class Test03닉네임검사 {
 	public static void main(String[] args) {
-		String nickname = "테스트유저1";
+		
+		String nickname = "테스트운영자1";
 		
 		String regex = "^[가-힣][가-힣0-9]{1,9}$";
 		
