@@ -13,7 +13,6 @@ public class Test10문자열호환 {
 		
 		System.out.println("text = "+text);
 		System.out.println("text2 = "+text2);
-		
 	}
 
 }
