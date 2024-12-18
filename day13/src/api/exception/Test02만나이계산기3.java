@@ -21,11 +21,12 @@ public class Test02만나이계산기3 {
 				//강제처리2 - 연도가 1900 미만인 경우를 차단
 				if(year < 1900) throw new Exception("1900 미만은 연도로 설정할 수 없습니다");
 				int month = Integer.parseInt(birth.substring(5,7));
+//				int month = Integer.parseInt(birth.substring(5)); //위와 아래의 month는 동일한 의미
 				//강제처리3 - 월이 1~12 사이가 아닌 경우 차단
 				if(month<1 || month>12) throw new Exception("월은 1~12로만 작성 가능합니다");
 				int date = Integer.parseInt(birth.substring(8,10));
 				int maxDate = getMaxDate(year, month); //연/월에 따른 날짜 수 계산
-//				int month = Integer.parseInt(birth.substring(5)); //위와 아래의 month는 동일한 의미
+				if(date<1 || date>maxDate) throw new Exception("일 정보가 올바르지 않습니다");
 				
 				int total = getTotalDate(year, month, date);
 				int current = getTotalDate(2024, 12, 18); //금일 날짜
