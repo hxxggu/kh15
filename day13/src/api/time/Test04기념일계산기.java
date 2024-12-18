@@ -31,7 +31,7 @@ public class Test04기념일계산기 {
 		}
 		
 		for(int i=1; i<=4; i++) {
-			c.add(Calendar.YEAR, 1);
+			c.add(Calendar.DATE, 1);
 			Date d = c.getTime();
 			Format f = new SimpleDateFormat("yyyy년 MM월 dd일");
 			System.out.println(i+"주년 : "+f.format(d));
