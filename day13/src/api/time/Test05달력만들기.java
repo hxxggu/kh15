@@ -39,7 +39,7 @@ public class Test05달력만들기 {
         }
  	}
 	
-	public static void weekday() {
+	public static void weekday() { //상단부 요일 출력
 		Calendar c = Calendar.getInstance();
 		for(int i=1; i<8; i++) {
         	c.set(Calendar.DAY_OF_WEEK, i);
