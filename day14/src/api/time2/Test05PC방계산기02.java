@@ -22,16 +22,15 @@ public class Test05PC방계산기02 {
 		LocalDateTime startTime = LocalDateTime.parse(start);
 		LocalDateTime endTime = LocalDateTime.parse(end);
 		
-		if(startTime.getDayOfWeek().equals(endTime)) {
-			
-		} else{
+		if(startTime.getDayOfWeek().equals(endTime)) { //둘의 날짜가 같을 때
 			Duration duration = Duration.between(startTime, endTime);		
 			System.out.println(duration);
 			
 			int totalPrice = (duration.toHoursPart()*price);
 			if(duration.toMinutesPart() != 0) totalPrice += price;
-			System.out.println("총 이용요금 : "+totalPrice+"원");
+			System.out.println("총 이용요금 : "+totalPrice+"원");	
+		} else {
+			
 		}
-		
 	}
 }
