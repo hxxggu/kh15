@@ -30,7 +30,7 @@ public class Test02예약날짜선택01 {
 			System.out.println("년도 : "+date.getYear());
 			System.out.println("월 : "+date.getMonthValue());
 			System.out.println("일 : "+date.getDayOfMonth());
-		}catch(Exception e) {
+		} catch(Exception e) {
 //			e.printStackTrace();
 			System.out.println("오류 : "+e.getMessage());
 		}
