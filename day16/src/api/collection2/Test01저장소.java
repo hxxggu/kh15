@@ -31,6 +31,7 @@ public class Test01저장소 {
 		System.out.println(a.contains("피카츄"));
 		
 		a.remove("피카츄");
+		
 		System.out.println("a = " + a);
 		
 		//(*주의) get 명령은 존재하지 않는다 (인덱스가 없음)
