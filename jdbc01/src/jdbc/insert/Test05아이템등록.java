@@ -25,8 +25,8 @@ public class Test05아이템등록 {
 		
 		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
 		
-		String sql = "insert into item("
-				+ "(item_no, item_name, item_type, item_price, item_discount_rate, item_qty, item_ealry)"
+		String sql = "insert into item"
+				+ "(item_no, item_name, item_type, item_price, item_discount_rate, item_qty, item_early) "
 				+ "values(item_seq.nextval, ?, ?, ?, ?, ?, ?)";
 		
 		Object[] data = {itemName, itemType, itemPrice, itemDiscountRate, itemQty, itemEarly};

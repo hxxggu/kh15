@@ -22,7 +22,7 @@ public class Test04메뉴등록 {
 		
 		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
 		
-		String sql = "insert into menu("
+		String sql ="insert into menu("
 				+ "menu_no, menu_name, menu_type, menu_price, menu_event)"
 				+ "values(menu_seq.nextval, ?, ?, ?, ?)";
 		
