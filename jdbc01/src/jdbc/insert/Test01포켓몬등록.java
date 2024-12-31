@@ -10,16 +10,16 @@ public class Test01포켓몬등록 {
 		//연결 정보를 생성
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("oracle.jdbc.OracleDriver");
-		dataSource.setUrl("jbdc:oracle:thin:@localhost:1521:xe");
+		dataSource.setUrl("jdbc:oracle:thin:@localhost:1521:xe");
 		dataSource.setUsername("kh15");
 		dataSource.setPassword("kh15");
 		
-		//연결 도구를 생성
+		//연결 도구를 생성 
 		JdbcTemplate jdbcTemplate = new JdbcTemplate();
 		jdbcTemplate.setDataSource(dataSource); //연결정보를 설정
 		
 		
-		//실행할 구문 생성
+		//실행할 구문 생성 (* 마지막에 세미콜론 작성 금지 )
 		String sql = "insert into pokemon("
 				+ "pokemon_no, pokemon_name, pokemon_type"
 				+ ")"
@@ -28,7 +28,7 @@ public class Test01포켓몬등록 {
 		//실행
 		jdbcTemplate.update(sql);
 		System.out.println("실행완료");
-
+		
 	}
 
 }
