@@ -5,23 +5,21 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import jdbc.util.JdbcFactory;
 
 public class PlayerDao {
+
+	//등록 메소드
 	public void insert(PlayerDto playerDto) {
 		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
-		
-		String sql = "insert into player(player_no, player_name,"
-				+ "player_event, player_type, player_gold_medal,"
-				+ "player_silver medal, player_bronze_medal)"
-				+ "values(player_seq.nextval, ?, ?, ?, ?, ?, ?)" ;
-		
+		String sql = "insert into player("
+							+ "player_no, player_name, player_event, player_type,"
+							+ "player_gold_medal, player_silver_medal, player_bronze_medal"
+						+ ") "
+						+ "values(player_seq.nextval, ?, ?, ?, ?, ?, ?)";
 		Object[] data = {
-				playerDto.getPlayerName(),
-				playerDto.getPlayerEvent(),
-				playerDto.getPleyerType(),
-				playerDto.getPlayerGoldMedal(),
-				playerDto.getPlayerSilverMedal(),
-				playerDto.getPlayerBronzeMedal()
+			playerDto.getPlayerName(), playerDto.getPlayerEvent(),
+			playerDto.getPlayerType(), playerDto.getPlayerGoldMedal(),
+			playerDto.getPlayerSilverMedal(), playerDto.getPlayerBronzeMedal()
 		};
-		
 		jdbcTemplate.update(sql, data);
 	}
+	
 }

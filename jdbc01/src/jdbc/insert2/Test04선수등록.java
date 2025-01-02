@@ -7,7 +7,7 @@ public class Test04선수등록 {
 		
 		playerDto.setPlayerName("김연아");
 		playerDto.setPlayerEvent("피겨스케이팅");
-		playerDto.setPleyerType("하계");
+		playerDto.setPlayerType("하계");
 		playerDto.setPlayerGoldMedal(7);
 		playerDto.setPlayerSilverMedal(3);
 		playerDto.setPlayerBronzeMedal(5);

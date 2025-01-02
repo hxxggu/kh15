@@ -1,10 +1,10 @@
-package jdbc.insert2;
+package jdbc.dto;
 
 public class PlayerDto {
 	private int playerNo;
 	private String playerName;
 	private String playerEvent;
-	private String playerType;
+	private String pleyerType;
 	private int playerGoldMedal;
 	private int playerSilverMedal;
 	private int playerBronzeMedal;
@@ -27,11 +27,11 @@ public class PlayerDto {
 	public void setPlayerEvent(String playerEvent) {
 		this.playerEvent = playerEvent;
 	}
-	public String getPlayerType() {
-		return playerType;
+	public String getPleyerType() {
+		return pleyerType;
 	}
-	public void setPlayerType(String playerType) {
-		this.playerType = playerType;
+	public void setPleyerType(String pleyerType) {
+		this.pleyerType = pleyerType;
 	}
 	public int getPlayerGoldMedal() {
 		return playerGoldMedal;
@@ -58,7 +58,7 @@ public class PlayerDto {
 	@Override
 	public String toString() {
 		return "PlayerDto [playerNo=" + playerNo + ", playerName=" + playerName + ", playerEvent=" + playerEvent
-				+ ", playerType=" + playerType + ", playerGoldMedal=" + playerGoldMedal + ", playerSilverMedal="
+				+ ", pleyerType=" + pleyerType + ", playerGoldMedal=" + playerGoldMedal + ", playerSilverMedal="
 				+ playerSilverMedal + ", playerBronzeMedal=" + playerBronzeMedal + "]";
 	}
 	
