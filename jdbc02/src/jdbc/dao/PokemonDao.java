@@ -1,8 +1,11 @@
 package jdbc.dao;
 
+import java.util.List;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import jdbc.dto.PokemonDto;
+import jdbc.mapper.PokemonMapper;
 import jdbc.util.JdbcFactory;
 
 //DAO(Data Access Object)
@@ -61,6 +64,16 @@ public class PokemonDao {
 		String sql = "delete pokemon where pokemon_no = ?";
 		Object[] data = {pokemonNo};
 		return jdbcTemplate.update(sql, data) > 0;
+	}
+	
+	//조회를 위한 Mapper를 필드로 선언
+	private PokemonMapper pokemonMapper = new PokemonMapper();
+	
+	//목록조회 메서드
+	public List<PokemonDto> selectList(){
+		JdbcTemplate jdbcTemplate =JdbcFactory.createTemplate();
+		String sql = "select * from pokemon";
+		return jdbcTemplate.query(sql, pokemonMapper);
 	}
 	
 }

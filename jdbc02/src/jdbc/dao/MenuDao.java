@@ -1,8 +1,11 @@
 package jdbc.dao;
 
+import java.util.List;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import jdbc.dto.MenuDto;
+import jdbc.mapper.MenuMapper;
 import jdbc.util.JdbcFactory;
 
 public class MenuDao {
@@ -45,5 +48,12 @@ public class MenuDao {
 		return jdbcTemplate.update(sql, data) > 0;
 	}
 	
+	private MenuMapper menuMapper = new MenuMapper();
+	
+	public List<MenuDto> selectList(){
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql = "select * from menu";
+		return jdbcTemplate.query(sql, menuMapper);
+	}
 	
 }

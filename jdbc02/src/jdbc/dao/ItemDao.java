@@ -1,8 +1,11 @@
 package jdbc.dao;
 
+import java.util.List;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import jdbc.dto.ItemDto;
+import jdbc.mapper.ItemMapper;
 import jdbc.util.JdbcFactory;
 
 public class ItemDao {
@@ -47,5 +50,13 @@ public class ItemDao {
 		String sql = "delete item where item_no = ?";
 		Object[] data = {itemNo};
 		return jdbcTemplate.update(sql, data) > 0;
+	}
+	
+	private ItemMapper itemMapper = new ItemMapper();
+	
+	public List<ItemDto> selectList() {
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql = "select * from item";
+		return jdbcTemplate.query(sql, itemMapper);
 	}
 }

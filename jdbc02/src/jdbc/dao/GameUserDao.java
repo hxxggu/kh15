@@ -1,8 +1,11 @@
 package jdbc.dao;
 
+import java.util.List;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import jdbc.dto.GameUserDto;
+import jdbc.mapper.GameUserMapper;
 import jdbc.util.JdbcFactory;
 
 public class GameUserDao {
@@ -44,6 +47,14 @@ public class GameUserDao {
 		String sql = "delete lecture where lecture_no= ?";
 		Object[] data = {gameUserDao};
 		return jdbcTemplate.update(sql, data) > 0;
+	}
+
+	private GameUserMapper gameUserMapper = new GameUserMapper();
+	
+	public List<GameUserDto> selectList(){
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql = "select * from game_user";
+		return jdbcTemplate.query(sql, gameUserMapper);
 	}
 	
 }

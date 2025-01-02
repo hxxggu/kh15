@@ -5,7 +5,7 @@ public class ItemDto {
 	private String itemName;
 	private String itemType;
 	private int itemPrice;
-	private int itemDiscountRate;
+	private Float itemDiscountRate;
 	private int itemQty;
 	private String itemEarly;
 	
@@ -33,10 +33,10 @@ public class ItemDto {
 	public void setItemPrice(int itemPrice) {
 		this.itemPrice = itemPrice;
 	}
-	public int getItemDiscountRate() {
+	public Float getItemDiscountRate() {
 		return itemDiscountRate;
 	}
-	public void setItemDiscountRate(int itemDiscountRate) {
+	public void setItemDiscountRate(Float itemDiscountRate) {
 		this.itemDiscountRate = itemDiscountRate;
 	}
 	public int getItemQty() {

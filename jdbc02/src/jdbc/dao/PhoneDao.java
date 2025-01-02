@@ -1,8 +1,11 @@
 package jdbc.dao;
 
+import java.util.List;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import jdbc.dto.PhoneDto;
+import jdbc.mapper.PhoneMapper;
 import jdbc.util.JdbcFactory;
 
 public class PhoneDao {
@@ -43,4 +46,12 @@ public class PhoneDao {
 		return jdbcTemplate.update(sql, data) > 0;
 	}
 	
+	private PhoneMapper phoneMapper = new PhoneMapper();
+	
+	public List<PhoneDto> selectList(){
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql = "select * from phone";
+		return jdbcTemplate.query(sql, phoneMapper);
+		
+	}
 }

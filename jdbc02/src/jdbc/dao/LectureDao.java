@@ -1,8 +1,11 @@
 package jdbc.dao;
 
+import java.util.List;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import jdbc.dto.LectureDto;
+import jdbc.mapper.LectureMapper;
 import jdbc.util.JdbcFactory;
 
 public class LectureDao {
@@ -45,4 +48,12 @@ public class LectureDao {
 		return jdbcTemplate.update(sql, data) > 0;
 	}
 	
+	private LectureMapper lectureMapper = new LectureMapper();
+	
+	public List<LectureDto> selectList() {
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql = "select * from lecture";
+		return jdbcTemplate.query(sql, lectureMapper);
+	}
+
 }
