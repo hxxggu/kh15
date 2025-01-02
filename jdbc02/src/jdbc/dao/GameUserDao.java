@@ -39,4 +39,11 @@ public class GameUserDao {
 		return rows > 0;
 	}
 	
+	public boolean delete(int gameUserDao) {
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql = "delete lecture where lecture_no= ?";
+		Object[] data = {gameUserDao};
+		return jdbcTemplate.update(sql, data) > 0;
+	}
+	
 }

@@ -41,4 +41,11 @@ public class ItemDao {
 	int rows = jdbcTemplate.update(sql, data);
 	return rows > 0;
 	}
+
+	public boolean delete(int itemNo) {
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql = "delete item where item_no = ?";
+		Object[] data = {itemNo};
+		return jdbcTemplate.update(sql, data) > 0;
+	}
 }

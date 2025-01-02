@@ -37,4 +37,13 @@ public class MenuDao {
 		int rows = jdbcTemplate.update(sql, data);
 		return rows > 0;
 	}
+	
+	public boolean delete(int menuNo) {
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql = "delete menu where menu_no= ?";
+		Object[] data = {menuNo};
+		return jdbcTemplate.update(sql, data) > 0;
+	}
+	
+	
 }

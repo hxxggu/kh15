@@ -6,7 +6,7 @@ import jdbc.dto.LectureDto;
 import jdbc.util.JdbcFactory;
 
 public class LectureDao {
-
+	
 	//등록 메소드
 	public void insert(LectureDto lectureDto) {
 		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
@@ -36,6 +36,13 @@ public class LectureDao {
 		};
 		int rows = jdbcTemplate.update(sql, data);
 		return rows > 0;
+	}
+	
+	public boolean delete(int lectureNo) {
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql = "delete lecture where lecture_no= ?";
+		Object[] data = {lectureNo};
+		return jdbcTemplate.update(sql, data) > 0;
 	}
 	
 }

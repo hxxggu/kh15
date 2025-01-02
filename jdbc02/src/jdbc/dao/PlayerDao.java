@@ -47,4 +47,12 @@ public class PlayerDao {
 //			return rows > 0;
 
 		}
+		
+		public boolean delete(int playerNo) {
+			JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+			String sql = "delete game_user where game_user_no = ?";
+			Object[] data = {playerNo};
+			return jdbcTemplate.update(sql, data) > 0;
+		}
+		
 }

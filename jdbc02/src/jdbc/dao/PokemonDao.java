@@ -54,4 +54,13 @@ public class PokemonDao {
 		
 		return rows > 0;
 	}
+	
+	//삭제 메서드
+	public boolean delete(int pokemonNo) {
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql = "delete pokemon where pokemon_no = ?";
+		Object[] data = {pokemonNo};
+		return jdbcTemplate.update(sql, data) > 0;
+	}
+	
 }

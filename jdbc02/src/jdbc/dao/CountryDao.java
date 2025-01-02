@@ -38,4 +38,15 @@ public class CountryDao {
 		int rows  = jdbcTemplate.update(sql, data);
 		return rows > 0;
 	}
+	
+	//삭제 메서드
+	public boolean delete(int countryNo) {
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql = "delete country where country_no = ?";
+		Object[] data = {countryNo};
+		return jdbcTemplate.update(sql, data) > 0;
+	}
+	
+	
+	
 }

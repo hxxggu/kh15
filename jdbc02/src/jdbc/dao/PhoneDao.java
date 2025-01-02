@@ -36,4 +36,11 @@ public class PhoneDao {
 		return rows > 0;
 	}
 	
+	public boolean delete(int phoneNo) {
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql = "delete phone where phone_no = ?";
+		Object[] data = {phoneNo};
+		return jdbcTemplate.update(sql, data) > 0;
+	}
+	
 }
