@@ -20,4 +20,21 @@ public class MenuDao {
 		};
 		jdbcTemplate.update(sql, data);
 	}
+	
+	public boolean update(MenuDto menuDto) {
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql = "update menu "
+				+"set menu_name = ?, menu_type = ?, "
+				+"menu_price = ?, menu_event = ? "
+				+"where menu_no = ?";
+		Object[] data = {
+				menuDto.getMenuName(),
+				menuDto.getMenuType(),
+				menuDto.getMenuPrice(),
+				menuDto.getMenuEvent(),
+				menuDto.getMenuNo()
+		};
+		int rows = jdbcTemplate.update(sql, data);
+		return rows > 0;
+	}
 }

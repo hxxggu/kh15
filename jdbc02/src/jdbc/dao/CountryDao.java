@@ -7,11 +7,13 @@ import jdbc.util.JdbcFactory;
 
 public class CountryDao {
 
-	//등록 메소드
+	//등록 메서드
 	public void insert(CountryDto countryDto) {
 		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
-		String sql = "insert into country(country_no, country_name, country_capital, country_population) "
-						+"values(country_seq.nextval, ?, ?, ?)";
+		String sql = "insert into country(country_no, country_name, "
+				+ "country_capital, country_population) "
+				+"values(country_seq.nextval, ?, ?, ?)";
+		
 		Object[] data = {
 			countryDto.getCountryName(),
 			countryDto.getCountryCapital(),
@@ -20,4 +22,20 @@ public class CountryDao {
 		jdbcTemplate.update(sql, data);
 	}
 	
+	//수정 메서드
+	public boolean update(CountryDto countryDto) {
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql = "update country "
+				+ "set country_name = ?, country_capital = ?, country_population = ? "
+				+ "where country_no = ?";
+				
+		Object[] data = {
+				countryDto.getCountryName(),
+				countryDto.getCountryCapital(),
+				countryDto.getCountryPopulation(),
+				countryDto.getCountryNo()
+		};
+		int rows  = jdbcTemplate.update(sql, data);
+		return rows > 0;
+	}
 }

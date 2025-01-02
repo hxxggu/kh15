@@ -22,4 +22,23 @@ public class ItemDao {
 		};
 		jdbcTemplate.update(sql, data);
 	}
+	
+	public boolean update(ItemDto itemDto) {
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql =  "update item "
+				+ "set item_name = ?, item_type = ?, item_price = ?, "
+				+ "item_discount_rate = ?, item_qty = ?, item_early = ? "
+				+ "where item_no = ?";
+		Object[] data = {
+				itemDto.getItemName(),
+				itemDto.getItemType(),
+				itemDto.getItemPrice(),
+				itemDto.getItemDiscountRate(),
+				itemDto.getItemQty(),
+				itemDto.getItemEarly(),
+				itemDto.getItemNo()
+		};
+	int rows = jdbcTemplate.update(sql, data);
+	return rows > 0;
+	}
 }

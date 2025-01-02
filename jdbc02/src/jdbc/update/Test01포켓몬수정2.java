@@ -26,7 +26,6 @@ public class Test01포켓몬수정2 {
 			System.out.println("대상이 없습니다");
 		}
 		
-		
 	}
 
 }

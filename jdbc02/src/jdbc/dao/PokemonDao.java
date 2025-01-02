@@ -39,6 +39,7 @@ public class PokemonDao {
 		String sql = "update pokemon "
 				+"set pokemon_name = ?, pokemon_type =? "
 				+"where pokemon_no = ?";
+	
 		
 		Object[] data = {
 				pokemonDto.getPokemonName(),
