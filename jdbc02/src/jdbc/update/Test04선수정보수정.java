@@ -11,7 +11,7 @@ public class Test04선수정보수정 {
 		playerDto.setPlayerNo(50);
 		playerDto.setPlayerName("전종오");
 		playerDto.setPlayerEvent("사격");
-		playerDto.setPleyerType("하계");
+		playerDto.setPlayerType("하계");
 		playerDto.setPlayerGoldMedal(1);
 		playerDto.setPlayerSilverMedal(2);
 		playerDto.setPlayerBronzeMedal(3);

@@ -12,7 +12,11 @@ public class Test04게임유저조회 {
 		List<GameUserDto> list = gameUserDao.selectList();
 		
 		for(GameUserDto gameUserDto : list) {
-			System.out.println(gameUserDto);
+			System.out.print("["+gameUserDto.getGameUserNo()+"]");
+			System.out.print(" ID:"+gameUserDto.getGameUserId());
+			System.out.print(" / 직업:"+gameUserDto.getGameUserJob());
+			System.out.print(" / Level "+gameUserDto.getGameUserLevel());
+			System.out.println(" / 소지금:"+gameUserDto.getGameUserMoney());
 		}
 
 	}

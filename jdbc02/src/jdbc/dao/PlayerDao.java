@@ -20,7 +20,7 @@ public class PlayerDao {
 		Object[] data = {
 				playerDto.getPlayerName(),
 				playerDto.getPlayerEvent(),
-				playerDto.getPleyerType(),
+				playerDto.getPlayerType(),
 				playerDto.getPlayerGoldMedal(),
 				playerDto.getPlayerSilverMedal(),
 				playerDto.getPlayerBronzeMedal()
@@ -38,7 +38,7 @@ public class PlayerDao {
 		Object[] data = {
 				playerDto.getPlayerName(),
 				playerDto.getPlayerEvent(),
-				playerDto.getPleyerType(),
+				playerDto.getPlayerType(),
 				playerDto.getPlayerGoldMedal(),
 				playerDto.getPlayerSilverMedal(),
 				playerDto.getPlayerBronzeMedal(),

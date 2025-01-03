@@ -16,7 +16,7 @@ public class PlayerMapper implements RowMapper<PlayerDto> {
 		playerDto.setPlayerNo(rs.getInt("player_no"));
 		playerDto.setPlayerName(rs.getString("player_name"));
 		playerDto.setPlayerEvent(rs.getString("player_event"));
-		playerDto.setPleyerType(rs.getString("player_type"));
+		playerDto.setPlayerType(rs.getString("player_type"));
 		playerDto.setPlayerGoldMedal(rs.getInt("player_gold_medal"));
 		playerDto.setPlayerSilverMedal(rs.getInt("player_silver_medal"));
 		playerDto.setPlayerBronzeMedal(rs.getInt("player_bronze_medal"));

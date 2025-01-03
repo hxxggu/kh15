@@ -4,7 +4,7 @@ public class PlayerDto {
 	private int playerNo;
 	private String playerName;
 	private String playerEvent;
-	private String pleyerType;
+	private String playerType;
 	private int playerGoldMedal;
 	private int playerSilverMedal;
 	private int playerBronzeMedal;
@@ -27,11 +27,11 @@ public class PlayerDto {
 	public void setPlayerEvent(String playerEvent) {
 		this.playerEvent = playerEvent;
 	}
-	public String getPleyerType() {
-		return pleyerType;
+	public String getPlayerType() {
+		return playerType;
 	}
-	public void setPleyerType(String pleyerType) {
-		this.pleyerType = pleyerType;
+	public void setPlayerType(String pleyerType) {
+		this.playerType = pleyerType;
 	}
 	public int getPlayerGoldMedal() {
 		return playerGoldMedal;
@@ -58,7 +58,7 @@ public class PlayerDto {
 	@Override
 	public String toString() {
 		return "PlayerDto [playerNo=" + playerNo + ", playerName=" + playerName + ", playerEvent=" + playerEvent
-				+ ", pleyerType=" + pleyerType + ", playerGoldMedal=" + playerGoldMedal + ", playerSilverMedal="
+				+ ", playerType=" + playerType + ", playerGoldMedal=" + playerGoldMedal + ", playerSilverMedal="
 				+ playerSilverMedal + ", playerBronzeMedal=" + playerBronzeMedal + "]";
 	}
 	

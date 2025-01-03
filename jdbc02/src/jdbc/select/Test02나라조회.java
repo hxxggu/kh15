@@ -12,10 +12,10 @@ public class Test02나라조회 {
 		
 		for(CountryDto countryDto : list) {
 //			System.out.println(countryDto);
-			System.out.print("[" + countryDto.getCountryNo() + "] ");
+			System.out.print("[" + countryDto.getCountryNo() + "]");
 			System.out.print(countryDto.getCountryName());
-			System.out.print(" (수도:" + countryDto.getCountryCapital() + ")");
-			System.out.print("(인구:" + countryDto.getCountryPopulation() + ")");
+			System.out.print("(수도:" + countryDto.getCountryCapital()+")");
+			System.out.print(" 인구:" + countryDto.getCountryPopulation());
 		}
 	}
 }

@@ -11,7 +11,9 @@ public class Test01포켓몬조회2 {
 		List<PokemonDto> list = pokemonDao.selectList();
 		
 		for(PokemonDto pokemonDto : list) {
-			System.out.println(pokemonDto);
+			System.out.print("[No."+pokemonDto.getPokemonNo()+"]");
+			System.out.print(pokemonDto.getPokemonName());
+			System.out.println("("+pokemonDto.getPokemonType()+")");
 		}
 	
 	}
