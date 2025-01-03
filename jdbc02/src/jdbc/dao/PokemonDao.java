@@ -99,4 +99,19 @@ public class PokemonDao {
 		Object[] data = {keyword};
 		return jdbcTemplate.query(sql, pokemonMapper, data);			
 	}
+	
+	//상세조회 메서드
+	public PokemonDto selectOne(int pokemonNo) {
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql = "select * from pokemon where pokemon_no = ?";
+		Object[] data = {pokemonNo};
+		List<PokemonDto> list = jdbcTemplate.query(sql, pokemonMapper, data);
+		return list.isEmpty() ? null : list.get(0); //순서에 유의할 것
+	}
+	
+	
+	
+	
+	
+	
 }

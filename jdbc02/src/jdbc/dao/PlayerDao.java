@@ -80,4 +80,13 @@ public class PlayerDao {
 		Object[] data = {keyword};
 		return jdbcTemplate.query(sql, playerMapper, data);
 	}
+	
+	public PlayerDto selectOne(int playerNo) {
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql = "select * from player where player_no = ?";
+		Object[] data = {playerNo};
+		List<PlayerDto> list = jdbcTemplate.query(sql, playerMapper, data);
+		return list.isEmpty() ? null : list.get(0);
+	}
+	
 }

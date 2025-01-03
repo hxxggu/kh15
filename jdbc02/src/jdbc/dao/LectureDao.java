@@ -79,4 +79,13 @@ public class LectureDao {
 		Object[] data = {keyword};
 		return jdbcTemplate.query(sql, lectureMapper, data);
 	}
+	
+	public LectureDto selectOne(int lectureNo) {
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql = "select * from lecture where lecture_no = ?";
+		Object[] data = {lectureNo};
+		List<LectureDto> list = jdbcTemplate.query(sql, lectureMapper, data);
+		return list.isEmpty() ? null : list.get(0);
+	}
+	
 }

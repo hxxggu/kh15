@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import jdbc.dto.CountryDto;
 import jdbc.dto.ItemDto;
-import jdbc.dto.PhoneDto;
 import jdbc.mapper.ItemMapper;
 import jdbc.util.JdbcFactory;
 
@@ -68,15 +68,23 @@ public class ItemDao {
 		"새벽배송여부", "item_early"
 		);
 		
-		public List<ItemDto> selectList(String column, String keyword) {
-			String columnName = columnExample.get(column);
-			if(columnName == null) throw new RuntimeException();
-			JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
-			String sql = "select * from item "
-					+ "where instr(" + columnName + ", ?) > 0 "
-					+ "order by " + columnName + " asc, item_no asc";
-			Object[] data = {keyword};
-			return jdbcTemplate.query(sql, itemMapper, data);
-		}
+	public List<ItemDto> selectList(String column, String keyword) {
+		String columnName = columnExample.get(column);
+		if(columnName == null) throw new RuntimeException();
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql = "select * from item "
+				+ "where instr(" + columnName + ", ?) > 0 "
+				+ "order by " + columnName + " asc, item_no asc";
+		Object[] data = {keyword};
+		return jdbcTemplate.query(sql, itemMapper, data);
+	}
+	
+	public ItemDto selectOne(int itemNo) {
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql = "select * from item where item_no = ?";
+		Object[] data = {itemNo};
+		List<ItemDto> list = jdbcTemplate.query(sql, itemMapper, data);
+		return list.isEmpty() ? null : list.get(0);
+	}
 	
 }

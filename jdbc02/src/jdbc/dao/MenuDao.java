@@ -72,4 +72,13 @@ public class MenuDao {
 		Object[] data = {keyword};
 		return jdbcTemplate.query(sql, menuMapper, data);
 	}
+	
+	public MenuDto selectOne(int menuNo) {
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql = "select * from menu where menu_no = ?";
+		Object[] data = {menuNo};
+		List<MenuDto> list = jdbcTemplate.query(sql, menuMapper, data);
+		return list.isEmpty() ? null : list.get(0);
+	}
+	
 }

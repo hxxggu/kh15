@@ -75,4 +75,12 @@ public class GameUserDao {
 		Object[] data = {keyword};
 		return jdbcTemplate.query(sql, gameUserMapper, data);
 	}
+	
+	public GameUserDto selectOne(int gameUserNo) {
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql = "select * from game_user where game_user_no = ?";
+		Object[] data = {gameUserNo};
+		List<GameUserDto> list = jdbcTemplate.query(sql, gameUserMapper, data);
+		return list.isEmpty() ? null : list.get(0);
+	}
 }

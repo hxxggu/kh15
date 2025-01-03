@@ -7,6 +7,7 @@ import javax.management.RuntimeErrorException;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import jdbc.dto.CountryDto;
 import jdbc.dto.PhoneDto;
 import jdbc.mapper.PhoneMapper;
 import jdbc.util.JdbcFactory;
@@ -75,4 +76,11 @@ public class PhoneDao {
 		return jdbcTemplate.query(sql, phoneMapper, data);
 	}
 	
+	public PhoneDto selectOne(int phoneNo) {
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql = "select * from phone where phone_no = ?";
+		Object[] data = {phoneNo};
+		List<PhoneDto> list = jdbcTemplate.query(sql, phoneMapper, data);
+		return list.isEmpty() ? null : list.get(0);
+	}
 }
