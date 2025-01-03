@@ -1,10 +1,12 @@
 package jdbc.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import jdbc.dto.ItemDto;
+import jdbc.dto.PhoneDto;
 import jdbc.mapper.ItemMapper;
 import jdbc.util.JdbcFactory;
 
@@ -59,4 +61,22 @@ public class ItemDao {
 		String sql = "select * from item";
 		return jdbcTemplate.query(sql, itemMapper);
 	}
+	
+	private Map<String, String> columnExample = Map.of(
+		"상품명", "item_name",
+		"상품종류", "item_type",
+		"새벽배송여부", "item_early"
+		);
+		
+		public List<ItemDto> selectList(String column, String keyword) {
+			String columnName = columnExample.get(column);
+			if(columnName == null) throw new RuntimeException();
+			JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+			String sql = "select * from item "
+					+ "where instr(" + columnName + ", ?) > 0 "
+					+ "order by " + columnName + " asc, item_no asc";
+			Object[] data = {keyword};
+			return jdbcTemplate.query(sql, itemMapper, data);
+		}
+	
 }

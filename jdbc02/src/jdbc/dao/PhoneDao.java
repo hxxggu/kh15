@@ -1,6 +1,9 @@
 package jdbc.dao;
 
 import java.util.List;
+import java.util.Map;
+
+import javax.management.RuntimeErrorException;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -54,4 +57,22 @@ public class PhoneDao {
 		return jdbcTemplate.query(sql, phoneMapper);
 		
 	}
+	
+	private Map<String, String> columnExample = Map.of(
+		"기종", "phone_name",
+		"할부기간", "phone_conract",
+		"통신사", "phone_telecom"
+	);
+	
+	public List<PhoneDto> selectList(String column, String keyword) {
+		String columnName = columnExample.get(column);
+		if(columnName == null) throw new RuntimeException();
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql = "select * from phone "
+				+ "where instr(" + columnName + ", ?) > 0 "
+				+ "order by " + columnName + " asc, phone_no asc";
+		Object[] data = {keyword};
+		return jdbcTemplate.query(sql, phoneMapper, data);
+	}
+	
 }

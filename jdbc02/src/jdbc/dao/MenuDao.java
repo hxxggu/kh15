@@ -1,6 +1,7 @@
 package jdbc.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -56,4 +57,19 @@ public class MenuDao {
 		return jdbcTemplate.query(sql, menuMapper);
 	}
 	
+	private Map<String, String> columnExample = Map.of(
+		"이름", "menu_name",
+		"종류", "menu_type"
+	);
+	
+	public List<MenuDto> selectList(String column, String keyword) {
+		String columnName = columnExample.get(column);
+		if(columnName == null) throw new RuntimeException();
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql = "select * from menu "
+				+ "where instr(" + columnName + ", ?) > 0 "
+				+ "order by " + columnName + " asc, menu_no asc";
+		Object[] data = {keyword};
+		return jdbcTemplate.query(sql, menuMapper, data);
+	}
 }

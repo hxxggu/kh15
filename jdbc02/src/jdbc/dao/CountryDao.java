@@ -1,6 +1,7 @@
 package jdbc.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -58,5 +59,28 @@ public class CountryDao {
 		return jdbcTemplate.query(sql, countryMapper);
 	}
 	
+	//검색 항목을 설정
+	private Map<String, String> columnExample = Map.of(
+		"국가명", "country_name",
+		"수도명", "country_capital"
+		);
 	
+	//검색 메서드
+	public List<CountryDto> selectList(String column, String keyword){
+		//컬럼 변환
+		String columnName =  columnExample.get(column);
+		if(columnName == null) {
+			throw new RuntimeException("항목 오류");
+		}
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql = "select * from country "
+				+ "where instr(#1, ?) > 0 "
+				+ "order by #1 asc, country_no asc";
+		sql = sql.replace("#1", columnName);		
+//		String sql = "select * from country "
+//				+ "where instr(" +columnName + ", ?) > 0 "
+//				+ "order by " + columnName + " asc, country_no asc";
+		Object[] data = {keyword};
+		return jdbcTemplate.query(sql, countryMapper, data);
+	}
 }

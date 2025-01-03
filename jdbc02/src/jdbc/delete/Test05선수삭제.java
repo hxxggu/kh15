@@ -5,7 +5,7 @@ import jdbc.dao.PlayerDao;
 public class Test05선수삭제 {
 	public static void main(String[] args) {
 		
-		int playerNo = 30;
+		int playerNo = 22;
 		
 		PlayerDao playerDao = new PlayerDao();
 		boolean success = playerDao.delete(playerNo);

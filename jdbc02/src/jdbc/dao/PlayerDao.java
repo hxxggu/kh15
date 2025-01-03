@@ -1,6 +1,7 @@
 package jdbc.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -11,12 +12,10 @@ import jdbc.util.JdbcFactory;
 public class PlayerDao {
 	public void insert(PlayerDto playerDto) {
 		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
-		
 		String sql = "insert into player(player_no, player_name,"
 				+ "player_event, player_type, player_gold_medal,"
 				+ "player_silver medal, player_bronze_medal)"
-				+ "values(player_seq.nextval, ?, ?, ?, ?, ?, ?)" ;
-		
+				+ "values(player_seq.nextval, ?, ?, ?, ?, ?, ?)" ;	
 		Object[] data = {
 				playerDto.getPlayerName(),
 				playerDto.getPlayerEvent(),
@@ -25,7 +24,6 @@ public class PlayerDao {
 				playerDto.getPlayerSilverMedal(),
 				playerDto.getPlayerBronzeMedal()
 		};
-	
 		jdbcTemplate.update(sql, data);		
 	}
 	//수정 메서드
@@ -64,5 +62,22 @@ public class PlayerDao {
 		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
 		String sql = "select * from player";
 		return jdbcTemplate.query(sql, playerMapper);
+	}
+	
+	private Map<String, String> columnExample = Map.of(
+		"이름", "player_name",
+		"종목", "player_event",
+		"시즌", "player_type"
+	);
+	
+	public List<PlayerDto> selectList(String column, String keyword){
+		String columnName = columnExample.get(column);
+		if(columnName == null) throw new RuntimeException();
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql = "select * from player "
+				+ "where instr(" + columnName +", ?) > 0 "
+				+ "order by " + columnName + " asc, player_no asc";
+		Object[] data = {keyword};
+		return jdbcTemplate.query(sql, playerMapper, data);
 	}
 }

@@ -1,6 +1,7 @@
 package jdbc.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -76,4 +77,26 @@ public class PokemonDao {
 		return jdbcTemplate.query(sql, pokemonMapper);
 	}
 	
+	//검색에 사용할 컬럼에 대한 정보를 저장
+	private Map<String, String> columnExample = Map.of(
+		"이름", "pokemon_name",
+		"속성", "pokemon_type"
+		);
+	
+	//검색 메서드
+	public List<PokemonDto> selectList(String column, String keyword){ //같은 이름으로 다시 선언하는 것 / 메서드 오버로딩, 오버라이딩 구분하기
+		String columnName = columnExample.get(column); //컬럼명 획득(없으면
+		if(columnName == null) {
+			//return null; //없다고 말해주겠다
+			//return List.of(); //결과가 비어있다고 말해주겠다
+			throw new RuntimeException("항목 오류"); //너는 문제가 있다고 말해주겠다	//RuntimeExeption : 따로 예외에 대한 선언을 하지 않아도 됨
+		}
+		
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql = "select * from pokemon "
+				+ "where instr("+ columnName +", ?) > 0 " //"+: 구문의 일부", "holder : 데이터"를 의미
+				+ "order by "+ columnName +" asc, pokemon_no asc";
+		Object[] data = {keyword};
+		return jdbcTemplate.query(sql, pokemonMapper, data);			
+	}
 }

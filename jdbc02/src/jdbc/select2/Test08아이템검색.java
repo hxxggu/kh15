@@ -1,15 +1,18 @@
-package jdbc.select;
+package jdbc.select2;
 
 import java.util.List;
 
 import jdbc.dao.ItemDao;
 import jdbc.dto.ItemDto;
 
-public class Test08아이템조회 {
 
+public class Test08아이템검색 {
 	public static void main(String[] args) {
+		String column = "새벽배송여부"; //상품명, 상품종류, 새벽배송여부
+		String keyword = "Y";
+		
 		ItemDao itemDao = new ItemDao();
-		List<ItemDto> list = itemDao.selectList();
+		List<ItemDto> list = itemDao.selectList(column, keyword);
 		
 		for(ItemDto itemDto : list) {
 			System.out.print("[" + itemDto.getItemNo() + "] ");
@@ -25,5 +28,4 @@ public class Test08아이템조회 {
 		}
 
 	}
-
 }

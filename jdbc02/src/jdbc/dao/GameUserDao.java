@@ -1,6 +1,7 @@
 package jdbc.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -57,4 +58,21 @@ public class GameUserDao {
 		return jdbcTemplate.query(sql, gameUserMapper);
 	}
 	
+	private Map<String, String> columnExample = Map.of(
+		"아이디", "game_user_id",
+		"직업", "game_user_job",
+		"레벨", "game_user_level"
+	);
+	
+	public List<GameUserDto> selectList(String column, String keyword){
+		String columnName = columnExample.get(column);
+		if(columnName == null) throw new RuntimeException("항목 오류");
+		
+		JdbcTemplate jdbcTemplate = JdbcFactory.createTemplate();
+		String sql = "select * from game_user "
+				+ "where instr(" + columnName + ", ?) > 0 "
+				+ "order by " + columnName + " asc, game_user_no asc";
+		Object[] data = {keyword};
+		return jdbcTemplate.query(sql, gameUserMapper, data);
+	}
 }
