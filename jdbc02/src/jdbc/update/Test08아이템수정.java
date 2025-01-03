@@ -11,7 +11,7 @@ public class Test08아이템수정 {
 		itemDto.setItemName("행주");
 		itemDto.setItemType("잡화");
 		itemDto.setItemPrice(3000);
-		itemDto.setItemDiscountRate(10/100);
+		itemDto.setItemDiscountRate(10/100f);
 		itemDto.setItemQty(20);
 		itemDto.setItemEarly("Y");
 		
