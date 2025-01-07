@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.kh</groupId>
-	<artifactId>spring07player</artifactId>
+	<artifactId>spring07quiz</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring07player</name>
+	<name>spring07quiz</name>
 	<description>kh spring demo</description>
 	<url/>
 	<licenses>
