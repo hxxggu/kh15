@@ -11,11 +11,13 @@ import com.kh.spring06.dto.CountryDto;
 import com.kh.spring06.mapper.CountryMapper;
 
 @Repository
+//@Repository : 영원히 저장이 가능한 공간
 public class CountryDao {
 	@Autowired
 	private CountryMapper countryMapper;
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	//어노테이션은 한번에 하나에만 적용됨. 각각 적어주어야 함
 	
 	public void insert(CountryDto countryDto) {
 		String sql = "insert into country(country_no, country_name, "
