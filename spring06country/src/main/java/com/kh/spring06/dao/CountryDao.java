@@ -23,7 +23,6 @@ public class CountryDao {
 		String sql = "insert into country(country_no, country_name, "
 				+ "country_capital, country_population) "
 				+"values(country_seq.nextval, ?, ?, ?)";
-		
 		Object[] data = {
 			countryDto.getCountryName(),
 			countryDto.getCountryCapital(),
@@ -36,8 +35,7 @@ public class CountryDao {
 	public boolean update(CountryDto countryDto) {
 		String sql = "update country "
 				+ "set country_name = ?, country_capital = ?, country_population = ? "
-				+ "where country_no = ?";
-				
+				+ "where country_no = ?";			
 		Object[] data = {
 				countryDto.getCountryName(),
 				countryDto.getCountryCapital(),
