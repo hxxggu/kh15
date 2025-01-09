@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.spring09.dao.GameUserDao;
 import com.kh.spring09.dto.GameUserDto;
@@ -38,10 +39,21 @@ public class GameUserController {
 		return "/WEB-INF/views/game-user/add-finish.jsp";
 	}
 	
+	//목록 및 검색 매핑
 	@RequestMapping("/list")
-	public String list(Model model) {
-		List<GameUserDto> list = gameUserDao.selectList();
-		model.addAttribute("list", list);
+	public String list(@RequestParam(required = false) String column,
+							@RequestParam(required = false) String keyword,
+							Model model) {
+		boolean search = column != null && keyword != null;
+		if(search) {
+			model.addAttribute("list", gameUserDao.selectList(column, keyword));
+		}
+		else {
+			model.addAttribute("list", gameUserDao.selectList());
+		}
+		model.addAttribute("search", search);
+		model.addAttribute("column", column);
+		model.addAttribute("keyword", keyword);
 		return "/WEB-INF/views/game-user/list.jsp";
 	}
 	

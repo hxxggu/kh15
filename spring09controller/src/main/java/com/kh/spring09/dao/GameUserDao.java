@@ -68,6 +68,7 @@ public class GameUserDao {
 		
 		String sql = "select * from game_user where instr(#1, ?) > 0 "
 						+ "order by #1 asc, game_user_no asc";
+		sql = sql.replace("#1", columnName);
 		Object[] data = {keyword};
 		return jdbcTemplate.query(sql, gameUserMapper, data);
 	}

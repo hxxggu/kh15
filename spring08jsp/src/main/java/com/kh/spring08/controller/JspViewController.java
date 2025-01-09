@@ -100,4 +100,10 @@ public class JspViewController {
 		model.addAttribute("list", list);
 		return "/WEB-INF/views/test11.jsp";
 	}
+	
+	@RequestMapping("/test12")
+	public String test12() {
+		
+		return "/WEB-INF/views/test12.jsp";
+	}
 }
