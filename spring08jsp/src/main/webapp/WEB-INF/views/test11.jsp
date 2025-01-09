@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="java.util.List"%>
+<%@page import="com.kh.spring08.dto.PokemonDto"%>
 
 <h1>전달된 포켓몬 정보</h1>
 <h2> 번호: ${list.get(0).pokemonNo} </h2>
@@ -12,12 +14,12 @@
 <hr>
 
 <%
-	List<PokemonDto> list = pageContext.getAttribute("list");
-	for(int i=0; i<list.size(); i++) {
-%>		
-		<h2>번호: <%=list.get(i).getPokemonNo()%></h2>
-		<h2>이름: <%=list.get(i).getPokemonName()%></h2>
-		<h2>속성: <%=list.get(i).getPokemonType()%></h2>
+	List<PokemonDto> list = (List<PokemonDto>)request.getAttribute("list");
+	for(int i=0; i < list.size(); i++) {
+%>
+		<h2>번호 : <%=list.get(i).getPokemonNo()%></h2>
+		<h2>이름 : <%=list.get(i).getPokemonName()%></h2>
+		<h2>속성 : <%=list.get(i).getPokemonType()%></h2>
 <%} %>
 
 
