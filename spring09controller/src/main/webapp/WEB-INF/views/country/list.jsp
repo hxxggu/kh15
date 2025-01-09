@@ -8,7 +8,7 @@
 <form action="list" method="get">
 	<select name="column">
 		<option>국가명
-		<option ${column.equals('수도명')?'selected':" }>수도명
+		<option ${column.equals('수도명')?'selected':"}>수도명
 	</select>
 	<input type="text" name="keyword" value="${keyword}" required>
 	<button>검색</button>
