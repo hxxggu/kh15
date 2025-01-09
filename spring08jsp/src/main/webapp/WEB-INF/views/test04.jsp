@@ -17,3 +17,12 @@
 <img width="200" height="200" src = "//localhost:8080/하위폴더/이미지파일.jpg">
 <br>
 <img width="200" height="200" src = "/하위폴더/이미지파일.jpg">
+
+<!--
+	현재페이지를 기준으로 주소를 계산할 수도 있다 (상대경로)
+	(현재) http://localhost:8080/jsp/test04
+	(대상) http://localhost:8080/images/이미지파일명.jpg
+ -->
+ 
+ <br>
+ <img width="200" height="200" src=".../images/이미지파일명.jpg" alt="피카츄의 이미지">

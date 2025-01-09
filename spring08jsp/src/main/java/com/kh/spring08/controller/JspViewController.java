@@ -26,6 +26,16 @@ public class JspViewController {
 		return "/WEB-INF/views/test03.jsp";
 	}
 	
+	@RequestMapping("/test04")
+	public String test04() {
+		return "/WEB-INF/views/test04.jsp";
+	}
+	
+	@RequestMapping("/test05")
+	public String test05() {
+		return "/WEB-INF/views/test05.jsp";
+	}
+	
 	//model은 화면에 데이터를 실어 나르는 카트(컨트롤러에 선언하면 사용 가능)
 	@RequestMapping("/test07")
 	public String test07(Model model) {
@@ -48,5 +58,14 @@ public class JspViewController {
 		model.addAttribute("age", age);
 		return "/WEB-INF/views/test08.jsp";
 	}
+	
+	//Model에 int나 String 말고 인스턴스를 추가하여 전달할 수 있을까?
+	@RequestMapping("/test09")
+	public String test09(Model model) {
+		LocalDate time = LocalDate.now();
+		model.addAttribute("time", time);
+		return "/WEB-INF/views/test09.jsp";
+	}
+	
 	
 }
