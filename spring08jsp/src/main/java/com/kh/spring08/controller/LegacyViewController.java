@@ -18,5 +18,7 @@ public class LegacyViewController {
 		//response는 사용자에게 내보낼 내용이 담긴 인스턴스
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().println("<h1>Hello</h1>");
+		
+		//이 방식은 비효율적이며 스프링을 무시하는 코드
 	}
 }
