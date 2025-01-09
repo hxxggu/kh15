@@ -5,8 +5,8 @@
 <h2><a href="add">신규등록</a></h2>
 <c:forEach var="pokemonDto" items="${list}">
 	<h2>
-		번호 : ${pokemonDto.pokemonNo} , 
-		이름 : ${pokemonDto.pokemonName} , 
+		번호 : ${pokemonDto.pokemonNo},
+		이름 : ${pokemonDto.pokemonName},
 		속성 : ${pokemonDto.pokemonType}
 	</h2>
 </c:forEach>
