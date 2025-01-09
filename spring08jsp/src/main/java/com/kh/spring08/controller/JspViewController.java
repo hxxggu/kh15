@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.spring08.dto.PokemonDto;
+
 @Controller
 @RequestMapping("/jsp")
 public class JspViewController {
@@ -34,6 +36,11 @@ public class JspViewController {
 	@RequestMapping("/test05")
 	public String test05() {
 		return "/WEB-INF/views/test05.jsp";
+	}
+	
+	@RequestMapping("/test06")
+	public String test06() {
+		return "/WEB-INF/views/test06.jsp";
 	}
 	
 	//model은 화면에 데이터를 실어 나르는 카트(컨트롤러에 선언하면 사용 가능)
@@ -67,5 +74,16 @@ public class JspViewController {
 		return "/WEB-INF/views/test09.jsp";
 	}
 	
+	//DTO도 Model로 전달할 수 있을까?
+	@RequestMapping("/test10")
+	public String test10(Model model) {
+		PokemonDto pokemonDto = new PokemonDto();
+		pokemonDto.setPokemonNo(1);
+		pokemonDto.setPokemonName("피카츄");
+		pokemonDto.setPokemonType("전기");
+//		model.addAttribute(pokemonDto); //자동으로 클래스 이름 첫글자만 소문자로 변환
+		model.addAttribute("pokemonDto", pokemonDto); //수동으로 이름 부여
+		return "/WEB-INF/views/test10.jsp";
+	}
 	
 }
