@@ -1,5 +1,6 @@
 package com.kh.spring08.controller;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Random;
 
 import org.springframework.stereotype.Controller;
@@ -86,4 +87,17 @@ public class JspViewController {
 		return "/WEB-INF/views/test10.jsp";
 	}
 	
+	//List를 Model에 전달할 수 있을까?
+	@RequestMapping("/test11")
+	public String test11(Model model) {
+		List<PokemonDto> list = List.of(
+				new PokemonDto(1, "피카츄", "전기"),
+				new PokemonDto(2, "라이츄", "전기"),
+				new PokemonDto(3, "파이리", "불"),
+				new PokemonDto(4, "꼬부기", "물"),
+				new PokemonDto(5, "버터플", "바람")
+				);
+		model.addAttribute("list", list);
+		return "/WEB-INF/views/test11.jsp";
+	}
 }

@@ -38,10 +38,10 @@
 				min="0" step="1000" required><br><br>
 	수업유형
 	<select name="lectureType" required>
-		<option value="온라인"> 선택하세요
-		<option value="온라인"> 온라인
-		<option value="오프라인"> 오프라인
-		<option value="혼합"> 혼합
+		<option> 선택하세요 </option>
+		<option value="온라인"> 온라인 </option>
+		<option value="오프라인"> 오프라인 </option>
+		<option value="혼합"> 혼합 </option>
 	</select>
 	<br><br>
 	<button>강좌 등록</button>
