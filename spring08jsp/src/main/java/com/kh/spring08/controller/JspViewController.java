@@ -103,7 +103,16 @@ public class JspViewController {
 	
 	@RequestMapping("/test12")
 	public String test12() {
-		
 		return "/WEB-INF/views/test12.jsp";
+	}
+	
+	@RequestMapping("/test13")
+	public String test13() {
+		return "/WEB-INF/views/test13.jsp";
+	}
+	
+	@RequestMapping("/test14")
+	public String test14() {
+		return "/WEB-INF/views/test14.jsp";
 	}
 }
