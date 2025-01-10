@@ -27,7 +27,11 @@
 	<tbody align="center">
 		<c:forEach var="gameUserDto" items="${list}">
 		<tr>
-			<td>${gameUserDto.gameUserId}</td>
+			<td>
+				<a href="detail?gameUserNo=${gameUserDto.gameUserNo}">
+					${gameUserDto.gameUserId}
+				</a>
+			</td>
 			<td>${gameUserDto.gameUserJob}</td>
 			<td>${gameUserDto.gameUserLevel}</td>
 		</tr>

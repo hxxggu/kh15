@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.spring09.dao.CountryDao;
 import com.kh.spring09.dto.CountryDto;
+import com.kh.spring09.dto.PokemonDto;
 
 @Controller
 @RequestMapping("/country")
@@ -56,5 +57,12 @@ public class CountryController {
 		model.addAttribute("list", list);
 		
 		return "/WEB-INF/views/country/list.jsp";
+	}
+	
+	@RequestMapping("/detail")
+	public String detail(@RequestParam int countryNo, Model model) {
+		CountryDto countryDto = countryDao.selectOne(countryNo);
+		model.addAttribute("countryDto", countryDto);
+		return "/WEB-INF/views/country/detail.jsp";
 	}
 }

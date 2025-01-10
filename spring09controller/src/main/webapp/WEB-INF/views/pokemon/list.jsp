@@ -17,7 +17,11 @@
 		<c:forEach var="pokemonDto" items="${list}">
 		<tr>
 			<td>${pokemonDto.pokemonNo}</td>
-			<td>${pokemonDto.pokemonName}</td>
+			<td>
+				<a href="detail?pokemonNo=${pokemonDto.pokemonNo}">
+					${pokemonDto.pokemonName}
+				</a>
+			</td>
 			<td>${pokemonDto.pokemonType}</td>
 		</tr>
 		</c:forEach>

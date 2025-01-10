@@ -42,7 +42,11 @@
 				<c:forEach var="countryDto" items="${list}">
 				<tr>
 					<td>${countryDto.countryNo}</td>
-					<td>${countryDto.countryName}</td>
+					<td>
+						<a href="detail?countryNo=${countryDto.countryNo}">
+							${countryDto.countryName}
+						</a>
+					</td>
 					<td>${countryDto.countryCapital}</td>
 					<td align="right">
 						<fmt:formatNumber pattern="#,##0" 

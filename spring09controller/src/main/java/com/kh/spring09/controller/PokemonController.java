@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.spring09.dao.PokemonDao;
 import com.kh.spring09.dto.PokemonDto;
@@ -49,4 +50,13 @@ public class PokemonController {
 		return "/WEB-INF/views/pokemon/list.jsp";
 	}
 	
+	//상세조회 매핑
+	//: 상세조회를 위해서는 기본키(primary key)가 필요하다
+	//: model은 조회류의 기능에서는 거의 항상 존재
+	@RequestMapping("/detail")
+	public String detail(@RequestParam int pokemonNo, Model model) {
+		PokemonDto pokemonDto = pokemonDao.selectOne(pokemonNo);
+		model.addAttribute("pokemonDto", pokemonDto);
+		return "/WEB-INF/views/pokemon/detail.jsp";
+	}
 }

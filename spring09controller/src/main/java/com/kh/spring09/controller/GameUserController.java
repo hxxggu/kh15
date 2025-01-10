@@ -57,4 +57,11 @@ public class GameUserController {
 		return "/WEB-INF/views/game-user/list.jsp";
 	}
 	
+	@RequestMapping("/detail")
+	public String detail(@RequestParam int gameUserNo, Model model) {
+		GameUserDto gameUserDto = gameUserDao.selectOne(gameUserNo);
+		model.addAttribute("gameUserDto", gameUserDto);
+		return "/WEB-INF/views/game-user/detail.jsp";
+	}
+	
 }
