@@ -1,7 +1,5 @@
 package com.kh.spring09.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -62,6 +60,40 @@ public class GameUserController {
 		GameUserDto gameUserDto = gameUserDao.selectOne(gameUserNo);
 		model.addAttribute("gameUserDto", gameUserDto);
 		return "/WEB-INF/views/game-user/detail.jsp";
+	}
+	
+	@RequestMapping("/delete")
+	public String delete(@RequestParam int gameUserNo) {
+		gameUserDao.delete(gameUserNo);
+		return "redirect:list"; //상대경로
+//		return "redirect:/game-user/list"; //절대경로
+	}
+	
+	@GetMapping("/edit")
+	public String edit(@RequestParam int gameUserNo, Model model) {
+		GameUserDto gameUserDto = gameUserDao.selectOne(gameUserNo);
+		model.addAttribute("gameUserDto", gameUserDto);
+		return "/WEB-INF/views/game-user/edit.jsp";
+	}
+	
+	@PostMapping("/edit")
+	public String edit(@ModelAttribute GameUserDto gameUserDto) {
+		boolean success = gameUserDao.update(gameUserDto);
+		if(success) {
+			return "redirect:detail?gameUserNo=" + gameUserDto.getGameUserNo();
+		} else {
+			return "redirect:list";
+		}
+	}
+	
+	@RequestMapping("/levelup")
+	public String levelup(@ModelAttribute GameUserDto gameUserDto){
+		boolean success = gameUserDao.update(gameUserDto);
+		if(success) {
+			return "redirect:levelup?gameUserNo="+gameUserDto.getGameUserNo();
+		} else {
+			return "redirect:list";
+		}
 	}
 	
 }

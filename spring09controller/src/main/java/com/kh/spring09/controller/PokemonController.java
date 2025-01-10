@@ -59,4 +59,35 @@ public class PokemonController {
 		model.addAttribute("pokemonDto", pokemonDto);
 		return "/WEB-INF/views/pokemon/detail.jsp";
 	}
+	
+	//삭제 매핑
+	//: JSP를 연동할 필요 없이 처리 후 다른 매핑으로 쫓아낸다 (redirect)
+	@RequestMapping("/delete")
+	public String delete(@RequestParam int pokemonNo) {
+		pokemonDao.delete(pokemonNo);
+		return "redirect:list"; //오류 처리로 나중에 변경
+	}
+	
+	//수정 매핑
+	//: 입력/처리를 GET/POST로 나누어서 처리
+	//: 정보를 표시해두기 위해 Model에 DTO정보를 전달해야 한다
+	@GetMapping("/edit")
+	public String edit(@RequestParam int pokemonNo, Model model) {
+		PokemonDto pokemonDto = pokemonDao.selectOne(pokemonNo);
+		model.addAttribute("pokemonDto", pokemonDto);
+		return "/WEB-INF/views/pokemon/edit.jsp"; //forward에는 ?가 올 수 없음
+	}
+	
+	@PostMapping("/edit")
+	public String edit(@ModelAttribute PokemonDto pokemonDto) {
+		boolean success = pokemonDao.update(pokemonDto);
+		if(success) {
+//			return "redirect:detail"; //pk인 pokemonNo가 있어야 detail로 이동이 가능함
+			//*참고: redirect는 다른 매핑으로 GET방식 요청을 생성하는 것이므로 
+			return "redirect:detail?pokemonNo="+pokemonDto.getPokemonNo();
+		} else {
+			return "redirect:list";
+		}
+	}
+	
 }

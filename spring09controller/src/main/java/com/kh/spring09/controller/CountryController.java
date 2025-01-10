@@ -65,4 +65,28 @@ public class CountryController {
 		model.addAttribute("countryDto", countryDto);
 		return "/WEB-INF/views/country/detail.jsp";
 	}
+	
+	@RequestMapping("/delete")
+	public String delete(@RequestParam int countryNo) {
+		countryDao.delete(countryNo);
+		return "redirect:list"; //redirect : 주소가 바뀜, 끝나고 다른 곳으로 이동(다른 주소로 보냄), 잦지 않은 특별한 작업(따로 표시를 해주야 함)
+//		return "/WEB-INF/views/country /list.jsp"; //forward : 주소가 유지되고 화면만 연결, 보통의 일반적인 작업
+	}
+	
+	@GetMapping("/edit")
+	public String edit(@RequestParam int countryNo, Model model) {
+		CountryDto countryDto = countryDao.selectOne(countryNo);
+		model.addAttribute("countryDto", countryDto);
+		return "/WEB-INF/views/country/edit.jsp";
+	}
+	
+	@PostMapping("/edit")
+	public String edit(@ModelAttribute CountryDto countryDto) {
+		boolean success = countryDao.update(countryDto);
+		if(success) {
+			return "redirect:detail?countryNo=" + countryDto.getCountryNo();
+		} else {
+			return "redirect:list";
+		}
+	}
 }

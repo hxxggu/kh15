@@ -31,6 +31,7 @@
 <h2>
 	<a href="add">신규 유저 등록</a>
 	<a href="list">유저 목록</a>
-	<a href="#">수정</a>
-	<a href=#>삭제</a>
+	<a href="edit?gameUserNo=${gameUserDto.gameUserNo}">수정</a>
+	<a href="levelup?gameUserNo=${gameUserDto.gameUserNo}">레벨업</a>
+	<a href="delete?gameUserNo=${gameUserDto.gameUserNo}">삭제</a>
 </h2>

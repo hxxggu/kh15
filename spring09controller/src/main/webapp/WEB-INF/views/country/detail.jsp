@@ -25,6 +25,6 @@
 <h2>
 	<a href="add">신규등록</a>
 	<a href="list">목록보기</a>
-	<a href="#">수정하기</a>
-	<a href="#">삭제하기</a>
+	<a href="edit?countryNo=${countryDto.countryNo}">수정하기</a>
+	<a href="delete?countryNo=${countryDto.countryNo}">삭제하기</a>
 </h2>
