@@ -70,7 +70,7 @@ public class GameUserController {
 	}
 	
 	@GetMapping("/edit")
-	public String edit(@RequestParam int gameUserNo, Model model) {
+	public String edit(@RequestParam int gameUserNo, Model model) { //어노테이션이 붙으면 전송할 데이터, spring은 단순 값 / requestparam: PK 데이터 전달
 		GameUserDto gameUserDto = gameUserDao.selectOne(gameUserNo);
 		model.addAttribute("gameUserDto", gameUserDto);
 		return "/WEB-INF/views/game-user/edit.jsp";
@@ -86,14 +86,15 @@ public class GameUserController {
 		}
 	}
 	
+	//(+추가) 레벨업 매핑
 	@RequestMapping("/levelup")
-	public String levelup(@ModelAttribute GameUserDto gameUserDto){
-		boolean success = gameUserDao.update(gameUserDto);
-		if(success) {
-			return "redirect:levelup?gameUserNo="+gameUserDto.getGameUserNo();
-		} else {
-			return "redirect:list";
-		}
+	public String levelup(@RequestParam int gameUserNo){
+		GameUserDto gameUserDto = gameUserDao.selectOne(gameUserNo);
+		int level = gameUserDto.getGameUserLevel();
+		gameUserDto.setGameUserLevel(level+1);
+		gameUserDao.update(gameUserDto); //1.dto에서 레벨을 불러와 +1 해서 업데이트하는 방법
+		//gameUserDao.increaseGameUserLevel(gameUserNo); //2.Dao에 메서드를 새로 추가하는 방법
+		return "redirect:detail?gameUserNo = " +gameUserNo;
 	}
 	
 }

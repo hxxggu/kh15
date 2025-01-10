@@ -7,7 +7,7 @@
 
 <form action="edit" method="post">
 	<input type="hidden" name="pokemonNo" value="${pokemonDto.pokemonNo}">
-	포켓몬 이름 <input type="text" name="pokemonName" value="${pokemonDto.pokemonName}"><br><br>
-	포켓몬 속성 <input type="text" name="pokemonType" value="${pokemonDto.pokemonType}"><br><br>
+	포켓몬 이름 <input type="text" name="pokemonName" value="${pokemonDto.pokemonName}" required><br><br>
+	포켓몬 속성 <input type="text" name="pokemonType" value="${pokemonDto.pokemonType}" required><br><br>
 	<button>정보수정</button>
 </form>
