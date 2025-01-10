@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
 <c:if test="${search == true}">
 	<h1>국가 검색</h1>
 </c:if>
@@ -58,3 +60,5 @@
 		</c:choose>
 	</tbody>
 </table>
+
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

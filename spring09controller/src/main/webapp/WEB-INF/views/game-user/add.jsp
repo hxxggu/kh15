@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
 <h1>게임 유저 등록(운영자)</h1>
 <form action="add" method="post">
 	아이디 <input name="gameUserId" type="text" required placeholder="(ex) 피카츄"> <br><br>
@@ -29,3 +32,5 @@
 	<br><br>
 	<button>등록</button>
 </form>
+
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

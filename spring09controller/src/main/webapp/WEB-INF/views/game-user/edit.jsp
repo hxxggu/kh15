@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
 <h1>사용자 정보 수정</h1>
 <form action="edit" method="post">
 	<input type="hidden" name="gameUserNo" value="${gameUserDto.gameUserNo}">
@@ -16,3 +18,5 @@
 	소지금 <input type="number" name="gameUserMoney" value="${gameUserDto.gameUserMoney}" required><br><br>
 	<button>정보수정</button>
 </form>
+
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

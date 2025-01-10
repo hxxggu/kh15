@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
 <h1>국가 정보</h1>
 
 <table border="1" width="300">
@@ -28,3 +30,5 @@
 	<a href="edit?countryNo=${countryDto.countryNo}">수정하기</a>
 	<a href="delete?countryNo=${countryDto.countryNo}">삭제하기</a>
 </h2>
+
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
