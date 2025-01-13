@@ -2,6 +2,7 @@ package com.kh.spring09.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.spring09.dao.MemberDao;
 import com.kh.spring09.dto.MemberDto;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/member")
@@ -36,19 +39,50 @@ public class MemberController {
 	public String login() {
 		return  "/WEB-INF/views/member/login.jsp";
 	}
+	
+	//HttpSession 추가
+	//- 사용자별로 무언가 다른 정보를 기록해야 할 필요가 있을 때 사용
+	//- Model처럼 선언만 하면 자동으로 스프링이 제공해 줌
+	//- 데이터 추가: session.setAttribute("key", value);
+	//- 데이터 추출: session.getAttribute("key");
+	//- 데이터 제거: session.removeAttribute("key");
+	//- 목표 : 로그인 성공 시 이 회원의 정보를 세션에 저장 (PK)
 	@PostMapping("/login")
-	public String login(@ModelAttribute MemberDto memberDto) {
+	public String login(@ModelAttribute MemberDto memberDto, HttpSession session) {
 		MemberDto findDto = memberDao.selectOne(memberDto.getMemberId());
 		//아이디가 없으면 findDto는 null이다
 		if(findDto == null) { //아이디 없음
-			return "redirect:login"; //로그인 페이지로 쫓아낸다
+			return "redirect:login ? error"; //로그인 페이지로 쫓아낸다
 		} //아이디가 있으면 비밀번호 검사를 진행
 		boolean isValid = findDto.getMemberPw().equals(memberDto.getMemberPw());
 		if(isValid) { //로그인 성공 시
-			return "redirect:/";
 			
-		} else { //비밀번호 다름
-			return "redirect:login"; //로그인페이지로 쫓아낸다
-		}
+			//(+추가) 세션에 userId란 이름으로 사용자의 ID를 저장
+			session.setAttribute("userId", findDto.getMemberId());
+			return "redirect:/";
+			} else { //비밀번호 다름
+			return "redirect:login ? error"; //로그인페이지로 쫓아낸다
+		}	
 	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("userId");
+//		session.invalidate(); //세션 소멸 명령
+		return "redirect:/";
+	}
+	
+	//마이페이지(내 정보) 매핑
+	//- 현재 로그인한 회원의 모든 정보가 화면에 출력(단, 비밀번호 제외)
+	//- HttpSession에 있는 아이디를 꺼내 회원의 모든 정보를 조회
+	@RequestMapping("/mypage")
+	public String mypage(HttpSession session, Model model) {
+		String userId = (String) session.getAttribute("userId"); //업캐스팅<>다운캐스팅
+		MemberDto memberDto = memberDao.selectOne(userId); //내 정보 획득
+		model.addAttribute("memberDto", memberDto);
+		return "/WEB-INF/views/member/mypage.jsp"; //redirect<>forward
+		//redirect는 특정 페이지 접속 시 다른 페이지로 이동시킴. 사용자는 처음 요청한 url와 다른 url에 접속함.
+		//forward는 servlet에서 직접 다른 url을 처리하여 response. 클라이언트가 http request를 두번 요청하지 않음.
+	}
+	
 }
