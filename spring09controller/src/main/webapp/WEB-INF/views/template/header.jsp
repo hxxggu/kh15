@@ -13,7 +13,7 @@
 <div>
 	<h1>
 		<a href="/">
-			<img src="/spring09intergrated/src/main/resources/static/images/image.jpg" width="150" height="30">
+			<img src="/images/image.jpg" width="40" height="40">
 			홈페이지 제작 수업
 		</a>
 	</h1>
