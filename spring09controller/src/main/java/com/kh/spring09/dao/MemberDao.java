@@ -1,5 +1,7 @@
 package com.kh.spring09.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -45,4 +47,14 @@ public class MemberDao {
 				memberDto.getMemberAddress2()
 		};
 	}
+	
+	//상세조회 기능
+	public MemberDto selectOne(String memberId) {
+		String sql = "select * from member where member_id = ?";
+		Object[] data = {memberId};
+		List<MemberDto> list = jdbcTemplate.query(sql, memberMapper, data);
+		return list.isEmpty() ? null : list.get(0);
+	}
+	
+	
 }

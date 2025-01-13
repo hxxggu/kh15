@@ -11,7 +11,7 @@
 	<b style="color: red">*</b>비밀번호<input name="memberPw" type="password" required><br><br>
 	<b style="color: red">*</b>닉네임<input name="memberNickname" type="text" required><br><br>
 	<b style="color: red">*</b>이메일 <input name="memberEmail" type="email" required><br><br>
-	생년월일 <input name="memberBirth" type="date" required><br><br>
+	<b style="color: red">*</b>생년월일 <input name="memberBirth" type="date" required><br><br>
 	연락처 <input name="memberContact" type="tel"><br><br> <!-- (type) text: 쿼티창이 나옴 / tel: 전화번호 입력창이 나옴 (모바일 상에서) --> 
 	주소<br><br> 
 	<input name="memberPost" type="text" size="6" placeholder="우편번호"><br><br>
