@@ -23,6 +23,8 @@
 	<a href="/pokemon/list">포켓몬</a> <!-- 절대경로: /pokemon/list, 상대경로: pokemon/list -->
 	<a href="/country/list">국가</a>
 	<a href="/game-user/list">게임유저</a>
+	<a href="/member/join">회원가입</a>
+	<a href="#">로그인</a>
 </div>
 <hr>
 <div>
