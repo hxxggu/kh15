@@ -29,6 +29,7 @@
 				<a href="/game-user/list">게임유저</a>
 				<a href="/member/mypage">내 정보</a>
 				<a href="/member/logout">로그아웃</a>
+				<a href="/board/list">게시판</a>
 				<hr>
 			</c:when>
 			<%-- 비회원 --%>

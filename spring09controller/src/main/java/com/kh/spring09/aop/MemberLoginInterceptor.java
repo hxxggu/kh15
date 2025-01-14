@@ -38,9 +38,6 @@ public class MemberLoginInterceptor implements HandlerInterceptor {
 			
 			//3.커스텀 예외 처리 //직접 예외를 만들어서 처리하는 것을 권장
 			throw new NoPermissionException("로그인 후 이용 가능합니다");
-			
-			
 		}
 	}
-	
 }
