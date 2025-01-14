@@ -56,5 +56,24 @@ public class MemberDao {
 		return list.isEmpty() ? null : list.get(0);
 	}
 	
+	//최종 로그인 시각 갱신 메서드
+	public boolean updateMemberLogin(String memberId) {
+		String sql = "update member set member_login = systemstamp "
+				+ "where member_id = ?";
+		Object[] data = {memberId};
+		return jdbcTemplate.update(sql,data) > 0;
+	} //로그인 성공 시 불러오는 메서드
+	
+	//비밀번호 변경 시 최종 비밀번호 변경일도 같이 바뀌게 구현
+	public boolean updateMemberPassword(MemberDto memberDto) {
+		String sql = "update member "
+				+ "set member pw = ?, member_change = systimestamp";
+		Object[] data = {
+				memberDto.getMemberPw(), memberDto.getMemberId()
+		};
+		return jdbcTemplate.update(sql, data) > 0;
+	}
+	
+	
 	
 }

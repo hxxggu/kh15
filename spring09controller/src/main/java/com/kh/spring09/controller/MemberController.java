@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.spring09.dao.MemberDao;
 import com.kh.spring09.dto.MemberDto;
@@ -37,7 +38,7 @@ public class MemberController {
 	//로그인 매핑
 	@GetMapping("/login")
 	public String login() {
-		return  "/WEB-INF/views/member/login.jsp";
+		return "/WEB-INF/views/member/login.jsp";
 	}
 	
 	//HttpSession 추가
@@ -59,6 +60,8 @@ public class MemberController {
 			
 			//(+추가) 세션에 userId란 이름으로 사용자의 ID를 저장
 			session.setAttribute("userId", findDto.getMemberId());
+			//(+추가) 최종 로그인 시각을 갱신 처리
+			memberDao.updateMemberLogin(findDto.getMemberId());
 			return "redirect:/";
 			} else { //비밀번호 다름
 			return "redirect:login ? error"; //로그인페이지로 쫓아낸다
@@ -84,5 +87,38 @@ public class MemberController {
 		//redirect는 특정 페이지 접속 시 다른 페이지로 이동시킴. 사용자는 처음 요청한 url와 다른 url에 접속함.
 		//forward는 servlet에서 직접 다른 url을 처리하여 response. 클라이언트가 http request를 두번 요청하지 않음.
 	}
+	
+	@RequestMapping("/password-finish")
+	public String passwordFinish(){
+		return "/WEB-INF/views/member/password-finish";
+	}
+	
+	@GetMapping("/password")
+	public String password() {
+		return "/WEB-INF/views/member/password.jsp";
+	}
+	@PostMapping("/password")
+	public String password(
+			@RequestParam String currentPw,
+			@RequestParam String newPw, HttpSession session) {
+		String userId = (String) session.getAttribute("userId"); //*세션은 object를 받음 / *원래대로 돌리는 것: 다운캐스팅
+		//비밀번호 비교는 java에서 실행
+		MemberDto memberDto = memberDao.selectOne(userId);
+		boolean isValid = currentPw.equals(memberDto.getMemberPw());
+		if(isValid == false) return "redirect:password?error=1"; //비밀번호가 일치하지 않는 경우는 되돌린다(redirect)
+		//error에 value를 줘서 알아볼 수 있게 차별화를 시킴 (Ex. error=1)
+		
+		//(+추가)동일한 비밀번호로는 변경할 수 없도록 차단 처리
+		if(currentPw.equals(newPw)) {
+			return "redirect:password?error=2";
+		}
+		
+		memberDto.setMemberPw(newPw); //비밀번호 변경
+		memberDao.updateMemberPassword(memberDto); //이왕이면 Dto 사용하는 것을 지양
+		return "redirect:mypage";
+	}
+	
+	
+	
 	
 }
