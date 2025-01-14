@@ -63,7 +63,7 @@
 </table>
 
 <h2><a href="password">비밀번호 변경</a></h2> <!-- end point(마지막 /)가 같다 -->
-<h2><a href="#">개인정보 변경</a></h2>
+<h2><a href="change">개인정보 변경</a></h2>
 <h2><a href="#">회원 탈퇴</a></h2>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

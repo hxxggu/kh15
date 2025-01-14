@@ -6,8 +6,8 @@
 <h2>로그인</h2>
 
 <form action="login" method="post">
-	아이디 <input type="text" name=memberId required><br><br>
-	비밀번호 <input type="password" name=memberPw" required><br><br>
+	아이디 <input type="text" name="memberId" required><br><br>
+	비밀번호 <input type="password" name="memberPw" required><br><br>
 	<button>로그인</button>
 	
 </form>

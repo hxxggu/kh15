@@ -16,7 +16,7 @@
 	주소<br><br> 
 	<input name="memberPost" type="text" size="6" placeholder="우편번호"><br><br>
 	<input name="memberAddress1" type="text" size="60" placeholder="기본 주소"><br><br>
-	<input name="memberAddress1" type="text" size="60" placeholder="상세 주소"><br><br>
+	<input name="memberAddress2" type="text" size="60" placeholder="상세 주소"><br><br>
 	
 	<button>회원가입</button>
 </form>

@@ -22,11 +22,12 @@ public class MemberDao {
 	//	- 아이디, 비밀번호, 닉네임, 생년월일, 연락처, 이메일
 	//	- 주소(우편번호, 기본주소, 상세주소)
 	public void insert(MemberDto memberDto) {
-		String sql = "insert into member(" //필수 항목만 기재
-				+ "member_id, member_pw, member_nickname,"
-				+ "member_birth, member_contact, member_email,"
-				+ "member_post, member_address1, member_address2) "
-				+ "values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "insert into member("
+				+ "member_id, member_pw, member_nickname, "
+				+ "member_birth, member_contact, member_email, "
+				+ "member_post, member_address1, member_address2"
+			+ ") "
+			+ "values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 //		String sql = "insert into member("	//전체 필드 기재
 //				+ "member_id, member_pw, member_nickname, "
@@ -46,6 +47,7 @@ public class MemberDao {
 				memberDto.getMemberAddress1(),
 				memberDto.getMemberAddress2()
 		};
+		jdbcTemplate.update(sql, data);
 	}
 	
 	//상세조회 기능
@@ -58,7 +60,7 @@ public class MemberDao {
 	
 	//최종 로그인 시각 갱신 메서드
 	public boolean updateMemberLogin(String memberId) {
-		String sql = "update member set member_login = systemstamp "
+		String sql = "update member set member_login = systimestamp "
 				+ "where member_id = ?";
 		Object[] data = {memberId};
 		return jdbcTemplate.update(sql,data) > 0;
@@ -67,13 +69,29 @@ public class MemberDao {
 	//비밀번호 변경 시 최종 비밀번호 변경일도 같이 바뀌게 구현
 	public boolean updateMemberPassword(MemberDto memberDto) {
 		String sql = "update member "
-				+ "set member pw = ?, member_change = systimestamp";
+				+ "set member_pw = ?, member_change = systimestamp "
+				+ "where member_id = ?";
 		Object[] data = {
 				memberDto.getMemberPw(), memberDto.getMemberId()
 		};
 		return jdbcTemplate.update(sql, data) > 0;
 	}
 	
-	
+	public boolean update(MemberDto memberDto) {
+		String sql  = "update member set member_pw = ?, "
+				+ "member_nickname = ?, member_birth = ?, "
+				+ "member_contact = ?, member_email = ?, member_post = ?, "
+				+ "member_address1 = ?, member_address2 = ? "
+				+ "member_level = ?, member_point = ? where member_id";
+		Object[] data = {
+				memberDto.getMemberPw(), memberDto.getMemberNickname(),
+				memberDto.getMemberBirth(), memberDto.getMemberContact(),
+				memberDto.getMemberEmail(),	memberDto.getMemberPost(),
+				memberDto.getMemberAddress1(), memberDto.getMemberAddress2(),
+				memberDto.getMemberLevel(), memberDto.getMemberPoint(),
+				memberDto.getMemberId()
+		};
+		return jdbcTemplate.update(sql, data) > 0;
+	}
 	
 }
