@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <h2>My Page</h2>
@@ -30,8 +30,8 @@
 		<th>주소</th>
 		<td>
 			[${memberDto.memberPost}]<br>
-			${memberDto.memberAddredd1}<br>
-			${memberDto.memberAddredd2}<br>
+			${memberDto.memberAddress1}<br>
+			${memberDto.memberAddress2}<br>
 		</td>
 	</tr>
 	<tr>
@@ -64,6 +64,6 @@
 
 <h2><a href="password">비밀번호 변경</a></h2> <!-- end point(마지막 /)가 같다 -->
 <h2><a href="change">개인정보 변경</a></h2>
-<h2><a href="#">회원 탈퇴</a></h2>
+<h2><a href="exit">회원 탈퇴</a></h2>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

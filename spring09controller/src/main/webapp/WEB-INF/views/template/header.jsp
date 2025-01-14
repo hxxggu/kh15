@@ -22,12 +22,12 @@
 	<div>
 		<c:choose>
 			<%--회원 --%>
-			<c:when test="${sessionScope.iserId != null }">
+			<c:when test="${sessionScope.userId != null }">
 				<a href="/">홈</a>
 				<a href="/pokemon/list">포켓몬</a> <!-- 절대경로: /pokemon/list, 상대경로: pokemon/list -->
 				<a href="/country/list">국가</a>
 				<a href="/game-user/list">게임유저</a>
-				<a hreg="/member/mypage">내 정보</a>
+				<a href="/member/mypage">내 정보</a>
 				<a href="/member/logout">로그아웃</a>
 				<hr>
 			</c:when>
@@ -35,10 +35,14 @@
 			<c:otherwise>
 				<a href="/">홈</a>
 				<a href="/country/list">국가</a>
-				<a href="/pokemon/list">포켓몬
+				<a href="/pokemon/list">포켓몬</a>
 				<a href="/member/join">회원가입</a>
 				<a href="/member/login">로그인</a>
 				<hr>
+				<div style="min-height:400px">
+				
+				
+				
 			</c:otherwise>
 		</c:choose>
 	</div>

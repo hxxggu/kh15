@@ -140,4 +140,27 @@ public class MemberController {
 		memberDao.update(findDto);
 		return "redirect:mypage";
 	}
+	
+	//회원 탈퇴 매핑
+	@GetMapping("/exit")
+	public String exit() {
+		return "/WEB-INF/views/member/exit.jsp";
+	}
+	@PostMapping("/exit")
+	public String exit(
+			@RequestParam String memberPw, HttpSession session) {
+		String userId = (String)session.getAttribute("userId");
+		MemberDto memberDto = memberDao.selectOne(userId);
+		boolean isValid = memberPw.equals(memberDto.getMemberPw());
+		if(isValid == false) return "redirect:exit?error:";
+		
+		memberDao.delete(userId);
+//		return "redirect:logout"; //로그아웃 페이지로 전달 >이용해주셔서 감사합니다 라는 글을 띄울 수 없음
+		session.removeAttribute("userId");
+		return "redirect:exitFinish";
+	}
+	@RequestMapping("/exitFinish")
+	public String exitFinish() {
+		return "/WEB-INF/views/member/exitFinish.jsp";
+	}
 }

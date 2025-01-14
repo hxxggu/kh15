@@ -81,8 +81,8 @@ public class MemberDao {
 		String sql  = "update member set member_pw = ?, "
 				+ "member_nickname = ?, member_birth = ?, "
 				+ "member_contact = ?, member_email = ?, member_post = ?, "
-				+ "member_address1 = ?, member_address2 = ? "
-				+ "member_level = ?, member_point = ? where member_id";
+				+ "member_address1 = ?, member_address2 = ?, "
+				+ "member_level = ?, member_point = ? where member_id = ?";
 		Object[] data = {
 				memberDto.getMemberPw(), memberDto.getMemberNickname(),
 				memberDto.getMemberBirth(), memberDto.getMemberContact(),
@@ -94,4 +94,9 @@ public class MemberDao {
 		return jdbcTemplate.update(sql, data) > 0;
 	}
 	
+	public boolean delete(String memberId) {
+		String sql = "delete member where member_id = ?";
+		Object[] data = {memberId};
+		return jdbcTemplate.update(sql, data) > 0;
+	}	
 }
