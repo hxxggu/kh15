@@ -88,11 +88,6 @@ public class MemberController {
 		//forward는 servlet에서 직접 다른 url을 처리하여 response. 클라이언트가 http request를 두번 요청하지 않음.
 	}
 	
-	@RequestMapping("/password-finish")
-	public String passwordFinish(){
-		return "/WEB-INF/views/member/password-finish";
-	}
-	
 	@GetMapping("/password")
 	public String password() {
 		return "/WEB-INF/views/member/password.jsp";
