@@ -22,6 +22,7 @@
 				value="${countryDto.countryPopulation}">
 			</fmt:formatNumber>명
 		</td>
+	</tr>
 </table>
 
 <h2>

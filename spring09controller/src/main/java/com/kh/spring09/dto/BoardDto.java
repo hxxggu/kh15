@@ -1,6 +1,6 @@
 package com.kh.spring09.dto;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 import lombok.Data;
 

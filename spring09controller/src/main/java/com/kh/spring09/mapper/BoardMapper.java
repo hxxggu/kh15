@@ -9,21 +9,22 @@ import org.springframework.stereotype.Component;
 import com.kh.spring09.dto.BoardDto;
 
 @Component
-public class BoardMapper implements RowMapper<BoardMapper> {
+public class BoardMapper implements RowMapper<BoardDto> {
 
 	@Override
-	public BoardMapper mapRow(ResultSet rs, int rowNum) throws SQLException {
+	public BoardDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 		BoardDto boardDto = new BoardDto();
+		
 		boardDto.setBoardNo(rs.getInt("board_no"));
-		boardDto.setBoardNo(rs.getString("board_title"));
-		boardDto.setBoardNo(rs.getString("board_content"));
-		boardDto.setBoard(rs.getString("board_writer"));
-		boardDto.setBoardWtime(rs.getTimestamp("board_wtime"));
-		boardDto.setBoardEtime(rs.getTimestamp("board_etime"));
-		boardDto.setBoardNo(rs.getInt("board_"));
+		boardDto.setBoardTitle(rs.getString("board_title"));
+		boardDto.setBoardContent(rs.getString("board_content"));
+		boardDto.setBoardWriter(rs.getString("board_writer"));
+		boardDto.setBoardWtime(rs.getTimestamp("board_Wtime"));
+		boardDto.setBoardEtime(rs.getTimestamp("board_Etime"));
+		boardDto.setBoardLike(rs.getInt("board_like"));
+		boardDto.setBoardRead(rs.getInt("board_read"));
+		boardDto.setBoardReply(rs.getInt("board_reply"));
+		
 		return boardDto;
 	}
-	
-	
-
 } 
