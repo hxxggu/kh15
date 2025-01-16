@@ -1,89 +1,122 @@
 package com.kh.spring09.dao;
 
-import java.nio.channels.AsynchronousServerSocketChannel;
-import java.sql.Timestamp;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.spring09.dto.BoardDto;
+import com.kh.spring09.error.NoPermissionException;
+import com.kh.spring09.mapper.BoardListMapper;
 import com.kh.spring09.mapper.BoardMapper;
 
 @Repository
 public class BoardDao {
-	
+
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 	@Autowired
 	private BoardMapper boardMapper;
 	@Autowired
-	private JdbcTemplate jdbcTemplate;
-	
-	//게시글 등록 메서드
-	public void write(BoardDto boardDto) {
-		String sql = "insert into board(board_no, board_title, "
-				+ "board_content, board_Wtime) "
-				+ "values(board_seq.nextval, ?, ?, ?, systimestamp)";
-		Object[] data = {
-				boardDto.getBoardTitle(),
-				boardDto.getBoardContent(),
-				boardDto.getBoardWtime(),
-				boardDto.getBoardWriter()
-		};
-		jdbcTemplate.update(sql, data);
+	private BoardListMapper boardListMapper;
+
+	public List<BoardDto> selectList() {
+		String sql = "select "
+							+ "board_no, board_title, "
+							+ "board_writer, board_wtime, board_etime, "
+							+ "board_like, board_read, board_reply "
+						+ "from board order by board_no desc";
+		return jdbcTemplate.query(sql, boardListMapper);
 	}
-	
-	//검색 항목 설정
-	private Map<String, String> columnExamples = Map.of(
-			"제목", "board_title",
-			"작성자", "board_writer"
-			);
-	
-	//게시글 목록 및 검색 메서드
-	public List<BoardDto> selectList(){
-		String sql = "select * from board";
-		return jdbcTemplate.query(sql, boardMapper);
-	}
-	
 	public List<BoardDto> selectList(String column, String keyword) {
-		String columnName = columnExamples.get(column);
-		if(columnName == null) throw new RuntimeException("검색 오류");
-		String sql = "select * from board where instr(#1, ?) > 0 "
-				+ "order by #1 asc, board_no asc";
-		sql = sql.replace("#1", columnName);
+		//검색 항목 검사
+		switch(column) {
+		case "board_writer":
+		case "board_title":
+			break;
+		default:
+			throw new NoPermissionException("검색할 수 없는 항목");
+		}
+		
+		String sql = "select "
+							+ "board_no, board_title, "
+							+ "board_writer, board_wtime, board_etime, "
+							+ "board_like, board_read, board_reply "
+						+ "from board "
+						+ "where instr(#1, ?) > 0 "
+						+ "order by board_no desc";
+		sql = sql.replace("#1", column);
 		Object[] data = {keyword};
-		return jdbcTemplate.query(sql, boardMapper, data);
+		return jdbcTemplate.query(sql, boardListMapper, data);
 	}
+	
 	
 	public BoardDto selectOne(int boardNo) {
-		String sql = "select * from board where board_no = ? "
-				+ "order by board_Wtime asc";
-		Object[] data= {boardNo};
+		String sql = "select * from board where board_no=?";
+		Object[] data = {boardNo};
 		List<BoardDto> list = jdbcTemplate.query(sql, boardMapper, data);
 		return list.isEmpty() ? null : list.get(0);
 	}
 	
-	//게시글 수정 메서드 (글 제목과 내용 수정, 수정 시각)
-	public boolean update(BoardDto boardDto) {
-		String sql = "update board set board_title = ?, "
-				+ "board_content = ?, board_Etime = systimestamp "
-				+ "where board_no = ?";
-		
+	public void insert(BoardDto boardDto) {
+		String sql = "insert into board("
+							+ "board_no, board_title, "
+							+ "board_content, board_writer"
+						+ ") "
+						+ "values(board_seq.nextval, ?, ?, ?)";
 		Object[] data = {
-				boardDto.getBoardTitle(),
-				boardDto.getBoardContent(),
-				boardDto.getBoardEtime(),
-				boardDto.getBoardNo()
+			boardDto.getBoardTitle(), 
+			boardDto.getBoardContent(),
+			boardDto.getBoardWriter()
 		};
-		int rows = jdbcTemplate.update(sql, data);
-		return rows > 0;
+		jdbcTemplate.update(sql, data);
+	}
+	//시퀀스 발급과 등록을 분리
+	public int sequence() {
+		String sql = "select board_seq.nextval from dual";//dual=임시테이블
+		return jdbcTemplate.queryForObject(sql, int.class);
+	}
+	public void insert2(BoardDto boardDto) {
+		String sql = "insert into board("
+							+ "board_no, board_title, "
+							+ "board_content, board_writer"
+						+ ") "
+						+ "values(?, ?, ?, ?)";
+		Object[] data = {
+			boardDto.getBoardNo(),
+			boardDto.getBoardTitle(), 
+			boardDto.getBoardContent(),
+			boardDto.getBoardWriter()
+		};
+		jdbcTemplate.update(sql, data);
 	}
 	
-	//게시글 삭제 메서드
 	public boolean delete(int boardNo) {
-		String sql = "delete board where board_no = ?";
+		String sql = "delete board where board_no=?";
 		Object[] data = {boardNo};
 		return jdbcTemplate.update(sql, data) > 0;
 	}
+	
+	public boolean update(BoardDto boardDto) {
+		String sql = "update board "
+						+ "set board_title=?, board_content=?, "
+								+ "board_etime=systimestamp "
+						+ "where board_no=?";
+		Object[] data = {
+			boardDto.getBoardTitle(), boardDto.getBoardContent(),
+			boardDto.getBoardNo()
+		};
+		return jdbcTemplate.update(sql, data) > 0;
+	}
+	
+	//조회수 1 증가 메소드
+	public boolean updateBoardRead(int boardNo) {
+		String sql = "update board "
+						+ "set board_read=board_read+1 "
+						+ "where board_no=?";
+		Object[] data = {boardNo};
+		return jdbcTemplate.update(sql, data) > 0;
+	}
+	
 }

@@ -12,53 +12,91 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kh.spring09.dao.BoardDao;
 import com.kh.spring09.dto.BoardDto;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/board")
 public class BoardController {
+	
 	@Autowired
 	private BoardDao boardDao;
 	
-	//게시판 목록
+	//목록 및 매핑
 	@RequestMapping("/list")
-	public String list(
-			@RequestParam(required = false) String column,
-			@RequestParam(required = false) String keyword,
-			Model model) {
-		boolean search = column!=null && keyword!=null;
+	public String list(Model model, 
+			@RequestParam(required=false) String column, 
+			@RequestParam(required=false) String keyword) {
+		boolean search = column != null && keyword != null;
 		if(search) {
 			model.addAttribute("list", boardDao.selectList(column, keyword));
-		} else {
+		}
+		else {
 			model.addAttribute("list", boardDao.selectList());
 		}
-		model.addAttribute("search", search);
-		model.addAttribute("column", column);
-		model.addAttribute("keyword", keyword);
 		return "/WEB-INF/views/board/list.jsp";
 	}
 	
-	//게시글 작성
-	@GetMapping("/write")
-	public String write() {
-		return "/WEB-INF/views/board/write.jsp";
-	}
-	@PostMapping("/write")
-	public String write(@ModelAttribute BoardDto boardDto) {
-		boardDao.write(boardDto);
-		return "redirect:write-finish";
-	}
-	@RequestMapping("/write-finish")
-	public String writeFinish() {
-		return "/WEB-INF/views/board/write-finish.jsp";
-	}
-	
-	//게시글 보기
+	//게시글 상세 매핑
 	@RequestMapping("/detail")
 	public String detail(@RequestParam int boardNo, Model model) {
 		BoardDto boardDto = boardDao.selectOne(boardNo);
 		model.addAttribute("boardDto", boardDto);
-		return "/WEB-INF/views/board/edit.jsp";
+		return "/WEB-INF/views/board/detail.jsp";
 	}
 	
+	//게시글 작성 매핑
+	@GetMapping("/write")
+	public String write() {
+		return "/WEB-INF/views/board/write.jsp";
+	}
+//	@PostMapping("/write")
+//	public String write(@ModelAttribute BoardDto boardDto, 
+//															HttpSession session) {
+//		//사용자는 2개의 정보(제목, 내용)만 작성
+//		//작성자 정보는 HttpSession에 있으므로 이를 꺼내어 합쳐서 등록
+//		String userId = (String)session.getAttribute("userId");
+//		boardDto.setBoardWriter(userId);
+//		boardDao.insert(boardDto);
+//		return "redirect:list";//목록으로 리다이렉트
+//	}
+	@PostMapping("/write")
+	public String write(@ModelAttribute BoardDto boardDto, 
+															HttpSession session) {
+		//사용자는 2개의 정보(제목, 내용)만 작성
+		//작성자 정보는 HttpSession에 있으므로 이를 꺼내어 합쳐서 등록
+		String userId = (String)session.getAttribute("userId");
+		boardDto.setBoardWriter(userId);
+		
+		//등록 후 상세페이지로 이동시켜야할 경우 반드시 등록된 대상의 번호가 필요
+		//[1] 등록하고 나서 DB에서 가장 큰 글번호를 조회 (max)
+		// - select max(board_no) from board
+		//[2] 시퀀스 번호만 미리 생성해오는 방법
+		// - select board_seq.nextval from dual
+		
+		int boardNo = boardDao.sequence();//시퀀스 번호 발행
+		boardDto.setBoardNo(boardNo);//번호 설정
+		boardDao.insert2(boardDto);//등록
+		
+		return "redirect:detail?boardNo="+boardNo;//상세로 리다이렉트
+	}
 	
+	//게시글 삭제 매핑
+	@RequestMapping("/delete")
+	public String delete(@RequestParam int boardNo) {
+		boardDao.delete(boardNo);
+		return "redirect:list";
+	}
 	
+	//게시글 수정 매핑
+	@GetMapping("/edit")
+	public String edit(@RequestParam int boardNo, Model model) {
+		BoardDto boardDto = boardDao.selectOne(boardNo);
+		model.addAttribute("boardDto", boardDto);
+		return "/WEB-INF/views/board/edit.jsp";
+	}
+	@PostMapping("/edit")
+	public String edit(@ModelAttribute BoardDto boardDto) {
+		boardDao.update(boardDto);
+		return "redirect:detail?boardNo="+boardDto.getBoardNo();
+	}
 }

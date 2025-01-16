@@ -7,7 +7,7 @@
 
 <table border="1" width="400">
 	<tr>
-		<th width="25%">제목</th>
+		<th width="25%">ID</th>
 		<td>${memberDto.memberId}</td>
 	</tr>
 	<tr>
@@ -43,7 +43,7 @@
 		<td>${memberDto.memberPoint}</td>
 	</tr>
 	<tr>
-		<th>가입일시</th>
+		<th>가입 일시</th>
 		<td>
 			<fmt:formatDate value = "${memberDto.memberJoin}" pattern="y년 M월 d일 a h시 m분 s초"/>
 		</td>
@@ -55,15 +55,15 @@
 		</td>
 	</tr>
 	<tr>
-		<th>비밀번호 변경일</th>
+		<th>비밀번호<br>변경일</th>
 		<td>
 			<fmt:formatDate value = "${memberDto.memberChange}" pattern="y년 M월 d일 a h시 m분 s초"/>
 		</td>
 	</tr>
 </table>
 
-<h2><a href="password">비밀번호 변경</a></h2> <!-- end point(마지막 /)가 같다 -->
-<h2><a href="change">개인정보 변경</a></h2>
-<h2><a href="exit">회원 탈퇴</a></h2>
+<h2><button><a href="password">비밀번호 변경</a></h2></button> <!-- end point(마지막 /)가 같다 -->
+<h2><button><a href="change">개인정보 변경</a></h2></button>
+<h2><button><a href="exit">회원 탈퇴</a></h2></button>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

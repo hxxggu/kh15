@@ -7,6 +7,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.kh.spring09.aop.BoardOwnerInterceptor;
+import com.kh.spring09.aop.BoardReadInterceptor;
+import com.kh.spring09.aop.BoardReadInterceptor2;
+import com.kh.spring09.aop.BoardReadInterceptor3;
 import com.kh.spring09.aop.MemberLoginInterceptor;
 import com.kh.spring09.aop.TestLogInterceptor;
 
@@ -18,9 +22,16 @@ public class InterceptorConfiguration implements WebMvcConfigurer { //configurat
 	
 	@Autowired
 	private TestLogInterceptor testLogInterceptor;
-	
 	@Autowired
 	private MemberLoginInterceptor memberLoginInterceptor;
+	@Autowired
+	private BoardOwnerInterceptor boardOwnerInterceptor;
+	@Autowired
+	private BoardReadInterceptor boardReadInterceptor;
+	@Autowired
+	private BoardReadInterceptor2 boardReadInterceptor2;
+	@Autowired
+	private BoardReadInterceptor3 boardReadInterceptor3;
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -39,7 +50,19 @@ public class InterceptorConfiguration implements WebMvcConfigurer { //configurat
 					//"/member/joinFinish",
 					"/member/join*",
 					"/member/login",
-					"/member/exitFinish"
+					"/member/exitFinish",
+					"/board/list",
+					"/board/detail"
 				));
+		
+		//게시글 소유자 검사 인터셉터 추가
+		registry.addInterceptor(boardOwnerInterceptor)
+				.addPathPatterns(List.of(
+				"/board/edit",
+				"/board/delete"
+				));
+		
+		//조회 수 증가처리 인터셉터 등록
+		registry.addInterceptor(boardReadInterceptor).addPathPatterns("/board/detail");
 	}
 }
