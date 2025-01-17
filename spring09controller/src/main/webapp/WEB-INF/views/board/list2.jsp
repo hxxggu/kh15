@@ -60,29 +60,29 @@
 	</c:choose>
 </table>
 
-<!-- 페이 네비게이터 : pageVO에 기반하여 처리하도록 구현 -->
+<!-- 페이지 네비게이터 -->
 <h3>
 <!-- 이전 : startBlock > 1일 경우 출력 -->
-<c:if test="${pageVO.hasPrevBlock()}">
+<c:if test="${startBlock > 1}">
 	<c:choose>
-		<c:when test="${pageVO.Search}">
-			<a href="list?column=${pageVO.column} & keyword=${pageVO.keyword} & page=${pageVO.prevBlock} & size=${pageVO.size}">&lt;</a>
+		<c:when test="${search == true}">
+			<a href="list?column=${column} & keyword=${keyword} & page=${startBlock-1}">&lt;</a>
 		</c:when>
 		<c:otherwise>
-			<a href="list?page=${pageVO.prevBlock} & size=${pageVO.size}">&lt;</a>
+			<a href="list?page=${startBlock-1} & size=${size}">&lt;</a>
 		</c:otherwise>
 	</c:choose>
 </c:if>
 
 <!-- 숫자 -->
 <%--for(int i=1; i<=10; i++;) {} --%>
-<c:forEach var="i" begin="${pageVO.startBlock}" end="${pageVO.finishBlock}" step="1">
+<c:forEach var="i" begin="${startBlock}" end="${finishBlock}" step="1">
 	<c:choose>
-		<c:when test="${pageVO.search == true}">
-			<a href="list?column=${pageVO.column} & keyword=${pageVO.keyword} & page=${i} & size=${pageVO.size}">${i}</a>
+		<c:when test="${search == true}">
+			<a href="list?column=${column} & keyword=${keyword} & page=${i} & size=${size}">${i}</a>
 		</c:when>
 		<c:otherwise>
-			<a href="list?page=${i} & size=${pageVO.size}">${i}</a>
+			<a href="list?page=${i} & size=${size}">${i}</a>
 		</c:otherwise>
 	</c:choose>
 </c:forEach>

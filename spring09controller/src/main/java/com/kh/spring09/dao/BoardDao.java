@@ -10,6 +10,7 @@ import com.kh.spring09.dto.BoardDto;
 import com.kh.spring09.error.NoPermissionException;
 import com.kh.spring09.mapper.BoardListMapper;
 import com.kh.spring09.mapper.BoardMapper;
+import com.kh.spring09.vo.PageVO;
 
 @Repository
 public class BoardDao {
@@ -83,6 +84,7 @@ public class BoardDao {
 		}
 		
 		String sql = "select * from ("
+				+ "select rownum rn, TMP.* from("
 						+ "select board_no, board_title, "
 						+ "board_writer, board_wtime, board_etime, "
 						+ "board_like, board_read, board_reply "
@@ -94,6 +96,18 @@ public class BoardDao {
 		sql = sql.replace("#1", column);
 		Object[] data = {keyword, begin, end};
 		return jdbcTemplate.query(sql, boardListMapper, data);
+	}
+	
+	//페이징용 통합 조회 메서드
+	public List<BoardDto> selectListByPaging(PageVO pageVO){
+		if(pageVO.isList()) { //목록이라면
+			return selectListByPaging(pageVO.getPage(), pageVO.getSize());
+		} else {
+			return selectListByPaging(
+					pageVO.getColumn(), pageVO.getKeyword(),
+					pageVO.getPage(), pageVO.getSize()
+			);
+		}
 	}
 	
 	//카운트 조회 명령
@@ -111,6 +125,11 @@ public class BoardDao {
 		Object[] data = {keyword};
 		return jdbcTemplate.queryForObject(sql, int.class, data);
 		//구문은 제일 앞에, 
+	}
+	
+	public int count(PageVO pageVO) {
+		if(pageVO.isList()) return count();
+		else return count(pageVO.getColumn(), pageVO.getKeyword());
 	}
 	
 	public BoardDto selectOne(int boardNo) {
