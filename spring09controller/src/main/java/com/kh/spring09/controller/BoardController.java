@@ -22,17 +22,48 @@ public class BoardController {
 	private BoardDao boardDao;
 	
 	//목록 및 매핑
+	//- 검색을 위해 column, keyword 항목을 수신
+	//- 페이징을 위해 page, size 항목을 수신
 	@RequestMapping("/list")
 	public String list(Model model, 
 			@RequestParam(required=false) String column, 
-			@RequestParam(required=false) String keyword) {
+			@RequestParam(required=false) String keyword,
+			@RequestParam(required=false, defaultValue="1") int page,
+			@RequestParam(required=false, defaultValue="10") int size) {
 		boolean search = column != null && keyword != null;
 		if(search) {
-			model.addAttribute("list", boardDao.selectList(column, keyword));
+			model.addAttribute("list", boardDao.selectListByPaging(column, keyword, page, size));
+		} else {
+			model.addAttribute("list", boardDao.selectListByPaging(page, size));
 		}
-		else {
-			model.addAttribute("list", boardDao.selectList());
+		
+		//페이징에 필요한 데이터들을 전달
+		model.addAttribute("search", search); //검색여부
+		model.addAttribute("page", page); //현재 페이지 번호
+		model.addAttribute("size", size); //현재 페이지 크기
+		model.addAttribute("column", column); //검색항목
+		model.addAttribute("keyword", keyword); //검색어
+		int startBlock = (page-1)/10*10+1;
+		int finishBlock = (page-1)/10*10+10;
+		model.addAttribute("startBlock", startBlock); //블록의 시작번호
+//		model.addAttribute("finishBlock", finishBlock); //블록의 종료번호
+		
+		//게시글 수
+		int count;
+		if(search) {
+			count = boardDao.count(column, keyword);
+		} else {
+			count = boardDao.count();
 		}
+		
+		//페이지 수
+		int pageCount = (count-1)/size+1;
+		model.addAttribute("count", count);
+		model.addAttribute("pageCount", pageCount);
+		
+		model.addAttribute("finishBlock", Math.min(pageCount, finishBlock)); //블록의 종료번호
+		//pageCount와 finishBlock 중 작은 쪽이 나감
+		
 		return "/WEB-INF/views/board/list.jsp";
 	}
 	

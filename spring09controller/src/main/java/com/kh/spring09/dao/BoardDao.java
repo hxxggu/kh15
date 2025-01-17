@@ -20,7 +20,7 @@ public class BoardDao {
 	private BoardMapper boardMapper;
 	@Autowired
 	private BoardListMapper boardListMapper;
-
+	
 	public List<BoardDto> selectList() {
 		String sql = "select "
 							+ "board_no, board_title, "
@@ -29,6 +29,23 @@ public class BoardDao {
 						+ "from board order by board_no desc";
 		return jdbcTemplate.query(sql, boardListMapper);
 	}
+	
+	public List<BoardDto> selectListByPaging(int page, int size) {
+		int begin = page*size-(size-1);
+		int end = page*size;
+		String sql = "select * from ("
+					+ "select rownum rn, TMP.*from ("
+						+ "select "
+							+ "board_no, board_title, "
+							+ "board_writer, board_wtime, board_etime, "
+							+ "board_like, board_read, board_reply "
+							+ "from board order by board_no desc"
+						+ ")TMP"
+					+ ") where rn between ? and ?";
+		Object[] data = {begin,end};
+		return jdbcTemplate.query(sql, boardListMapper, data);
+	}
+	
 	public List<BoardDto> selectList(String column, String keyword) {
 		//검색 항목 검사
 		switch(column) {
@@ -51,6 +68,50 @@ public class BoardDao {
 		return jdbcTemplate.query(sql, boardListMapper, data);
 	}
 	
+	public List<BoardDto> selectListByPaging(
+				String column, String keyword, int page, int size){
+		int begin = page*size-(size-1);
+		int end = page*size;
+		
+		//검색 항목 검사
+		switch(column) {
+		case "board_writer" : 
+		case "board_title" :
+			break;
+		default :
+			throw new NoPermissionException("검색할 수 없는 항목");
+		}
+		
+		String sql = "select * from ("
+						+ "select board_no, board_title, "
+						+ "board_writer, board_wtime, board_etime, "
+						+ "board_like, board_read, board_reply "
+						+ "from board "
+						+ "where instr(#1, ?) > 0 "
+						+ "order by board_no desc"
+						+ ") TMP"
+						+ ") where rn between ? and ?";
+		sql = sql.replace("#1", column);
+		Object[] data = {keyword, begin, end};
+		return jdbcTemplate.query(sql, boardListMapper, data);
+	}
+	
+	//카운트 조회 명령
+	public int count() {
+		String sql = "select count(*) from board";
+		//* null이 나올 수 있으면 Integer, 아니라면 int 사용
+		//* count와 sequence는 null이 나오지 않음
+		return jdbcTemplate.queryForObject(sql, int.class);
+//		return jdbcTemplate.queryForObject(sql, Integer.class);
+	}
+	
+	public int count(String column, String keyword) {
+		String sql = "select count(*) from board where instr(#1, ?) > 0";
+		sql = sql.replace("#1", column);
+		Object[] data = {keyword};
+		return jdbcTemplate.queryForObject(sql, int.class, data);
+		//구문은 제일 앞에, 
+	}
 	
 	public BoardDto selectOne(int boardNo) {
 		String sql = "select * from board where board_no=?";
