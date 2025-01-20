@@ -80,6 +80,7 @@ public class BoardController {
 		//게시글 수
 		int count = boardDao.count(pageVO);
 		pageVO.setCount(count);
+		model.addAttribute("count", count);
 		return "/WEB-INF/views/board/list.jsp";
 	}
 	

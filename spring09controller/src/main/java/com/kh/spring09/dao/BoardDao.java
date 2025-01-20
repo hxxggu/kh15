@@ -21,31 +21,54 @@ public class BoardDao {
 	private BoardMapper boardMapper;
 	@Autowired
 	private BoardListMapper boardListMapper;
-	
+
 	public List<BoardDto> selectList() {
 		String sql = "select "
 							+ "board_no, board_title, "
 							+ "board_writer, board_wtime, board_etime, "
-							+ "board_like, board_read, board_reply "
-						+ "from board order by board_no desc";
+							+ "board_like, board_read, board_reply,"
+							+ "board_group, board_target, board_depth "
+						+ "from board "
+						+ "connect by prior board_no=board_target "
+						+ "start with board_target is null "
+						+ "order siblings by board_group desc, board_no asc";
 		return jdbcTemplate.query(sql, boardListMapper);
 	}
-	
 	public List<BoardDto> selectListByPaging(int page, int size) {
-		int begin = page*size-(size-1);
-		int end = page*size;
+		int begin = page * size - (size-1);
+		int end = page * size;
+		
+//		String sql = "select * from ("
+//								+ "select rownum rn , TMP.* from ("
+//										+ "select "
+//											+ "board_no, board_title, "
+//											+ "board_writer, board_wtime, board_etime, "
+//											+ "board_like, board_read, board_reply, "
+//											+ "board_group, board_target, board_depth "
+//										+ "from board "
+//										+ "connect by prior board_no=board_target "
+//										+ "start with board_target is null "
+//										+ "order siblings by board_group desc, board_no asc"
+//								+ ")TMP"
+//						+ ") where rn between ? and ?";
 		String sql = "select * from ("
-					+ "select rownum rn, TMP.*from ("
-						+ "select "
-							+ "board_no, board_title, "
-							+ "board_writer, board_wtime, board_etime, "
-							+ "board_like, board_read, board_reply "
-							+ "from board order by board_no desc"
-						+ ")TMP"
-					+ ") where rn between ? and ?";
-		Object[] data = {begin,end};
+				+ "select rownum rn, TMP.* from ("
+				+ "select "
+				+ "board_no, board_title, board_writer, "
+				+ "board_wtime, board_etime, board_like, "
+				+ "board_read, board_reply, "
+				+ "board_group, board_target, board_depth "
+				+ "from board "
+				+ "connect by prior board_no=board_target "
+				+ "start with board_target is null "
+				+ "order siblings by board_group desc, board_no asc"
+				+ ")TMP"
+				+ ") where rn between ? and ?";
+		Object[] data = {begin, end};
 		return jdbcTemplate.query(sql, boardListMapper, data);
 	}
+	
+	
 	
 	public List<BoardDto> selectList(String column, String keyword) {
 		//검색 항목 검사
@@ -60,52 +83,59 @@ public class BoardDao {
 		String sql = "select "
 							+ "board_no, board_title, "
 							+ "board_writer, board_wtime, board_etime, "
-							+ "board_like, board_read, board_reply "
+							+ "board_like, board_read, board_reply, "
+							+ "board_group, board_target, board_depth "
 						+ "from board "
 						+ "where instr(#1, ?) > 0 "
-						+ "order by board_no desc";
+						+ "connect by prior board_no=board_target "
+						+ "start with board_target is null "
+						+ "order siblings by board_group desc, board_no asc";
 		sql = sql.replace("#1", column);
 		Object[] data = {keyword};
 		return jdbcTemplate.query(sql, boardListMapper, data);
 	}
-	
 	public List<BoardDto> selectListByPaging(
-				String column, String keyword, int page, int size){
-		int begin = page*size-(size-1);
-		int end = page*size;
+			String column, String keyword, int page, int size) {
+		int begin = page * size - (size-1);
+		int end = page * size;
 		
 		//검색 항목 검사
 		switch(column) {
-		case "board_writer" : 
-		case "board_title" :
+		case "board_writer":
+		case "board_title":
 			break;
-		default :
+		default:
 			throw new NoPermissionException("검색할 수 없는 항목");
 		}
 		
 		String sql = "select * from ("
-				+ "select rownum rn, TMP.* from("
-						+ "select board_no, board_title, "
-						+ "board_writer, board_wtime, board_etime, "
-						+ "board_like, board_read, board_reply "
-						+ "from board "
-						+ "where instr(#1, ?) > 0 "
-						+ "order by board_no desc"
-						+ ") TMP"
+							+ "select rownum rn, TMP.* from ("
+								+ "select "
+									+ "board_no, board_title, "
+									+ "board_writer, board_wtime, board_etime, "
+									+ "board_like, board_read, board_reply, "
+									+ "board_group, board_target, board_depth "
+								+ "from board "
+								+ "where instr(#1, ?) > 0 "
+								+ "connect by prior board_no=board_target "
+								+ "start with board_target is null "
+								+ "order siblings by board_group desc, board_no asc"
+							+ ") TMP"
 						+ ") where rn between ? and ?";
 		sql = sql.replace("#1", column);
 		Object[] data = {keyword, begin, end};
 		return jdbcTemplate.query(sql, boardListMapper, data);
 	}
 	
-	//페이징용 통합 조회 메서드
-	public List<BoardDto> selectListByPaging(PageVO pageVO){
-		if(pageVO.isList()) { //목록이라면
+	//페이징용 통합 조회 메소드
+	public List<BoardDto> selectListByPaging(PageVO pageVO) {
+		if(pageVO.isList()) {//목록이라면
 			return selectListByPaging(pageVO.getPage(), pageVO.getSize());
-		} else {
+		}
+		else {//검색이라면
 			return selectListByPaging(
-					pageVO.getColumn(), pageVO.getKeyword(),
-					pageVO.getPage(), pageVO.getSize()
+				pageVO.getColumn(), pageVO.getKeyword(),
+				pageVO.getPage(), pageVO.getSize()
 			);
 		}
 	}
@@ -113,24 +143,23 @@ public class BoardDao {
 	//카운트 조회 명령
 	public int count() {
 		String sql = "select count(*) from board";
-		//* null이 나올 수 있으면 Integer, 아니라면 int 사용
-		//* count와 sequence는 null이 나오지 않음
 		return jdbcTemplate.queryForObject(sql, int.class);
 //		return jdbcTemplate.queryForObject(sql, Integer.class);
 	}
-	
 	public int count(String column, String keyword) {
 		String sql = "select count(*) from board where instr(#1, ?) > 0";
 		sql = sql.replace("#1", column);
 		Object[] data = {keyword};
 		return jdbcTemplate.queryForObject(sql, int.class, data);
-		//구문은 제일 앞에, 
 	}
 	
 	public int count(PageVO pageVO) {
-		if(pageVO.isList()) return count();
-		else return count(pageVO.getColumn(), pageVO.getKeyword());
+		if(pageVO.isList())
+			return count();
+		else 
+			return count(pageVO.getColumn(), pageVO.getKeyword());
 	}
+	
 	
 	public BoardDto selectOne(int boardNo) {
 		String sql = "select * from board where board_no=?";

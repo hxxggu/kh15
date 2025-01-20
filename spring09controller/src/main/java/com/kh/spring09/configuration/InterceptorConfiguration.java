@@ -36,7 +36,7 @@ public class InterceptorConfiguration implements WebMvcConfigurer { //configurat
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		//필요한 주소에 인터셉터를 등록
-		registry.addInterceptor(testLogInterceptor).addPathPatterns("/**");
+		//registry.addInterceptor(testLogInterceptor).addPathPatterns("/**");
 		
 		//회원 전용 기능에 대해 인터셉터를 등록
 		//- 와일드카드를 한개(*) 쓰면 엔드포인트를 유지하며 패턴 검색

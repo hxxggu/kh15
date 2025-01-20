@@ -6,7 +6,7 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <h2>자유 게시판</h2>
-<p>글은 자신의 인격입니다.<br>(* 무분별한 비방 시 글이 삭제될 수 있습니다)</p>
+<p>글은 자신의 인격입니다.<br>(*무분별한 비방 시 글이 삭제될 수 있습니다)</p>
 
 <button><a href="write">글쓰기</a></button><br><br>
 
@@ -20,6 +20,9 @@
 			<th>작성일</th>
 			<th>조회수</th>
 			<th>좋아요</th>
+			<th>그룹</th>
+			<th>상위글</th>
+			<th>차수</th>
 		</tr>
 	</thead>
 	<c:choose>
@@ -53,6 +56,9 @@
 					<td>${boardDto.boardWtimeString}</td>
 					<td>${boardDto.boardRead}</td>
 					<td>${boardDto.boardLike}</td>
+					<td>${boardDto.boardGroup}</td>
+					<td>${boardDto.boardTarget}</td>
+					<td>${boardDto.boardDepth}</td>
 				</tr>
 				</c:forEach>
 			</tbody>

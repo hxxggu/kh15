@@ -15,6 +15,10 @@ public class BoardDto {
 	private String boardWriter;
 	private Timestamp boardWtime, boardEtime;
 	private int boardLike, boardRead, boardReply;
+	//단답형 게시판을 위해 추가한 데이터
+	private int boardGroup;
+	private Integer boardTarget;
+	private int boardDepth;
 	
 	//날짜를 출력하기 위한 가상의 메소드
 	//- boardWtime과 현재날짜를 비교

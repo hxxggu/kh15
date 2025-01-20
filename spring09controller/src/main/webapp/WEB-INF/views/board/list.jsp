@@ -6,7 +6,7 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <h2>자유 게시판</h2>
-<p>글은 자신의 인격입니다.<br>(* 무분별한 비방 시 글이 삭제될 수 있습니다)</p>
+<p>글은 자신의 인격입니다.<br>(*무분별한 비방 시 글이 삭제될 수 있습니다.)</p>
 
 <button><a href="write">글쓰기</a></button><br><br>
 
@@ -20,6 +20,9 @@
 			<th>작성일</th>
 			<th>조회수</th>
 			<th>좋아요</th>
+			<th>그룹</th>
+			<th>상위글</th>
+			<th>차수</th>
 		</tr>
 	</thead>
 	<c:choose>
@@ -38,6 +41,14 @@
 				<tr>
 					<td>${boardDto.boardNo}</td>
 					<td align="left">
+						<!-- 글의 차수(board_depth)에 따라 띄어쓰기 부여 -->
+						<c:if test="${boardDto.boardDepth > 0}">
+							<c:forEach var="i" begin="1" end="${boardDto.boardDepth}" step="1">
+								&nbsp;&nbsp;
+							</c:forEach>
+							→
+						</c:if>
+								
 						<!-- 게시글 제목 -->
 						<a href="detail?boardNo=${boardDto.boardNo}">
 							${boardDto.boardTitle}
@@ -53,6 +64,9 @@
 					<td>${boardDto.boardWtimeString}</td>
 					<td>${boardDto.boardRead}</td>
 					<td>${boardDto.boardLike}</td>
+					<td>${boardDto.boardGroup}</td>
+					<td>${boardDto.boardTarget}</td>
+					<td>${boardDto.boardDepth}</td>
 				</tr>
 				</c:forEach>
 			</tbody>
@@ -60,45 +74,8 @@
 	</c:choose>
 </table>
 
-<!-- 페이 네비게이터 : pageVO에 기반하여 처리하도록 구현 -->
-<h3>
-<!-- 이전 : startBlock > 1일 경우 출력 -->
-<c:if test="${pageVO.hasPrevBlock()}">
-	<c:choose>
-		<c:when test="${pageVO.Search}">
-			<a href="list?column=${pageVO.column} & keyword=${pageVO.keyword} & page=${pageVO.prevBlock} & size=${pageVO.size}">&lt;</a>
-		</c:when>
-		<c:otherwise>
-			<a href="list?page=${pageVO.prevBlock} & size=${pageVO.size}">&lt;</a>
-		</c:otherwise>
-	</c:choose>
-</c:if>
-
-<!-- 숫자 -->
-<%--for(int i=1; i<=10; i++;) {} --%>
-<c:forEach var="i" begin="${pageVO.startBlock}" end="${pageVO.finishBlock}" step="1">
-	<c:choose>
-		<c:when test="${pageVO.search == true}">
-			<a href="list?column=${pageVO.column} & keyword=${pageVO.keyword} & page=${i} & size=${pageVO.size}">${i}</a>
-		</c:when>
-		<c:otherwise>
-			<a href="list?page=${i} & size=${pageVO.size}">${i}</a>
-		</c:otherwise>
-	</c:choose>
-</c:forEach>
-
-<!-- 다음 : finishBlock < pageConunt일 경우 출력 -->
-<c:if test="${finishBlock < pageCount}">
-	<c:choose>
-		<c:when test="${search == true}">
-			<a href="list?column=${column} & keyword=${keyword} & page=${finishBlock+1}">&gt;</a>
-		</c:when>
-		<c:otherwise>
-			<a href="list?page=${finishBlock+1} & size=${size}">&gt;</a>
-		</c:otherwise>
-	</c:choose>
-</c:if>
-</h3>
+<!-- 페이지 네비게이터 -->
+<jsp:include page="/WEB-INF/views/template/pagination.jsp"></jsp:include>
 
 <!-- 검색창 -->
 <form action="list" method="get">
