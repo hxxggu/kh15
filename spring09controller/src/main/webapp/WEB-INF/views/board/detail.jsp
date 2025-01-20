@@ -27,6 +27,7 @@
 <br>
 <div>
 	<button><a href="write">글쓰기</a></button>
+	<button><a href="write?boardTarget=${boardDto.boardNo}">답글쓰기</a></button>
 	
 	<!-- 소유자일 경우만 수정과 삭제를 표시 -->
 	<c:if test="${sessionScope.userId != null}">

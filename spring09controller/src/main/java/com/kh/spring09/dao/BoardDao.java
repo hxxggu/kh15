@@ -189,14 +189,18 @@ public class BoardDao {
 	public void insert2(BoardDto boardDto) {
 		String sql = "insert into board("
 							+ "board_no, board_title, "
-							+ "board_content, board_writer"
+							+ "board_content, board_writer, "
+							+ "board_group, board_target, board_depth"
 						+ ") "
-						+ "values(?, ?, ?, ?)";
+						+ "values(?, ?, ?, ?, ?, ?, ?)";
 		Object[] data = {
 			boardDto.getBoardNo(),
 			boardDto.getBoardTitle(), 
 			boardDto.getBoardContent(),
-			boardDto.getBoardWriter()
+			boardDto.getBoardWriter(),
+			boardDto.getBoardGroup(),
+			boardDto.getBoardTarget(),
+			boardDto.getBoardDepth()
 		};
 		jdbcTemplate.update(sql, data);
 	}
