@@ -49,7 +49,7 @@ public class InterceptorConfiguration implements WebMvcConfigurer { //configurat
 				.excludePathPatterns(List.of(
 					//"/member/join",
 					//"/member/joinFinish",
-					"/member/join*",
+					"/member/join*", //join 어쩌구
 					"/member/login",
 					"/member/exitFinish",
 					"/board/list",
@@ -64,6 +64,6 @@ public class InterceptorConfiguration implements WebMvcConfigurer { //configurat
 				));
 		
 		//조회 수 증가처리 인터셉터 등록
-		registry.addInterceptor(boardReadInterceptor).addPathPatterns("/board/detail");
+		registry.addInterceptor(boardReadInterceptor3).addPathPatterns("/board/detail");
 	}
 }

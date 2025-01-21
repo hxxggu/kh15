@@ -6,6 +6,9 @@
 
 <h2>${boardDto.boardTitle}</h2>
 <div>
+<%--${boardDto.boardWriter}--%>
+	${memberDto.memberNickname}
+	(${memberDto.memberLevel})<br>
 	작성자 : <b>${boardDto.boardWriter}</b>
 	<br>
 	[ ${boardDto.boardWtime} ]
