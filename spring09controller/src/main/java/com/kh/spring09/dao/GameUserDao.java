@@ -29,6 +29,27 @@ public class GameUserDao {
 		jdbcTemplate.update(sql, data);
 	}
 	
+	//시퀀스+등록 메서드
+	public int sequence() {
+		String sql = "select game_user_seq.nextval from dual";
+		return jdbcTemplate.queryForObject(sql, int.class);
+	}
+	public void insert2(GameUserDto gameUserDto) {
+		String sql = "insert into game_user("
+				+ "game_user_no, game_user_id, game_user_job, "
+				+ "game_user_level, game_user_money"
+				+ ") "
+				+ "values(?, ?, ? ,? ,?)";
+		Object[] data = {
+				gameUserDto.getGameUserNo(),
+				gameUserDto.getGameUserId(),
+				gameUserDto.getGameUserJob(),
+				gameUserDto.getGameUserLevel(),
+				gameUserDto.getGameUserMoney()
+				};
+		jdbcTemplate.update(sql, data);
+	}
+	
 	//수정 메소드
 	public boolean update(GameUserDto gameUserDto) {
 		String sql = "update game_user set "
@@ -88,6 +109,15 @@ public class GameUserDao {
 				+ "where game_user_no = ?";
 		Object[] data = {gameUserNo};
 		return jdbcTemplate.update(sql, data) > 0;
+	}
+	
+	//프로필 이미지 등록(연결)
+	public void connect(int gameUserNo, int attachmentNo) {
+		String sql = "insert into game_user_image ("
+				+ "game_user_no, attachment_no"
+				+ ") values(?, ?)";
+		Object[] data = {gameUserNo, attachmentNo};
+		jdbcTemplate.update(sql, data);
 	}
 	
 }

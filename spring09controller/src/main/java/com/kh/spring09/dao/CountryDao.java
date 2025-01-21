@@ -31,6 +31,22 @@ public class CountryDao {
 		jdbcTemplate.update(sql, data);
 	}
 	
+	//시퀀스+등록
+	public int sequence() {
+		String sql = "select country_seq.nextval from dual";
+		return jdbcTemplate.queryForObject(sql, int.class);
+	}
+	public void insert2(CountryDto countryDto) {
+		String sql = "insert into country(country_no, country_name, "
+				+ "country_capital, country_population) "
+				+"values(country_seq.nextval, ?, ?, ?)";
+		Object[] data = {
+			countryDto.getCountryName(),
+			countryDto.getCountryCapital(),
+			countryDto.getCountryPopulation()
+		};
+	}
+	
 	//수정 메서드
 	public boolean update(CountryDto countryDto) {
 		String sql = "update country "
@@ -83,5 +99,14 @@ public class CountryDao {
 		Object[] data = {countryNo};
 		List<CountryDto> list = jdbcTemplate.query(sql, countryMapper, data);
 		return list.isEmpty() ? null : list.get(0);
+	}
+	
+	//국기 이미지 등록(연결)
+	public void connect(int countryNo, int attachmentNo) {
+		String sql = "insert into country_image ("
+					+ "country_no, attachment_no"
+				+ ") values(?, ?)";
+		Object[] data = {countryNo, attachmentNo};
+		jdbcTemplate.update(sql, data);
 	}
 }

@@ -32,7 +32,25 @@ public class PokemonDao {
 		};
 		jdbcTemplate.update(sql, data);
 	}
-
+	
+	//시퀀스+등록
+	public int sequence() {
+		String sql = "select pokemon_seq.nextval from dual";
+		return jdbcTemplate.queryForObject(sql, int.class);
+	}
+	public void insert2(PokemonDto pokemonDto) {
+		String sql = "insert into pokemon("
+						+ "pokemon_no, pokemon_name, pokemon_type"
+					+ ") "
+					+ "values(pokemon_seq.nextval, ?, ?)";
+			Object[] data = {
+					pokemonDto.getPokemonNo(),
+					pokemonDto.getPokemonName(),
+					pokemonDto.getPokemonType()
+			};
+	}
+	
+	//수정 메서드
 	public boolean update(PokemonDto pokemonDto) {
 		String sql = "update pokemon "
 				+"set pokemon_name = ?, pokemon_type =? "
@@ -46,6 +64,7 @@ public class PokemonDao {
 		return rows > 0;
 	}
 	
+	//삭제 메서드
 	public boolean delete(int pokemonNo) {
 		String sql = "delete pokemon where pokemon_no = ?";
 		Object[] data = {pokemonNo};
@@ -57,11 +76,13 @@ public class PokemonDao {
 		return jdbcTemplate.query(sql, pokemonMapper);
 	}
 	
+	//검색 항목을 설정
 	private Map<String, String> columnExample = Map.of(
 		"이름", "pokemon_name",
 		"속성", "pokemon_type"
 		);
 	
+	//검색 메서드
 	public List<PokemonDto> selectList(String column, String keyword){
 		String columnName = columnExample.get(column);
 		if(columnName == null) {
@@ -81,4 +102,23 @@ public class PokemonDao {
 		List<PokemonDto> list = jdbcTemplate.query(sql, pokemonMapper, data);
 		return list.isEmpty() ? null : list.get(0);
 	}
+	
+	//포켓몬 이미지 등록(연결)
+	public void connect(int pokemonNo, int attachmentNo){
+		String sql = "insert into pokemon_image ("
+					+ "pokemon_no, attachment_no"
+				+ ") values(?, ?)";
+		Object[] data = {pokemonNo, attachmentNo};
+		jdbcTemplate.update(sql, data);
+	}
+	
+	//포켓몬 이미지 찾기
+	//-반환형이 int 이기 때문에 만약 이미지가 없으면 에외가 발생함
+	public int findAttachment(int pokemonNo) {
+		String sql = "select attachment_no from pokemon_image "
+				+ "where pokemon_no = ?";
+		Object[] data = {pokemonNo};
+		return jdbcTemplate.queryForObject(sql, int.class, data);
+	}
+	
 }

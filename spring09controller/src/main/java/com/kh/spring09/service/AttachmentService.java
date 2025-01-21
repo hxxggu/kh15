@@ -36,4 +36,17 @@ public class AttachmentService {
 		//파일 번호 반환
 		return attachmentNo;
 	}
+	
+	//파일 삭제 메서드
+	public void delete(int attachmentNo) {
+		//[1] 실제 파일을 지우고
+		File dir = new File("D:/upload");
+		File target = new File(dir, String.valueOf(attachmentNo));
+		if(target.isFile() == false) return;
+		
+		target.delete(); //파일 삭제
+		
+		//[2] DB 정보를 삭제
+		attachmentDao.delete(attachmentNo);
+	}
 }

@@ -4,8 +4,9 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<h1>포켓몬 목록</h1>
-<h2><a href="add">신규등록</a></h2>
+<h2>포켓몬 목록</h2>
+<button><a href="add">신규 등록</a></button>
+<button><a href="/">메인 화면</a></button><br><br>
 
 <table border="1" width="400">
 	<thead>

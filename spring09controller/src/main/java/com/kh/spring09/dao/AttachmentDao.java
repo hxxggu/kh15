@@ -32,4 +32,10 @@ public class AttachmentDao {
 		};
 		jdbcTemplate.update(sql, data);
 	}
+	
+	public boolean delete(int attachmentNo) {
+		String sql = "delete attachment where attachment_no = ?";
+		Object[] data = {attachmentNo};
+		return jdbcTemplate.update(sql, data) > 0;
+	}
 }

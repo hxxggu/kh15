@@ -6,13 +6,13 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <c:if test="${search == true}">
-	<h1>국가 검색</h1>
+	<h2>국가 검색</h2>
 </c:if>
 <c:if test="${search == false}">
-	<h1>국가 목록</h1>
+	<h2>국가 목록</h2>
 </c:if>
 
-<h2><a href="add">신규 국가 등록</a></h2>
+<button><a href="add">신규 국가 등록</a></button><br><br>
 
 <!-- 검색창 - /country/list?column=국가명&keyword=한국 -->
 <form action="list" method="get">

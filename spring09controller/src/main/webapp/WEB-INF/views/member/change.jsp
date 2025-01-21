@@ -7,6 +7,7 @@
 
 <form action="change" method="post">
 	<h5 style="color: red"><b>*필수입력항목</b></h5> 
+	프로필 이미지 <input type="file" name="attach"><br><br>
 	<b style="color: red">*</b> 닉네임 <input type="text" name="memberNickname" value="${memberDto.memberNickname}" required><br><br>
 	<b style="color: red">*</b> 이메일 <input type="email" name="memberEmail" value="${memberDto.memberEmail}" required><br><br>
 	생년월일 <input type="date" name="memberBirth" value="${memberDto.memberBirth}"><br><br>

@@ -4,8 +4,8 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<h1>게임 유저 목록</h1>
-<h2><a href="add">신규 유저 생성하기</a></h2>
+<h2>게임 유저 목록</h2>
+<button><a href="add">신규 유저 생성</a></button><br><br>
 
 <!-- 검색창 -->
 <form action="list" method="get">

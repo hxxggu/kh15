@@ -1,5 +1,7 @@
 package com.kh.spring09.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,9 +10,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring09.dao.GameUserDao;
 import com.kh.spring09.dto.GameUserDto;
+import com.kh.spring09.service.AttachmentService;
 
 @Controller
 @RequestMapping("/game-user")
@@ -18,24 +22,44 @@ public class GameUserController {
 
 	@Autowired
 	private GameUserDao gameUserDao;
+	@Autowired
+	private AttachmentService attachmentService;
 	
 	//등록 매핑
 	@GetMapping("/add")
 	public String add() {
 		return "/WEB-INF/views/game-user/add.jsp";
 	}
+	//파일 첨부 기능 삽입 이전 코드
+//	@PostMapping("/add")
+//	public String add(@ModelAttribute GameUserDto gameUserDto) {
+//		if(gameUserDto.getGameUserLevel() == 0) {
+//			gameUserDto.setGameUserLevel(1);
+//		}
+//		gameUserDao.insert(gameUserDto);
+//		return "redirect:add-finish";
+//	}
+//	@RequestMapping("/add-finish")
+//	public String addFinish() {
+//		return "/WEB-INF/views/game-user/add-finish.jsp";
+//	}
+	
 	@PostMapping("/add")
-	public String add(@ModelAttribute GameUserDto gameUserDto) {
-		if(gameUserDto.getGameUserLevel() == 0) {
-			gameUserDto.setGameUserLevel(1);
+	public String add(
+			@ModelAttribute GameUserDto gameUserDto,
+			@RequestParam MultipartFile attach
+			) throws IllegalStateException, IOException {
+		int gameUserNo = gameUserDao.sequence();
+		gameUserDto.setGameUserNo(gameUserNo);
+		gameUserDao.insert2(gameUserDto);
+		
+		if(attach.isEmpty() == false) { //첨부파일이 있으면
+			int attachmentNo = attachmentService.save(attach);
+			gameUserDao.connect(gameUserNo, attachmentNo);
 		}
-		gameUserDao.insert(gameUserDto);
-		return "redirect:add-finish";
+		return "redirect:addFinish";
 	}
-	@RequestMapping("/add-finish")
-	public String addFinish() {
-		return "/WEB-INF/views/game-user/add-finish.jsp";
-	}
+	
 	
 	//목록 및 검색 매핑
 	@RequestMapping("/list")

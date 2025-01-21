@@ -3,7 +3,7 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<h1>포켓몬 등록 완료</h1>
+<h2>포켓몬 등록 완료</h2>
 <h2><a href="add">추가 등록하기</a></h2>
 <h2><a href="list">목록 보기</a></h2>
 

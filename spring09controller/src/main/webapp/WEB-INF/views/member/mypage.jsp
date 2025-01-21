@@ -7,7 +7,11 @@
 
 <table border="1" width="400">
 	<tr>
-		<th width="25%">ID</th>
+		<th width="25%">프로필 사진</th>
+		<td></td>
+	</tr>
+	<tr>
+		<th>ID</th>
 		<td>${memberDto.memberId}</td>
 	</tr>
 	<tr>
@@ -62,8 +66,9 @@
 	</tr>
 </table>
 
-<h2><button><a href="password">비밀번호 변경</a></h2></button> <!-- end point(마지막 /)가 같다 -->
-<h2><button><a href="change">개인정보 변경</a></h2></button>
-<h2><button><a href="exit">회원 탈퇴</a></h2></button>
+<br><br>
+<button><a href="password">비밀번호 변경</a></button> <!-- end point(마지막 /)가 같다 -->
+<button><a href="change">개인정보 변경</a></button>
+<button><a href="exit">회원 탈퇴</a></button>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
