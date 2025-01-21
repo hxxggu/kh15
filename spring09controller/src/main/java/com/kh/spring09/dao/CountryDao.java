@@ -109,4 +109,12 @@ public class CountryDao {
 		Object[] data = {countryNo, attachmentNo};
 		jdbcTemplate.update(sql, data);
 	}
+	
+	//국기 이미지 찾기
+	public int findAttachment(int countryNo) {
+		String sql = "select attachement_no from country_image "
+				+ "where country_no = ?";
+		Object[] data = {countryNo};
+		return jdbcTemplate.queryForObject(sql, int.class, data);
+	}
 }

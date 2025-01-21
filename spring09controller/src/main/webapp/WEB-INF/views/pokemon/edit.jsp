@@ -7,7 +7,7 @@
 
 <!-- 수정에서 primary key를 전달하기 위해 input[type=hidden] 사용 -->
 
-<form action="edit" method="post"enctype="multipart/form-data">
+<form action="edit" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="pokemonNo" value="${pokemonDto.pokemonNo}">
 	포켓몬 이름 <input type="text" name="pokemonName" value="${pokemonDto.pokemonName}" required><br><br>
 	포켓몬 속성 <input type="text" name="pokemonType" value="${pokemonDto.pokemonType}" required><br><br>

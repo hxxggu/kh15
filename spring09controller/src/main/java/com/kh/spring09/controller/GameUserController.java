@@ -86,8 +86,13 @@ public class GameUserController {
 		return "/WEB-INF/views/game-user/detail.jsp";
 	}
 	
+	//삭제 매핑
 	@RequestMapping("/delete")
 	public String delete(@RequestParam int gameUserNo) {
+		try {
+			int attachmentNo = gameUserDao.findAttachment(gameUserNo);
+			attachmentService.delete(attachmentNo);
+		} catch(Exception e) {}
 		gameUserDao.delete(gameUserNo);
 		return "redirect:list"; //상대경로
 //		return "redirect:/game-user/list"; //절대경로
@@ -101,8 +106,22 @@ public class GameUserController {
 	}
 	
 	@PostMapping("/edit")
-	public String edit(@ModelAttribute GameUserDto gameUserDto) {
+	public String edit(
+			@ModelAttribute GameUserDto gameUserDto,
+			@RequestParam MultipartFile attach
+			) throws IllegalStateException, IOException {
 		boolean success = gameUserDao.update(gameUserDto);
+		if(!success) return "redirect:list";
+		if(success) {
+			if(attach.isEmpty() == false) {
+				try {
+					int attchmentNo = gameUserDao.findAttachment(gameUserDto.getGameUserNo());
+					attachmentService.delete(attchmentNo);
+				} catch(Exception e) {}
+				int newAttachmentNo = attachmentService.save(attach);
+				gameUserDao.connect(gameUserDto.getGameUserNo(), newAttachmentNo);
+			}
+		}
 		if(success) {
 			return "redirect:detail?gameUserNo=" + gameUserDto.getGameUserNo();
 		} else {

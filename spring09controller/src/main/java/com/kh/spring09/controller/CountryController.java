@@ -88,8 +88,13 @@ public class CountryController {
 		return "/WEB-INF/views/country/detail.jsp";
 	}
 	
+	//삭제 매핑
 	@RequestMapping("/delete")
 	public String delete(@RequestParam int countryNo) {
+		try {
+			int attachmentNo = countryDao.findAttachment(countryNo);
+			attachmentService.delete(attachmentNo);
+		} catch(Exception e) {}
 		countryDao.delete(countryNo);
 		return "redirect:list"; //redirect : 주소가 바뀜, 끝나고 다른 곳으로 이동(다른 주소로 보냄), 잦지 않은 특별한 작업(따로 표시를 해주야 함)
 //		return "/WEB-INF/views/country /list.jsp"; //forward : 주소가 유지되고 화면만 연결, 보통의 일반적인 작업
@@ -103,12 +108,26 @@ public class CountryController {
 	}
 	
 	@PostMapping("/edit")
-	public String edit(@ModelAttribute CountryDto countryDto) {
+	public String edit(
+			@ModelAttribute CountryDto countryDto,
+			@RequestParam MultipartFile attach
+			) throws IllegalStateException, IOException {
 		boolean success = countryDao.update(countryDto);
+		if(!success) return "redirect:list";
+		if(success) {
+			if(attach.isEmpty() == false) {
+				try { //기존 이미지 삭제 처리
+					int attachmentNo = countryDao.findAttachment(countryDto.getCountryNo());
+					attachmentService.delete(attachmentNo);
+				} catch(Exception e) {}
+				int newAttachmentNo = attachmentService.save(attach);
+				countryDao.connect(countryDto.getCountryNo(), newAttachmentNo);
+			}
+		}
 		if(success) {
 			return "redirect:detail?countryNo=" + countryDto.getCountryNo();
 		} else {
-			return "redirect:list";
+		return "redirect:list";
 		}
 	}
 }

@@ -119,6 +119,5 @@ public class PokemonDao {
 				+ "where pokemon_no = ?";
 		Object[] data = {pokemonNo};
 		return jdbcTemplate.queryForObject(sql, int.class, data);
-	}
-	
+	}	
 }

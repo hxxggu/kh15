@@ -120,4 +120,11 @@ public class GameUserDao {
 		jdbcTemplate.update(sql, data);
 	}
 	
+	//게임유저 이미지 찾기
+	public int findAttachment(int gameUserNo) {
+		String sql = "select attachment_no from game_user_image "
+				+ "where game_user_no = ?";
+		Object[] data = {gameUserNo};
+		return jdbcTemplate.queryForObject(sql, int.class, data);
+	}
 }

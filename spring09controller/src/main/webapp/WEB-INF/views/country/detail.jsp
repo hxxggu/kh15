@@ -4,7 +4,7 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<h1>국가 정보</h1>
+<h2>국가 정보</h2>
 
 <table border="1" width="300">
 	<tr>
