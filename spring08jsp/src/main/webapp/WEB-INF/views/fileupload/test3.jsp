@@ -13,6 +13,6 @@
 	 -->
 	
 	<!-- <input type="file" name="attach" accept=".png, .gif, .jpg"><br><br>  -->
-	<input type="file" name="attach" ><br><br>
+	<input type="file" name="attach" accept="image/*" ><br><br>
 	<button>업로드</button>
 </form>

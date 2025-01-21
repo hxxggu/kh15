@@ -1,0 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<h2>최종 테스트</h2>
+<form action="upload3" method="post" enctype="multipart/form-data">
+	<input type="text" name="uploader"><br><br>
+	<input type="file" name="attach" accept="image/*"><br><br>
+	<button>업로드</button>
+</form>

@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring08.dao.AttachmentDao;
 import com.kh.spring08.dto.AttachmentDto;
+import com.kh.spring08.service.AttachmentService;
 
 @Controller
 @RequestMapping("/fileupload")
@@ -90,5 +91,21 @@ public class FileUploadController {
 		attachmentDao.insert(attachmentDto);
 		
 		return "redirect:test3";
+	}
+	
+	//최종 파일 저장 코드
+	@Autowired
+	private AttachmentService attachmentService;
+	@RequestMapping("/test4")
+	public String test4() {
+		return "/WEB-INF/views/fileupload/test4.jsp";
+	}
+	@PostMapping("/upload4")
+	public String upload4(
+			@RequestParam String uploader,
+			@RequestParam MultipartFile attach
+			) throws IllegalStateException, IOException {
+		attachmentService.save(attach); //파일 저장 (물리+DB)
+		return "redirect:test4";
 	}
 }
