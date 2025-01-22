@@ -18,7 +18,7 @@ public class AttachmentMapper implements RowMapper<AttachmentDto>{
 		attachmentDto.setAttachmentName(rs.getString("attachment_name"));
 		attachmentDto.setAttachmentType(rs.getString("attachment_type"));
 		attachmentDto.setAttachmentSize(rs.getLong("attachment_size"));
-		return null;
+		return attachmentDto;
 	}
 	
 }
