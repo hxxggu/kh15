@@ -8,6 +8,7 @@
 		<h2>
 			<a href="/">
 				<img src="/images/image.jpg" width="30" height="30">
+				<!-- 정적 -->
 				홈페이지 제작 수업
 			</a>
 		</h2>
@@ -16,7 +17,8 @@
 	<!-- 상태확인용 영역 -->
 	<div>
 		* 세션ID : ${pageContext.session.id}<br>
-		* UserID : ${sessionScope.userId}
+		* UserID : ${sessionScope.userId}<br>
+		* UserLevel : ${sessionScope.userLevel}
 	</div><br>
 	<!-- 로그인 영역에 따라 메뉴를 다르게 표시 -->
 	<div>
@@ -30,6 +32,10 @@
 				<button><a href="/board/list">게시판</a></button>
 				<button><a href="/member/mypage">내 정보</a></button>
 				<button><a href="/member/logout">로그아웃</a></button>
+				
+				<c:if test="${sessionScope.userLevel == '관리자' }">
+					<button><a href="/admin/home">[관리자 메뉴]</a></button>
+				</c:if>
 				<hr>
 			</c:when>
 			<%-- 비회원 --%>

@@ -13,8 +13,8 @@
 	포켓몬 속성 <input type="text" name="pokemonType" value="${pokemonDto.pokemonType}" required><br><br>
 	<!-- (*중요) file 선택창에는 보안상의 이유로 value 설정이 불가능 -->
 	포켓몬 이미지 <input type="file" name="attach"><br><br>
-	<small>*미설정 시 현 상태가 유지됩니다</small>
-	<button>정보수정</button>
+	<small>*미설정 시 현 상태가 유지됩니다</small><br><br>
+	<button>수정완료</button>
 </form>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

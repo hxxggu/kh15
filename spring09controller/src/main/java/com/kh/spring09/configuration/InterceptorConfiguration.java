@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.kh.spring09.aop.AdminLoginInterceptor;
 import com.kh.spring09.aop.BoardOwnerInterceptor;
 import com.kh.spring09.aop.BoardReadInterceptor;
 import com.kh.spring09.aop.BoardReadInterceptor2;
@@ -32,6 +33,8 @@ public class InterceptorConfiguration implements WebMvcConfigurer { //configurat
 	private BoardReadInterceptor2 boardReadInterceptor2;
 	@Autowired
 	private BoardReadInterceptor3 boardReadInterceptor3;
+	@Autowired
+	private AdminLoginInterceptor adminLoginInterceptor;
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -62,8 +65,14 @@ public class InterceptorConfiguration implements WebMvcConfigurer { //configurat
 				"/board/edit",
 				"/board/delete"
 				));
-		
+	
 		//조회 수 증가처리 인터셉터 등록
 		registry.addInterceptor(boardReadInterceptor3).addPathPatterns("/board/detail");
+		
+		//admin으로 시작하는 모든 주소를 검사하여 자격이 부족하면 차단
+		registry.addInterceptor(adminLoginInterceptor)
+		.addPathPatterns(List.of(
+		"/admin**"
+));
 	}
 }

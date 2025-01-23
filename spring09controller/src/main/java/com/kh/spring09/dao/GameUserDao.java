@@ -23,8 +23,10 @@ public class GameUserDao {
 		String sql = "insert into game_user(game_user_no, game_user_id, game_user_job, game_user_level, game_user_money) "
 				+ "values(game_user_seq.nextval, ?, ?, ?, ?)";
 		Object[] data = {
-			gameUserDto.getGameUserId(), gameUserDto.getGameUserJob(),
-			gameUserDto.getGameUserLevel(), gameUserDto.getGameUserMoney()
+			gameUserDto.getGameUserId(),
+			gameUserDto.getGameUserJob(),
+			gameUserDto.getGameUserLevel(),
+			gameUserDto.getGameUserMoney()
 		};
 		jdbcTemplate.update(sql, data);
 	}
@@ -35,18 +37,17 @@ public class GameUserDao {
 		return jdbcTemplate.queryForObject(sql, int.class);
 	}
 	public void insert2(GameUserDto gameUserDto) {
-		String sql = "insert into game_user("
-				+ "game_user_no, game_user_id, game_user_job, "
-				+ "game_user_level, game_user_money"
-				+ ") "
-				+ "values(?, ?, ? ,? ,?)";
+		String sql = "insert into game_user(game_user_no, "
+				+ "game_user_id, game_user_job, game_user_level, "
+				+ "game_user_money) "
+				+ "values(?, ?, ?, ?, ?)";
 		Object[] data = {
-				gameUserDto.getGameUserNo(),
-				gameUserDto.getGameUserId(),
-				gameUserDto.getGameUserJob(),
-				gameUserDto.getGameUserLevel(),
-				gameUserDto.getGameUserMoney()
-				};
+			gameUserDto.getGameUserNo(),
+			gameUserDto.getGameUserId(),
+			gameUserDto.getGameUserJob(),
+			gameUserDto.getGameUserLevel(),
+			gameUserDto.getGameUserMoney()
+		};
 		jdbcTemplate.update(sql, data);
 	}
 	
@@ -57,8 +58,10 @@ public class GameUserDao {
 							+ "game_user_level=?, game_user_money=? "
 						+ "where game_user_no=?";
 		Object[] data = {
-			gameUserDto.getGameUserId(), gameUserDto.getGameUserJob(),
-			gameUserDto.getGameUserLevel(), gameUserDto.getGameUserMoney(),
+			gameUserDto.getGameUserId(),
+			gameUserDto.getGameUserJob(),
+			gameUserDto.getGameUserLevel(),
+			gameUserDto.getGameUserMoney(),
 			gameUserDto.getGameUserNo()
 		};
 		return jdbcTemplate.update(sql, data) > 0;
@@ -111,20 +114,15 @@ public class GameUserDao {
 		return jdbcTemplate.update(sql, data) > 0;
 	}
 	
-	//프로필 이미지 등록(연결)
-	public void connect(int gameUserNo, int attachmentNo) {
-		String sql = "insert into game_user_image ("
-				+ "game_user_no, attachment_no"
-				+ ") values(?, ?)";
-		Object[] data = {gameUserNo, attachmentNo};
-		jdbcTemplate.update(sql, data);
-	}
-	
-	//게임유저 이미지 찾기
-	public int findAttachment(int gameUserNo) {
-		String sql = "select attachment_no from game_user_image "
-				+ "where game_user_no = ?";
-		Object[] data = {gameUserNo};
-		return jdbcTemplate.queryForObject(sql, int.class, data);
-	}
+	//유저 프로필 등록(연결)
+		public void connect(int gameUserNo, int attachmentNo) {
+			String sql = "insert into game_user_profile(game_user_no, attachment_no) values(?, ?)";
+			Object[] data = {gameUserNo, attachmentNo};
+			jdbcTemplate.update(sql, data);
+		}
+		public int findAttachment(int gameUserNo) {
+			String sql = "select attachment_no from game_user_profile where game_user_no=?";
+			Object[] data = {gameUserNo};
+			return jdbcTemplate.queryForObject(sql, int.class, data);
+		}
 }

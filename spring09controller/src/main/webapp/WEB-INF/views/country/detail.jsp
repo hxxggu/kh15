@@ -6,6 +6,8 @@
 
 <h2>국가 정보</h2>
 
+<img src="image?countryNo=${countryDto.countryNo}" width="300">
+
 <table border="1" width="300">
 	<tr>
 		<th width="30%">국가명</th>

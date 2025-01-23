@@ -100,6 +100,7 @@ public class CountryController {
 //		return "/WEB-INF/views/country /list.jsp"; //forward : 주소가 유지되고 화면만 연결, 보통의 일반적인 작업
 	}
 	
+	//수정 매핑
 	@GetMapping("/edit")
 	public String edit(@RequestParam int countryNo, Model model) {
 		CountryDto countryDto = countryDao.selectOne(countryNo);
@@ -108,26 +109,23 @@ public class CountryController {
 	}
 	
 	@PostMapping("/edit")
-	public String edit(
-			@ModelAttribute CountryDto countryDto,
-			@RequestParam MultipartFile attach
-			) throws IllegalStateException, IOException {
+	public String edit(@ModelAttribute CountryDto countryDto) {
 		boolean success = countryDao.update(countryDto);
-		if(!success) return "redirect:list";
 		if(success) {
-			if(attach.isEmpty() == false) {
-				try { //기존 이미지 삭제 처리
-					int attachmentNo = countryDao.findAttachment(countryDto.getCountryNo());
-					attachmentService.delete(attachmentNo);
-				} catch(Exception e) {}
-				int newAttachmentNo = attachmentService.save(attach);
-				countryDao.connect(countryDto.getCountryNo(), newAttachmentNo);
-			}
+			return "redirect:detail?countryNo="+countryDto.getCountryNo();
 		}
-		if(success) {
-			return "redirect:detail?countryNo=" + countryDto.getCountryNo();
-		} else {
-		return "redirect:list";
+		else {
+			return "redirect:list";
 		}
 	}
+	
+	@RequestMapping("/flag")
+	public String flag(@RequestParam int countryNo) {
+		try {
+			int attachmentNo = countryDao.findAttachment(countryNo);
+			return "redirect:/attachment/download?attachmentNo=" + attachmentNo;
+		} catch(Exception e) {
+			return "redirect:/images/empty.png";
+			}
+		}
 }

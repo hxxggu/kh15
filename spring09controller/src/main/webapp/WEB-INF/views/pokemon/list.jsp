@@ -21,7 +21,7 @@
 		<c:forEach var="pokemonDto" items="${list}">
 		<tr>
 			<td>
-				<img src="/attachment/download?attachmentNo=" width="50" height="50">
+				<img src="image?pokemonNo=${pokemonDto.pokemonNo}" width="50" height="50">
 			</td>
 			<td>${pokemonDto.pokemonNo}</td>
 			<td>

@@ -11,8 +11,8 @@
 	*수도명 <input type="text" name="countryCapital" value="${countryDto.countryCapital}" required><br><br>
 	*인구수 <input type="number" name="countryPopulation" value="${countryDto.countryPopulation}" required><br><br>
 	국기 <input type="file" name="attach"><br><br>
-	<small>*미설정 시 현상태 유지</small>
-	<button>정보수정</button> 
+	<small>*미설정 시 현상태 유지</small><br><br>
+	<button>수정완료</button> 
 </form>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

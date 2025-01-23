@@ -1,12 +1,14 @@
 package com.kh.spring09.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.spring09.dto.MemberDto;
+import com.kh.spring09.mapper.GameUserMapper;
 import com.kh.spring09.mapper.MemberMapper;
 
 @Repository //제어반전(IoC)
@@ -16,6 +18,8 @@ public class MemberDao {
 	private MemberMapper memberMapper;
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	@Autowired
+	private GameUserMapper gameUserMapper;
 	
 	//가입(등록) 메서드
 	// 사용자 입력항목 : 14개 중 9개를 입력하며 필수는 4개
@@ -98,5 +102,22 @@ public class MemberDao {
 		String sql = "delete member where member_id = ?";
 		Object[] data = {memberId};
 		return jdbcTemplate.update(sql, data) > 0;
-	}	
+	}
+	
+//	public List<MemberDto> selectList(){
+//		String sql = "select * from member";
+//		return jdbcTemplate.query(sql, memberMapper);
+//	}
+//	private Map<String, String> columnExample = Map.of(
+//			"닉네임", "member_nickname"
+//			);
+//	public List<MemberDto> selectList(String column, String keyword) {
+//		String columnName =  columnExample.get(column);
+//		String sql = "select * from member "
+//				+ "where instr(#1, ?) > 0 "
+//				+ "order by #1 asc, member_nickname asc";
+//		sql = sql.replace("#1", columnName);
+//		Object[] data = {keyword};
+//		return jdbcTemplate.query(sql, memberMapper, data);
+//	}
 }

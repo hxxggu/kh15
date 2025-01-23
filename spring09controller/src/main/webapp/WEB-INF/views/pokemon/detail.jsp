@@ -5,6 +5,8 @@
 
 <h2>[${pokemonDto.pokemonName}] 포켓몬 정보</h2>
 
+<img src="image?pokemonNo=${pokemonDto.pokemonNo}" width="300"> <!-- 동적 -->
+
 <table border="1" width="300">
 	<tr>
 		<th width="30%">번호</th>

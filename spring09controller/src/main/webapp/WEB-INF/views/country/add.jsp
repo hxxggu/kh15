@@ -9,7 +9,7 @@
 	*국가명 <input type="text" name="countryName"> <br><br>
 	*수도명 <input type="text" name="countryCapital"> <br><br>
 	*인구수 <input type="number" name="countryPopulation"> <br><br>
-	국기 <input type="file" name="attach" accept=".png, .jpg"><br><br>
+	국기 <input type="file" name="attach"><br><br>
 	<button>등록하기</button>
 </form>
 

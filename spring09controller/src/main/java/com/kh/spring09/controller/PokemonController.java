@@ -1,14 +1,9 @@
 package com.kh.spring09.controller;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.ContentDisposition;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.spring09.dao.PokemonDao;
 import com.kh.spring09.dto.PokemonDto;
 import com.kh.spring09.service.AttachmentService;
+import com.kh.spring09.vo.PageVO;
 
 @Controller
 @RequestMapping("/pokemon")
@@ -81,7 +77,10 @@ public class PokemonController {
 	//목록 매핑
 	//- 데이터베이스에서 조회한 결과(List<PokemonDto>)를 화면에 전달
 	@RequestMapping("/list")
-	public String list(Model model) {
+	public String list(
+			Model model,
+			@ModelAttribute("pageVO") PageVO pageVO
+			) {
 		List<PokemonDto> list = pokemonDao.selectList();
 		model.addAttribute("list", list);
 		return "/WEB-INF/views/pokemon/list.jsp";
@@ -133,25 +132,31 @@ public class PokemonController {
 		}
 		
 		//[2] 이미지 변경 요청
-		if(success) {
-						
-			if(attach.isEmpty() == false) { //첨부파일이 존재한다면
-				try { //기존 이미지 삭제 처리 (없으면 예외 발생)
-					int attachmentNo = pokemonDao.findAttachment(pokemonDto.getPokemonNo());
-					attachmentService.delete(attachmentNo);
-				} catch(Exception e) {/*아무것도 안함*/}
-				//신규 이미지 등록
-				int newAttachmentNo = attachmentService.save(attach);
-				pokemonDao.connect(pokemonDto.getPokemonNo(), newAttachmentNo);
-			}
+		if(attach.isEmpty() == false) { //첨부파일이 존재한다면
+			try { //기존 이미지 삭제 처리 (없으면 예외 발생)
+				int attachmentNo = pokemonDao.findAttachment(pokemonDto.getPokemonNo());
+				attachmentService.delete(attachmentNo);
+			} catch(Exception e) {/*아무것도 안함*/}
+			//신규 이미지 등록
+			int newAttachmentNo = attachmentService.save(attach);
+			pokemonDao.connect(pokemonDto.getPokemonNo(), newAttachmentNo);
 		}
-		
-		if(success) {
 //			return "redirect:detail"; //pk인 pokemonNo가 있어야 detail로 이동이 가능함
 			//*참고: redirect는 다른 매핑으로 GET방식 요청을 생성하는 것이므로 
-			return "redirect:detail?pokemonNo="+pokemonDto.getPokemonNo();
-		} else {
-			return "redirect:list";
+		return "redirect:detail?pokemonNo="+pokemonDto.getPokemonNo();
+
+	}
+	
+	//포켓몬 번호(PK)로 이미지 주소를 반환하는 매핑
+	@RequestMapping("/image")
+	public String image(@RequestParam int pokemonNo) {
+		try { //플랜 A : 이미지가 있는 경우
+			int attachmentNo = pokemonDao.findAttachment(pokemonNo);
+			return "redirect:/attachment/download?attachmentNo = " + attachmentNo;
+		} catch(Exception e) { //플랜 B : 이미지가 없는 경우
+			return "redirect:/image/empty.png"; //내가 가진 기본 이미지
+//			return "redirect:https://placehold.co/400x400?text=P"; //더미 이미지
 		}
-	}	
+	}
+	
 }

@@ -27,6 +27,7 @@
 <table border="1" width="500">
 	<thead>
 		<tr>
+			<th>국기</th>
 			<th>번호</th>
 			<th>국가</th>
 			<th>수도</th>
@@ -43,6 +44,9 @@
 			<c:otherwise>
 				<c:forEach var="countryDto" items="${list}">
 				<tr>
+					<td>
+						<img src="flag?countryNo=${countryDto.countryNo}" width="50" height="30">
+					</td>
 					<td>${countryDto.countryNo}</td>
 					<td>
 						<a href="detail?countryNo=${countryDto.countryNo}">

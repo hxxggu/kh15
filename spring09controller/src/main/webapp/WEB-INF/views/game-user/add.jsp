@@ -18,7 +18,7 @@
 	<br><br>
 	*레벨 <input name="gameUserLevel" type="number"> <br><br>
 	*골드 <input name="gameUserMoney" type="number"> <br><br>
-	프로필 사진 <input type="file" name="attach" accept=".png, .jpg"><br><br>
+	프로필 사진 <input type="file" name="attach"><br><br>
 	<button>등록</button>
 </form>
 
@@ -37,7 +37,7 @@
 		<option>도적</option>
 	</select>
 	<br><br>
-	프로필 <input type="file" name="attach" accept="/image"><br><br>
+	프로필 <input type="file" name="attach"><br><br>
 	<button>등록</button>
 </form>
 
