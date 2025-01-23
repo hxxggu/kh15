@@ -74,5 +74,3 @@
 <button><a href="list">돌아가기</a></button>
 <br>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
-
-

@@ -32,8 +32,10 @@
 			- <title>은 브라우저 탭에 표시될 페이지의 제목
 		- <body>는 이 문서의 표시될 내용을 저장(편지지)
  -->
-		<h1>어서오세요!</h1>
-		<img src="https://placehold.co/700x400">
+		<h2>♥ℍ𝔸ℙℙ𝕐♥</h2>
+		<a href="/">
+			<img src="/images/멍멍개.jpg" width="300" height="400">
+		</a>
 		
 <%-- 정적 include --%>
 <%--<%@ include file="/WEB-INF/views/template/footer.jsp" %> --%>
