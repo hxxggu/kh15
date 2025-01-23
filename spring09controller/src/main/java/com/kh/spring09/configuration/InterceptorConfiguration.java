@@ -69,10 +69,8 @@ public class InterceptorConfiguration implements WebMvcConfigurer { //configurat
 		//조회 수 증가처리 인터셉터 등록
 		registry.addInterceptor(boardReadInterceptor3).addPathPatterns("/board/detail");
 		
-		//admin으로 시작하는 모든 주소를 검사하여 자격이 부족하면 차단
+		//관리자 검사 인터셉터 등록
 		registry.addInterceptor(adminLoginInterceptor)
-		.addPathPatterns(List.of(
-		"/admin**"
-));
+		.addPathPatterns("/admin/**");
 	}
 }

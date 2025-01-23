@@ -23,31 +23,24 @@ public class AttachmentDao {
 	}
 	public void insert(AttachmentDto attachmentDto) {
 		String sql = "insert into attachment("
-				+ "attachment_no, attachment_name, "
-				+ "attachment_type, attachment_size) "
-				+ "values(?, ?, ?, ?)";
+							+ "attachment_no, attachment_name, "
+							+ "attachment_type, attachment_size"
+					+ ") values(?, ?, ?, ?)";
 		Object[] data = {
-				attachmentDto.getAttachmentNo(),
-				attachmentDto.getAttachmentName(),
-				attachmentDto.getAttachmentType(),
-				attachmentDto.getAttachmentSize()
+			attachmentDto.getAttachmentNo(), attachmentDto.getAttachmentName(),
+			attachmentDto.getAttachmentType(), attachmentDto.getAttachmentSize()
 		};
 		jdbcTemplate.update(sql, data);
 	}
 	
 	public boolean delete(int attachmentNo) {
-		String sql = "delete attachment where attachment_no = ?";
+		String sql = "delete attachment where attachment_no=?";
 		Object[] data = {attachmentNo};
 		return jdbcTemplate.update(sql, data) > 0;
 	}
 	
-	public List<AttachmentDto> selectList() {
-		String sql = "select * from attachment order by attachment_no asc";
-		return jdbcTemplate.query(sql, attachmentMapper);		
-	}
-	
 	public AttachmentDto selectOne(int attachmentNo) {
-		String sql = "select * from attachment where attachment_no = ?";
+		String sql = "select * from attachment where attachment_no=?";
 		Object[] data = {attachmentNo};
 		List<AttachmentDto> list = jdbcTemplate.query(sql, attachmentMapper, data);
 		return list.isEmpty() ? null : list.get(0);

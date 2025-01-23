@@ -11,7 +11,7 @@
 <button><a href="write">글쓰기</a></button><br><br>
 
 <!-- 테이블 -->
-<table border="1" width="800">
+<table border="1" width="1000">
 	<thead>
 		<tr>
 			<th>번호</th>
@@ -67,6 +67,13 @@
 						<c:if test="${boardListViewDto.boardReply > 0}">
 						[${boardListViewDto.boardReply}]
 						</c:if>
+					</td>
+					<td>
+						<c:choose>
+							<c:when test="${boardListViewDto.memberNickname == null}">
+								탈퇴한 사용자
+							</c:when>
+						</c:choose>
 					</td>
 					<td>${boardListViewDto.boardWriter}</td>
 <%-- 					<td>${boardDto.getBoardWtimeString()}</td> --%>

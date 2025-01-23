@@ -34,7 +34,7 @@
 				<button><a href="/member/logout">로그아웃</a></button>
 				
 				<c:if test="${sessionScope.userLevel == '관리자' }">
-					<button><a href="/admin/home">[관리자 메뉴]</a></button>
+					<button><a href="/admin/home">*관리자 메뉴</a></button>
 				</c:if>
 				<hr>
 			</c:when>

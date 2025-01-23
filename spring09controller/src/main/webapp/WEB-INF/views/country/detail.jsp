@@ -27,11 +27,13 @@
 	</tr>
 </table>
 
-<h2>
-	<a href="add">신규등록</a>
-	<a href="list">목록보기</a>
-	<a href="edit?countryNo=${countryDto.countryNo}">수정하기</a>
-	<a href="delete?countryNo=${countryDto.countryNo}">삭제하기</a>
-</h2>
+<br>
+
+<div>
+	<button><a href="add">신규등록</a></button>
+	<button><a href="list">목록보기</a></button>
+	<button><a href="edit?countryNo=${countryDto.countryNo}">수정하기</a></button>
+	<button><a href="delete?countryNo=${countryDto.countryNo}">삭제하기</a></button>
+</div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
