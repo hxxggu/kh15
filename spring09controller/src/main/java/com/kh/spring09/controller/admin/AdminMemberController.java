@@ -70,7 +70,7 @@ public class AdminMemberController {
 			throw new TargetNotFoundException("존재하지 않는 회원");
 		}
 		model.addAttribute("memberDto", memberDto);
-		return "/WEB_INF/views/admin/member/edit.jsp";
+		return "/WEB-INF/views/admin/member/edit.jsp";
 	}
 	
 	@PostMapping("/edit")

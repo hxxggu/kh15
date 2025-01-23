@@ -36,4 +36,13 @@ public class StatusDao {
 				+ "group by member_level order by value desc, key asc";
 		return jdbcTemplate.query(sql, statusMapper);
 	}
+	
+	//회원 가입 현황
+	public List<StatusVO> memberJoin(){
+		String sql = "select extract(year from member_join), "
+				+ "extract(month from member_join), "
+				+ "count(*) from member group by extract (year from member_join),"
+				+ "extract(month from member_join)";
+		return jdbcTemplate.query(sql, statusMapper);
+	}
 }

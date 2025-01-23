@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<h2>등급별 회원 수</h2>
+<h2>등급별 회원 수 현황</h2>
 
 <table border="1" width="300">
 
