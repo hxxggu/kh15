@@ -6,8 +6,6 @@
 
 <h2>상품권 목록</h2>
 
-<h3><a href="add">+신규등록</a></h3>
-
 <table width="500">
 	<c:forEach var="giftcardDto" items="${list}">
 	<tr>
@@ -16,18 +14,17 @@
 		<th>
 			<h3>${giftcardDto.giftcardName}</h3>
 			<h3>
-				${giftcardDto.giftcardCharge} point
+				${giftcardDto.giftcardCharge}point
 				(${giftcardDto.giftcardPrice}원,
 				${giftcardDto.discountRate}% 할인)
 			</h3>
-			<pre>${giftcardDto.giftcardContent}</pre>
+			
+			<a href="detail?giftcardNo=${giftcardDto.giftcardNo}">구매하기</a>
+			
 		</th>
 	</tr>
 	</c:forEach>
 	
 </table>
-
-
-
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

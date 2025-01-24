@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.spring09.dao.MemberDao;
+import com.kh.spring09.dao.PurchaseHistoryDao;
 import com.kh.spring09.dto.MemberDto;
 
 import jakarta.servlet.http.HttpSession;
@@ -19,6 +20,8 @@ import jakarta.servlet.http.HttpSession;
 public class MemberController {
 	@Autowired
 	private MemberDao memberDao;
+	@Autowired
+	private PurchaseHistoryDao purchaseHistoryDao;
 	
 	//회원가입 매핑
 	@GetMapping("/join")
@@ -84,6 +87,8 @@ public class MemberController {
 		String userId = (String) session.getAttribute("userId"); //업캐스팅<>다운캐스팅
 		MemberDto memberDto = memberDao.selectOne(userId); //내 정보 획득
 		model.addAttribute("memberDto", memberDto);
+		
+		model.addAttribute("purchaseHistoryList", purchaseHistoryDao.selectList(userId));
 		return "/WEB-INF/views/member/mypage.jsp"; //redirect<>forward
 		//redirect는 특정 페이지 접속 시 다른 페이지로 이동시킴. 사용자는 처음 요청한 url와 다른 url에 접속함.
 		//forward는 servlet에서 직접 다른 url을 처리하여 response. 클라이언트가 http request를 두번 요청하지 않음.

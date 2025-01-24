@@ -33,8 +33,11 @@
 				<button><a href="/member/mypage">내 정보</a></button>
 				<button><a href="/member/logout">로그아웃</a></button>
 				
-				<c:if test="${sessionScope.userLevel == '관리자' }">
-					<button><a href="/admin/home">*관리자 메뉴</a></button>
+				<c:if test="${sessionScope.userLevel == '관리자'}">
+					<button><a href="/admin/home">관리자 메뉴</a></button>
+				</c:if>
+				<c:if test="${sessionScope.userLevel != '관리자'}">
+					<button><a href="/giftcard/list">포인트 충전</a></button>
 				</c:if>
 				<hr>
 			</c:when>

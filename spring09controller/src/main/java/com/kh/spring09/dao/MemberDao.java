@@ -18,7 +18,7 @@ public class MemberDao {
 	private MemberMapper memberMapper;
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	@Autowired
+	
 	
 	//가입(등록) 메서드
 	// 사용자 입력항목 : 14개 중 9개를 입력하며 필수는 4개
@@ -165,6 +165,14 @@ public class MemberDao {
 			Object[] data = {pageVO.getKeyword()};
 			return jdbcTemplate.queryForObject(sql, int.class, data);
 		}
+	}
+
+	public boolean plusMemberPoint(String memberId, int value) {
+		String sql = "update member "
+							+ "set member_point=member_point+? "
+							+ "where member_id=?";
+		Object[] data = {value, memberId};
+		return jdbcTemplate.update(sql, data) > 0;
 	}
 	
 }
