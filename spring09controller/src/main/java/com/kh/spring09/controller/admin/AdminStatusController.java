@@ -34,15 +34,13 @@ public class AdminStatusController {
 	
 	@RequestMapping("/member-join")
 	public String memberJoin(Model model) {
-		
-		
+		model.addAttribute("list", statusDao.memberJoin());
 		return "/WEB-INF/views/admin/member/list.jsp";
 	}
 	
 	@RequestMapping("/board-write")
 	public String boardWrite(Model model) {
-		
-		
+		model.addAttribute("list", statusDao.boardWrite());
 		return "/WEB-INF/views/admin/status/board-write.jsp";
 	}
 	

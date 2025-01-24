@@ -8,13 +8,14 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.spring09.dao.AttachmentDao;
 import com.kh.spring09.dto.AttachmentDto;
 import com.kh.spring09.service.AttachmentService;
-
+@Controller
 public class FileDownloadController {
 	@Autowired
 	private AttachmentDao attachmentDao;

@@ -19,7 +19,6 @@ public class MemberDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	@Autowired
-	private GameUserMapper gameUserMapper;
 	
 	//가입(등록) 메서드
 	// 사용자 입력항목 : 14개 중 9개를 입력하며 필수는 4개
