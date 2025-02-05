@@ -2,13 +2,14 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<h2>My Page</h2>
+<h2>▶ 마이페이지</h2>
 
 <table border="1" width="400">
 	<tr>
-		<th>ID</th>
+		<th width="25%">아이디</th>
 		<td>${memberDto.memberId}</td>
 	</tr>
 	<tr>
@@ -30,9 +31,9 @@
 	<tr>
 		<th>주소</th>
 		<td>
-			[${memberDto.memberPost}]<br>
-			${memberDto.memberAddress1}<br>
-			${memberDto.memberAddress2}<br>
+			[${memberDto.memberPost}]
+			${memberDto.memberAddress1}
+			${memberDto.memberAddress2}
 		</td>
 	</tr>
 	<tr>
@@ -41,57 +42,62 @@
 	</tr>
 	<tr>
 		<th>포인트</th>
-		<td>${memberDto.memberPoint}</td>
+		<td>${memberDto.memberPoint} point</td>
 	</tr>
 	<tr>
-		<th>가입 일시</th>
+		<th>가입일시</th>
 		<td>
-			<fmt:formatDate value = "${memberDto.memberJoin}" pattern="y년 M월 d일 a h시 m분 s초"/>
+			<fmt:formatDate value="${memberDto.memberJoin}" 
+										pattern="y년 M월 d일 a h시 m분 s초"/>
 		</td>
 	</tr>
 	<tr>
-		<th>최종 로그인</th>
+		<th>최종로그인</th>
 		<td>
-			<fmt:formatDate value = "${memberDto.memberLogin}" pattern="y년 M월 d일 a h시 m분 s초"/>
+			<fmt:formatDate value="${memberDto.memberLogin}" 
+										pattern="y년 M월 d일 a h시 m분 s초"/>
 		</td>
 	</tr>
 	<tr>
 		<th>비밀번호<br>변경일</th>
 		<td>
-			<fmt:formatDate value = "${memberDto.memberChange}" pattern="y년 M월 d일 a h시 m분 s초"/>
+			<fmt:formatDate value="${memberDto.memberChange}" pattern="y년 M월 d일 a h시 m분 s초"/>
 		</td>
 	</tr>
 </table>
 
 <!-- 구매내역 출력 -->
-<h2>포인트 구매내역</h2>
+<h2>▶ 포인트 구매내역</h2>
 
 <table border="1">
 	<thead>
 		<tr>
-			<th>구매항목</th>
-			<th>구매금액</th>
-			<th>구매일시</th>
+			<th>구매 항목</th>
+			<th>구매 일시</th>
+			<th>구매 금액</th>
 		</tr>
 	</thead>
-	
 	<tbody>
-	<c:forEach var="purchaseHistoryDto" items="${purchaseHistoryList}">
+		<c:forEach var="purchaseHistoryDto" items="${purchaseHistoryList}">
 		<tr>
 			<td>${purchaseHistoryDto.giftcardName}</td>
 			<td>${purchaseHistoryDto.giftcardPurchaseTime}</td>
 			<td>
-				${purchaseHistoryDto.giftcardPurchasePrice}원 x ${purchaseHistoryDto.giftcardPurchaseQty}개
-				=${purchaseHistoryDto.giftcardPurchaseTotal}원
+				${purchaseHistoryDto.giftcardPrice}원 
+				x 
+				${purchaseHistoryDto.giftcardPurchaseQty}개 
+				= 
+				${purchaseHistoryDto.giftcardPurchaseTotal}원
 			</td>
 		</tr>
-	</c:forEach>
+		</c:forEach>
 	</tbody>
 </table>
 
 <br><br>
-<button><a href="password">비밀번호 변경</a></button> <!-- end point(마지막 /)가 같다 -->
+<button><a href="password">비밀번호 변경</a></button>
 <button><a href="change">개인정보 변경</a></button>
 <button><a href="exit">회원 탈퇴</a></button>
+<br><br>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

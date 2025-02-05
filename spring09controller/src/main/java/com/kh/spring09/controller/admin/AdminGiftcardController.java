@@ -1,3 +1,4 @@
+
 package com.kh.spring09.controller.admin;
 
 import java.io.IOException;
@@ -34,9 +35,8 @@ public class AdminGiftcardController {
 		return "/WEB-INF/views/admin/giftcard/add.jsp";
 	}
 	@PostMapping("/add")
-	public String add(
-			@ModelAttribute GiftcardDto giftcardDto,
-			@RequestParam MultipartFile attach) throws IllegalStateException, IOException {
+	public String add(@ModelAttribute GiftcardDto giftcardDto,
+								@RequestParam MultipartFile attach) throws IllegalStateException, IOException {
 		//첨부파일이 없는경우를 제거
 		if(attach.isEmpty()) {
 			return "redirect:add?error";
@@ -66,11 +66,10 @@ public class AdminGiftcardController {
 		try {
 			int attachmentNo = giftcardDao.findAttachment(giftcardNo);
 			return "redirect:/attachment/download?attachmentNo="+attachmentNo;
-		} catch (Exception e) {
+		}
+		catch(Exception e) {
 			return "redirect:https://placehold.co/200x80?text=GIFT";
 		}
 	}
 	
-	
 }
-

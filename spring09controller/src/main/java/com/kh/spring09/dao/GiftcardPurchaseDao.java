@@ -9,7 +9,7 @@ import com.kh.spring09.mapper.GiftcardPurchaseMapper;
 
 @Repository
 public class GiftcardPurchaseDao {
-	
+
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	@Autowired
@@ -17,7 +17,7 @@ public class GiftcardPurchaseDao {
 	
 	//시퀀스 생성 및 등록
 	public int sequence() {
-		String sql = "selece giftcard_purchase_seq.nextval from dual";
+		String sql = "select giftcard_purchase_seq.nextval from dual";
 		return jdbcTemplate.queryForObject(sql, int.class);
 	}
 	public void insert(GiftcardPurchaseDto giftcardPurchaseDto) {
@@ -27,11 +27,12 @@ public class GiftcardPurchaseDao {
 						+ ") "
 						+ "values(?, ?, ?, ?)";
 		Object[] data = {
-				giftcardPurchaseDto.getGiftcardPurchaseNo(),
-				giftcardPurchaseDto.getGiftcardPurchaseTarget(),
-				giftcardPurchaseDto.getGiftcardPurchaseMember(),
-				giftcardPurchaseDto.getGiftcardPurchaseQty()
+			giftcardPurchaseDto.getGiftcardPurchaseNo(),
+			giftcardPurchaseDto.getGiftcardPurchaseTarget(),
+			giftcardPurchaseDto.getGiftcardPurchaseMember(),
+			giftcardPurchaseDto.getGiftcardPurchaseQty()
 		};
 		jdbcTemplate.update(sql,data);
 	}
+	
 }

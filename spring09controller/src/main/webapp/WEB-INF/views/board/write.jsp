@@ -12,16 +12,22 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<h2>게시글 작성</h2>
-
-<form action="write" method="post">
-	<c:if test="${param.boardTarget != null}">
-		<input type="hidden" name="boardTarget" value="${param.boardTarget}">
-	</c:if>
-	<input type="text" name="boardTitle" style="width:440" placeholder="제목" required> <br><br>
-	<textarea name="boardContent" required rows="10" cols="60" placeholder="내용" required></textarea>
-	<br><br>
-	<button>글쓰기</button>
+<form action="write" method="post" autocomplete="off">
+	<div class="container w-500">
+	    <div class="cell">
+	        <h2>게시글 작성</h2>
+	    </div>
+	    <div class="cell">
+	        <input type="text" class="field w-100" name="boardTitle" placeholder="제목">
+	    </div>
+	    <div class="cell">
+	        <textarea class="field w-100" name="boardContent" rows="15" placeholder="내용"></textarea>
+	    </div>
+	    <div class="cell mt-30 right">
+	    	<button class="btn btn-neutral"><a href="list">게시글 목록</a></button>
+	        <button class="btn btn-positive">작성 완료</button>
+	    </div>
+	</div>
 </form>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

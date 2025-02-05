@@ -10,22 +10,20 @@ import com.kh.spring09.dao.StatusDao;
 @Controller
 @RequestMapping("/admin/status")
 public class AdminStatusController {
-	
+
 	@Autowired
 	private StatusDao statusDao;
 	
 	@RequestMapping("/pokemon")
 	public String pokemon(Model model) {
-		model.addAttribute("list", statusDao.pokemon());
+		model.addAttribute("list", statusDao.pokemon());		
 		return "/WEB-INF/views/admin/status/pokemon.jsp";
 	}
-	
 	@RequestMapping("/game-user")
 	public String gameUser(Model model) {
 		model.addAttribute("list", statusDao.gameUser());
 		return "/WEB-INF/views/admin/status/game-user.jsp";
 	}
-	
 	@RequestMapping("/member")
 	public String member(Model model) {
 		model.addAttribute("list", statusDao.member());
@@ -35,7 +33,7 @@ public class AdminStatusController {
 	@RequestMapping("/member-join")
 	public String memberJoin(Model model) {
 		model.addAttribute("list", statusDao.memberJoin());
-		return "/WEB-INF/views/admin/member/list.jsp";
+		return "/WEB-INF/views/admin/status/member-join.jsp";
 	}
 	
 	@RequestMapping("/board-write")

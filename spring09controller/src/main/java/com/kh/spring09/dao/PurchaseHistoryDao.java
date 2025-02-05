@@ -11,7 +11,7 @@ import com.kh.spring09.mapper.PurchaseHistoryMapper;
 
 @Repository
 public class PurchaseHistoryDao {
-	
+
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	@Autowired
@@ -19,9 +19,10 @@ public class PurchaseHistoryDao {
 	
 	public List<PurchaseHistoryDto> selectList(String memberId) {
 		String sql = "select * from purchase_history "
-						+ "where giftcard_purchase_member = ? "
+						+ "where giftcard_purchase_member=? "
 						+ "order by giftcard_purchase_no desc";
 		Object[] data = {memberId};
 		return jdbcTemplate.query(sql, purchaseHistoryMapper, data);
 	}
+	
 }

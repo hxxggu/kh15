@@ -12,7 +12,8 @@
 	<h2>국가 목록</h2>
 </c:if>
 
-<button><a href="add">신규 국가 등록</a></button><br><br>
+<button><a href="add">신규 국가 등록</a></button>
+<button><a href="/">메인화면</a></button><br><br>
 
 <!-- 검색창 - /country/list?column=국가명&keyword=한국 -->
 <form action="list" method="get">

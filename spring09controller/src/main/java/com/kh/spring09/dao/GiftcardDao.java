@@ -28,10 +28,8 @@ public class GiftcardDao {
 							+ "giftcard_charge, giftcard_price"
 						+ ") values(?, ?, ?, ?, ?)";
 		Object[] data = {
-			giftcardDto.getGiftcardNo(),
-			giftcardDto.getGiftcardName(),
-			giftcardDto.getGiftcardContent(),
-			giftcardDto.getGiftcardCharge(),
+			giftcardDto.getGiftcardNo(), giftcardDto.getGiftcardName(),
+			giftcardDto.getGiftcardContent(), giftcardDto.getGiftcardCharge(),
 			giftcardDto.getGiftcardPrice()
 		};
 		jdbcTemplate.update(sql, data);
