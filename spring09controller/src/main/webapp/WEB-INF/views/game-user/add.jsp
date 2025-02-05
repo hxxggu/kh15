@@ -6,14 +6,14 @@
 <form action="add" method="post" enctype="multipart/form-data" autocomplete="off">
 	<div class="container w-400">
 		<div class="cell center">
-		    <h2>게임 유저 등록 (운영자)</h2>
+		    <h2>[ 게임 유저 등록 (운영자) ]</h2>
 		</div>
 		<div class="cell">
-		    <label>아이디</label>
+		    <label>* 아이디</label>
 		    <input type="text" name="gameUserId" class="field w-100">
 		</div>
 		<div class="cell">
-		    <label>직업</label>
+		    <label>* 직업</label>
 		    <select name="gameUserJob" required class="field w-100">
 		        <option>선택하세요</option>
 		        <option>전사</option>
@@ -22,15 +22,15 @@
 		    </select>
 		</div>
 		<div class="cell">
-		    <label>레벨</label>
+		    <label>* 레벨</label>
 		    <input type="text" name="gameUserLevel" class="field w-100" required>
 		</div>
 		<div class="cell">
-		    <label>소지금</label>
+		    <label>* 소지금</label>
 		    <input type="text" name="gameUserMoney" class="field w-100" required>
 		</div>
 		<div class="cell">
-		    <label>프로필 이미지</label>
+		    <label>프로필</label>
 		    <input type="file" name="attach" class="field w-100">
 		</div>
 		<div class="cell">
@@ -44,14 +44,14 @@
 <form action="add" method="post" enctype="multipart/form-data" autocomplete="off">
 	<div class="container w-400">
 		<div class="cell center">
-		    <h2>게임 유저 등록 (사용자)</h2>
+		    <h2>[ 게임 유저 등록 (사용자) ]</h2>
 		</div>
 		<div class="cell">
-		    <label>ID</label>
+		    <label>* ID</label>
 		    <input type="text" name="gameUserId" required class="field w-100">
 		</div>
 		<div class="cell">
-		    <label>직업</label>
+		    <label>* 직업</label>
 		    <select name="gameUserJob" required class="field w-100">
 		        <option value="">선택하세요</option>
 		        <option>전사</option>

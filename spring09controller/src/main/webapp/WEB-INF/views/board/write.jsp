@@ -24,8 +24,8 @@
 	        <textarea class="field w-100" name="boardContent" rows="15" placeholder="내용"></textarea>
 	    </div>
 	    <div class="cell mt-30 right">
-	    	<button class="btn btn-neutral"><a href="list">게시글 목록</a></button>
-	        <button class="btn btn-positive">작성 완료</button>
+	    	<a href="list" class="btn btn-neutral">게시글 목록</a>
+	        <class="btn btn-positive">작성 완료</a>
 	    </div>
 	</div>
 </form>

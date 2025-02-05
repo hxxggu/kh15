@@ -7,19 +7,19 @@
 		<div class="cell center">
 		    <h2>국가 정보 등록</h2>
 		</div>
-		<div class="cell center">
-		    <label>국가 이름</label>
+		<div class="cell">
+		    <label>* 국가 이름</label>
 		    <input type="text" name="coutryName" class="field w-100" required>
 		</div>
-		<div class="cell center">
-		    <label>수도</label>
+		<div class="cell">
+		    <label>* 수도</label>
 		    <input type="text" name="countryCapital" class="field w-100" required>
 		</div>
-		<div class="cell center">
-		    <label>인구 수</label>
+		<div class="cell">
+		    <label>* 인구 수</label>
 		    <input type="text" name="countryPopulation" class="field w-100" required>
 		</div>
-		<div class="cell center">
+		<div class="cell">
 		    <label>국기 이미지</label>
 		    <input type="file" name="attach" class="field w-100">
 		</div>

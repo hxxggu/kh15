@@ -73,10 +73,12 @@
 							<c:when test="${boardListViewDto.memberNickname == null}">
 								탈퇴한 사용자
 							</c:when>
+							<c:otherwise>
+								${boardListViewDto.memberNickname}
+							</c:otherwise>
 						</c:choose>
 					</td>
-					<td>${boardListViewDto.boardWriter}</td>
-<%-- 					<td>${boardDto.getBoardWtimeString()}</td> --%>
+<%-- 				<td>${boardDto.getBoardWtimeString()}</td> --%>
 					<td>${boardListViewDto.boardWtimeString}</td>
 					<td>${boardListViewDto.boardRead}</td>
 					<td>${boardListViewDto.boardLike}</td>

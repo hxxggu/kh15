@@ -70,10 +70,20 @@ public class PokemonController {
 	//목록 매핑
 	//- 데이터베이스에서 조회한 결과(List<PokemonDto>)를 화면에 전달
 	@RequestMapping("/list")
-	public String list(Model model, 
-				@ModelAttribute("pageVO") PageVO pageVO) {
-		List<PokemonDto> list = pokemonDao.selectList();
-		model.addAttribute("list", list);
+	public String list(
+			@RequestParam(required = false) String column,
+			@RequestParam(required = false) String keyword,
+			Model model) {
+		boolean search = column != null && keyword != null;
+		if(search) {
+			model.addAttribute("list", pokemonDao.selectList(column, keyword));
+		}
+		else {
+			model.addAttribute("list", pokemonDao.selectList());
+		}
+		model.addAttribute("search", search);
+		model.addAttribute("column", column);
+		model.addAttribute("keyword", keyword);
 		return "/WEB-INF/views/pokemon/list.jsp";
 	}
 	
