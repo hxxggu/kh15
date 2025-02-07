@@ -6,11 +6,7 @@
 
 * {
     box-sizing: border-box;
-}
-
-/* 테스트를 위해 영역을 시각화하는 코드 */
-div {
-    box-shadow: 0 0 0 1px #b2bec3;
+    font-family: "Noto Sans KR", sans-serif;
 }
 
 /*
@@ -42,8 +38,16 @@ div {
     - 최소 150px부터 1200px까지 구현
     - 비율로도 설정가능하도록 구현(0~100)
 */
+.w-20 {
+    width: 20% !important;
+}
+
 .w-25 {
     width: 25% !important;
+}
+
+.w-33 {
+    width: 33.3333% !important;
 }
 
 .w-50 {
@@ -565,10 +569,185 @@ textarea.field {
 }
 
 /* 확장 스타일(4) - 말줄임표 처리되는 테이블 */
-.table.table-ellipsis > tbody > tr > th, 
-.table.table-ellipsis > tbody > tr > td
-{
+.table.table-ellipsis>tbody>tr>th,
+.table.table-ellipsis>tbody>tr>td {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+/* 
+    페이지 네비게이터 디자인 
+*/
+.page-navigator {
+    text-align: center;
+}
+
+.page-navigator>a {
+    text-decoration: none;
+    color: #636e72;
+    font-size: 16px;
+    padding: 0.5em;
+    display: inline-block;
+    min-width: 2.5em;
+    text-align: center;
+    font-weight: bold;
+    /* border: 1px solid transparent; */
+}
+
+.page-navigator>a:hover,
+.page-navigator>a.on {
+    /* border: 1px solid #636e72; */
+    box-shadow: 0 0 2px 0 #0984e3;
+    color: #0984e3;
+}
+
+/*
+    float box 디자인
+    - 가상 선택자(virtual selector)를 이용해서 영역의 끝 지점을 생성
+    - 시작 지점(::before) , 끝 지점(::after)을 생성할 수 있음
+    - 원래 없는 영역이기 때문에 생성을 위해서 내용물을 작성해야함
+*/
+.float-box::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.float-box>.float-left {
+    float: left;
+}
+
+.float-box>.float-right {
+    float: right;
+}
+
+/*
+            Flexible layout 디자인
+        */
+.flex-box {
+    display: flex;
+    flex-direction: row;
+}
+
+.inline-flex-box {
+    display: inline-flex;
+    flex-direction: row;
+}
+
+.flex-box.flex-vertical,
+.inline-flex-box.flex-vertical {
+    flex-direction: column;
+}
+
+.flex-box.flex-center,
+.inline-flex-box.flex-center {
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-box>.flex-fill,
+.inline-flex-box>.flex-fill {
+    flex-grow: 1;
+}
+
+/*
+            계층형 구조 디자인
+            - 똑같은 요소가 중첩되는 형태를 계층형 구조라고 부름(ex : 답변형 게시판)
+            - ul과 li의 디자인을 개조해서 사용
+
+            (1) ul의 점과 여백을 제거
+            (2) 1차메뉴를 가로로 배치(display:flex)
+            (3) 메뉴를 동일한 폭으로 배치하고 링크 스타일을 제거
+            (4) 메뉴와 항목에 색상 부여
+            (5) 2차 메뉴 이상을 숨기고 메뉴항목에 마우스가 올라가면 하위요소를 표시
+            (6) 2차 메뉴 이상은 position을 absolute로 변경하고 모든 항목을 relative로 변경
+            (7) 3차 메뉴부터는 아래가 아니라 우측으로 펼쳐지도록 구현
+            (8) .menu-right가 붙은 메뉴들을 우측으로 정렬하도록 처리(1차메뉴만)
+            (9) 우측 정렬된 메뉴들의 3차메뉴부터는 좌측으로 펼쳐지도록 구현
+        */
+
+/* (1) */
+.menu,
+/* 1차메뉴 */
+.menu ul
+
+/* 2차이상메뉴*/
+    {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* (2) */
+.menu {
+    display: flex;
+}
+
+/* (3) */
+.menu li {
+    /* 모든 메뉴 항목 */
+    width: 150px;
+}
+
+.menu a {
+    color: inherit;
+    /* 외부 색상을 따라가도록 설정 */
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    padding: 0.5em;
+}
+
+/* (4) */
+.menu,
+.menu ul {
+    background-color: #dfe6e9;
+}
+
+.menu li:hover {
+    background-color: #b2bec3
+}
+
+/* (5) */
+.menu ul {
+    /* 모든 하위 메뉴를 숨김 */
+    display: none;
+}
+
+.menu li:hover>ul {
+    /* 마우스가 올라간 li태그 안의 ul을 표시 */
+    display: block;
+}
+
+/* (6) */
+.menu li {
+    position: relative;
+}
+
+.menu ul {
+    position: absolute;
+    top: 100%;
+    left: 0;
+}
+
+/* (7) */
+.menu>li>ul ul {
+    top: 0;
+    left: 100%;
+}
+
+/* (8) */
+.menu>.menu-end {
+    margin-left: auto;
+}
+
+/* (9) */
+.menu>li.menu-end>ul ul,
+.menu>li.menu-end~li>ul ul {
+    top: 0;
+    left: auto;
+    right: 100%;
 }

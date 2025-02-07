@@ -1,23 +1,78 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-	</div>
-	<hr>
-	<div>
-<pre> <!-- html의 기능을 없애고 본인이 원하는 형식으로 화면에 출력하고자 할 때 사용 -->
-KH정보교육원 ｜ 사업자등록번호 : 487-86-00763 ｜ 사업자등록번호 : 851-87-00622 ｜ 서울 강남 제2014-01호
-대표자 : 양진선 ｜ 책임자 : 최홍석 ｜  개인정보관리책임자 : 양진선
+            </div>
+        </div>
+        <!-- 푸터 영역 -->
+        <hr>
+        <div class="p-10 flex-box">
+            
+            <div class="w-50">
+                <div class="cell">
+                    <h3>KH정보교육원</h3>
+                </div>
+                <div class="cell">
+                    ㅇㅇ시 ㅇㅇ구 ㅇㅇ동 ㅇㅇㅇ-ㅇㅇㅇ번지
+                </div>
+                <div class="cell">
+                    대표자 : ㅇㅇㅇ
+                </div>
+                <div class="cell">
+                    고객센터 : 02) 0000-0000
+                </div>
+            </div>
 
-강남지원 1관 : 서울특별시 강남구 테헤란로14길 6 남도빌딩 2F, 3F, 4F, 5F, 6F
-강남지원 2관 : 서울특별시 강남구 테헤란로10길 9 그랑프리 빌딩 4F, 5F, 7F
-강남지원 3관 : 서울특별시 강남구 테헤란로 130 호산빌딩 5F, 6F
-종로점 : 서울특별시 중구 남대문로 120 그레이츠 청계(구 대일빌딩) 2F, 3F
-당산점 : 서울특별시 영등포구 선유동2로 57 이레빌딩(구관) 19F, 20F
-논현점 : 서울특별시 강남구 논현로 132길 9 마루빌딩 1F, 2F, 3F
-부산점 : 부산 부산진구 중앙대로 627 삼비빌딩 2F, 12F
+            <div class="w-25">
+                <div class="cell">
+                    <h3>지점 정보</h3>
+                </div>
+                <div class="cell">
+                    강남지점
+                    <a href="#">
+                    	<i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+                <div class="cell">
+                    종로지점
+                    <a href="#">
+                    	<i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+                <div class="cell">
+                    당산지점
+                    <a href="#">
+                    	<i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+                <div class="cell">
+                    부산지점
+                    <a href="#">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+            </div>
 
-Copyright © 1998-2025 KH Information Educational Institute All Right Reserved
-</pre>
-	</div>
+            <div class="w-25">
+                <div class="cell">
+                    <h3>운영 방침</h3>
+                </div>
+                <div class="cell">
+                    <a href="#">홈페이지 이용약관</a>
+                </div>
+                <div class="cell">
+                    <a href="#">개인정보 처리방침</a>
+                </div>
+                <div class="cell">
+                    <h3>파트너쉽</h3>
+                </div>
+                <div class="cell">
+					<a href="https://www.google.com"><i class="fa-brands fa-google"></i></a>
+					<a href="https://www.facebook.com/"><i class="fa-brands fa-facebook"></i></a>
+					<a href="https://www.line.me/ko/"><i class="fa-brands fa-line"></i></a>
+					<a href="https://www.instagram.com/"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
 
+        </div>
+    </div>
 </body>
 </html>

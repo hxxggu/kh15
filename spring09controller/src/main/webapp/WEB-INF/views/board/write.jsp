@@ -25,7 +25,7 @@
 	    </div>
 	    <div class="cell mt-30 right">
 	    	<a href="list" class="btn btn-neutral">게시글 목록</a>
-	        <class="btn btn-positive">작성 완료</a>
+	        <button type="submit" class="btn btn-positive">작성 완료</button>
 	    </div>
 	</div>
 </form>

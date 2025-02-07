@@ -3,7 +3,13 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<h1>${message}</h1>
-<p>다시 한번 확인해주세요</p>
+<div class="container w-500">
+	<div class="cell center">
+		<h1>${message}</h1>
+	</div>
+	<div class="cell center">
+		다시 한번 확인해주세요
+	</div>
+</div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

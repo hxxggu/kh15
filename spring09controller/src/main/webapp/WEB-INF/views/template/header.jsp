@@ -13,62 +13,110 @@
 		- <body> 는 이 문서의 표시될 내용을 저장 (편지지)
  -->
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-	<meta charset="UTF-8">
-	<title>Homepage 구현 실습</title>
-	<link rel="stylesheet" type="text/css" href="/css/commons.css">
-</head>
-<body>
-	<!-- 홈페이지를 헤더, 메인, 푸터로 구분 -->
-	<!-- (주의) 템플릿 페이지에서는 상대 경로를 쓸 수 없다 -->
-	<div>
-		<h2>
-			<a href="/">
-				<img src="/images/image.jpg" width="30" height="30">
-				<!-- 정적 -->
-				홈페이지 제작 수업
-			</a>
-		</h2>
-	</div>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>홈페이지 레이아웃</title>
 
-	<!-- 상태확인용 영역 -->
-	<div>
-		* 세션ID : ${pageContext.session.id}<br>
-		* UserID : ${sessionScope.userId}<br>
-		* UserLevel : ${sessionScope.userLevel}
-	</div><br>
-	<!-- 로그인 영역에 따라 메뉴를 다르게 표시 -->
-	<div>
-		<c:choose>
-			<%--회원 --%>
-			<c:when test="${sessionScope.userId != null }">
-				<button><a href="/">홈</a></button>
-				<button><a href="/pokemon/list">포켓몬</a></button> <!-- 절대경로: /pokemon/list, 상대경로: pokemon/list -->
-				<button><a href="/country/list">국가</a></button>
-				<button><a href="/game-user/list">게임유저</a></button>
-				<button><a href="/board/list">게시판</a></button>
-				<button><a href="/member/mypage">내 정보</a></button>
-				<button><a href="/member/logout">로그아웃</a></button>
+    <!-- google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- font awesome cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" type="text/css" href="/css/commons.css">
+    <link rel="stylesheet" type="text/css" href="/css/test.css">
+    <style>
+        
+    </style>
+</head>
+
+<body>
+    <!-- 화면 영역 -->
+    <div class="container w-1100">
+        <!-- 헤더 영역 -->
+        <div class="flex-box p-10">
+            <div class="w-25 left flex-box flex-center">
+                <img src="/images/kh로고.png" width="200">
+            </div>
+            <div class="w-50 center">
+                <a href="/"><h1>홈페이지 제작 수업자료</h1></a>
+            </div>
+            <div class="w-25 right"></div>
+        </div>
+        
+        <!-- 신규 메뉴 영역 -->
+        <div>
+        	<ul class="menu">
+        		<li>
+        			<a>데이터 관리</a>
+        			<ul>
+        				<li><a href="/pokemon/list">포켓몬 정보</a></li>
+        				<li><a href="/country/list">국가 정보</a></li>
+        				<c:if test="${sessionScope.userId != null}">
+        					<li><a href="/game-user/list">게임유저 정보</a></li>
+        				</c:if>
+        			</ul>
+        		</li>
+        		
+        		<li><a href="/board/list">게시판</a></li>
+        		<c:if test="${sessionScope.userId!=null && sessionScope.userLevel!='관리자'}">
+        			<li><a href="/giftcard/list">상품권 구매</a></li>
+        		</c:if>
+        		
+        		<!-- 회원 메뉴는 우측에 -->
+        		<c:if test="${sessionScope.userId == null}">
+        		<li class="menu-end">
+        			<a href="/member/login">로그인</a>
+        			<ul>
+        				<li><a href="/member/join">회원가입</a></li>
+        			</ul>
+        		</li>
+        		</c:if>
+        		
+        		<c:if test="${sessionScope.userId!=null}">
+        		<li class="menu-end">
+        			<a href="/member/mypage">${sessionScope.userId}</a>
+        			<ul>
+			   			<c:if test="${sessionScope.userLevel == '관리자'}">
+			   		<li><a href="/admin/home">관리자메뉴</a></li>
+        				</c:if>
+        				<li><a href="/member/logout">로그아웃</a></li>
+        			</ul>
+       			</li>
+       			</c:if>
+        	</ul>
+        </div>
+        
+       	<!-- 컨텐츠 영역 -->
+        <div class="flex-box">
+            <div class="w-200 p-10">
+            	<c:choose>
+					<c:when test="${sessionScope.userId != null}">
+						<!-- 회원일 경우 -->
+	                	<div class="cell center">
+	                    	<img src="/images/하츄핑.jpg" width="100px">
+	                	</div>
+	                	<div class="cell center">
+	                    	<i class="fa-solid fa-user"></i>
+	                    	${sessionScope.userId} 님
+	                	</div>
+	                	<div class="cell center">
+	                    	<a href="/member/mypage">내 정보 보기</a>
+	                	</div>
+					</c:when>
+					<c:otherwise>
+					<!-- 비회원일 경우 -->
+	                <div class="cell center">
+	                    <a href="/member/login">로그인</a>하세요
+	                </div>
+					</c:otherwise>
+				</c:choose>
 				
-				<c:if test="${sessionScope.userLevel == '관리자'}">
-					<button><a href="/admin/home">관리자 메뉴</a></button>
-				</c:if>
-				<c:if test="${sessionScope.userLevel != '관리자'}">
-					<button><a href="/giftcard/list">포인트 충전</a></button>
-				</c:if>
-				<hr>
-			</c:when>
-			<%-- 비회원 --%>
-			<c:otherwise>
-				<button><a href="/">홈</a></button>
-				<button><a href="/country/list">국가</a></button>
-				<button><a href="/pokemon/list">포켓몬</a></button>
-				<button><a href="/member/join">회원가입</a></button>
-				<button><a href="/member/login">로그인</a></button>
-				<hr>
-			</c:otherwise>
-		</c:choose>
-	</div>
-	<hr>
-	<div style="min-height:400px">
+			</div>
+			
+			<div class="flex-fill p-10" style="min-height: 400px;">
+			
