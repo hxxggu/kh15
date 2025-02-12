@@ -17,7 +17,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>홈페이지 레이아웃</title>
+    <title>Homepage Layout</title>
 
     <!-- google font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -52,27 +52,27 @@
         <div>
         	<ul class="menu">
         		<li>
-        			<a>데이터 관리</a>
+        			<a>Data</a>
         			<ul>
-        				<li><a href="/pokemon/list">포켓몬 정보</a></li>
-        				<li><a href="/country/list">국가 정보</a></li>
+        				<li><a href="/pokemon/list">Pokemon</a></li>
+        				<li><a href="/country/list">Country</a></li>
         				<c:if test="${sessionScope.userId != null}">
-        					<li><a href="/game-user/list">게임유저 정보</a></li>
+        					<li><a href="/game-user/list">Game User</a></li>
         				</c:if>
         			</ul>
         		</li>
         		
-        		<li><a href="/board/list">게시판</a></li>
+        		<li><a href="/board/list">Board</a></li>
         		<c:if test="${sessionScope.userId!=null && sessionScope.userLevel!='관리자'}">
-        			<li><a href="/giftcard/list">상품권 구매</a></li>
+        			<li><a href="/giftcard/list">Purchase</a></li>
         		</c:if>
         		
         		<!-- 회원 메뉴는 우측에 -->
         		<c:if test="${sessionScope.userId == null}">
         		<li class="menu-end">
-        			<a href="/member/login">로그인</a>
+        			<a href="/member/login">Login</a>
         			<ul>
-        				<li><a href="/member/join">회원가입</a></li>
+        				<li><a href="/member/join">Join</a></li>
         			</ul>
         		</li>
         		</c:if>
@@ -82,9 +82,9 @@
         			<a href="/member/mypage">${sessionScope.userId}</a>
         			<ul>
 			   			<c:if test="${sessionScope.userLevel == '관리자'}">
-			   		<li><a href="/admin/home">관리자메뉴</a></li>
+			   		<li><a href="/admin/home">Admin Menu</a></li>
         				</c:if>
-        				<li><a href="/member/logout">로그아웃</a></li>
+        				<li><a href="/member/logout">Logout</a></li>
         			</ul>
        			</li>
        			</c:if>
@@ -105,7 +105,7 @@
 	                    	${sessionScope.userId} 님
 	                	</div>
 	                	<div class="cell center">
-	                    	<a href="/member/mypage">내 정보 보기</a>
+	                    	<a href="/member/mypage">my page</a>
 	                	</div>
 					</c:when>
 					<c:otherwise>

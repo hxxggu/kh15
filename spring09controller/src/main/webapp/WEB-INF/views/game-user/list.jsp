@@ -65,8 +65,8 @@
 	</div>
 	
 	<div class="cell right">
-		<a href="add" class="btn btn-neutral"><i class="fa-solid fa-plus"></i> 신규 유저</a>
-		<a href="/" class="btn btn-neutral"><i class="fa-solid fa-house"></i></a>
+		<a href="add" class="btn btn-pink"><i class="fa-solid fa-plus"></i> 신규 유저</a>
+		<a href="/" class="btn btn-pink"><i class="fa-solid fa-house"></i></a>
 	</div>
 	
 	<!-- 테이블 -->

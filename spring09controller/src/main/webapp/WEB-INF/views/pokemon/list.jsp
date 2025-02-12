@@ -55,18 +55,18 @@
             <h2>[ Pokemon List ]</h2>
         </div>
         <div class="cell right">
-		<a href="add" class="btn btn-neutral"><i class="fa-solid fa-plus"></i> 추가</a>
-		<a href="/" class="btn btn-neutral"><i class="fa-solid fa-house"></i></a>
+		<a href="add" class="btn btn-pink"><i class="fa-solid fa-plus"></i> 추가</a>
+		<a href="/" class="btn btn-pink"><i class="fa-solid fa-house"></i></a>
         </div>
         <!-- 검색창 -->
 		<div class="cell center">
 		<form action="list" method="get">
-	    	<select name="column">
+	    	<select name="column" class="field">
 					<option ${column=='이름' ? 'selected' : ''}>이름</option>
 					<option  ${column=='속성' ? 'selected' : ''}>속성</option>
 				</select>
-				<input type="search" name="keyword" value="${keyword}">
-				<button>검색</button>
+				<input type="search" name="keyword" value="${keyword}" class="field">
+				<button class="btn btn-positive">검색</button>
 			</form>
 		</div>
 		

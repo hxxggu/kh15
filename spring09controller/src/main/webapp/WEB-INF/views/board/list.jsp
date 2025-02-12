@@ -48,7 +48,7 @@
      }
 </style>
 
-<div class="container w-1000">
+<div class="container w-950">
 	<div class="cell center">
 		<h2>자유 게시판</h2>
 		<p>글은 자신의 인격입니다.<br>(*무분별한 비방 시 글이 삭제될 수 있습니다.)</p>
