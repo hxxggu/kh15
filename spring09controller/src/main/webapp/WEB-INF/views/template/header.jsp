@@ -36,7 +36,7 @@
 
 <body>
     <!-- 화면 영역 -->
-    <div class="container w-1100">
+    <div class="container w-1200">
         <!-- 헤더 영역 -->
         <div class="flex-box p-10">
             <div class="w-25 left flex-box flex-center">

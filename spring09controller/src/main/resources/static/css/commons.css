@@ -751,3 +751,40 @@ textarea.field {
     left: auto;
     right: 100%;
 }
+
+
+/*
+    입력폼 디자인(feat. 자바스크립트)
+    - 모든 입력창은 .field 클래스를 가진다
+    - 입력창 뒤에는 성공과 실패에 대한 피드백 메세지 태그가 존재
+        - 성공 시 .success-feedback이 출력
+        - 실패 시 .fail-feedback이 출력
+    - 이 모든 작업의 주인공은 입력창이므로 입력창에 성공/실패 표시
+        - 성공 시 .success를 추가
+        - 실패 시 .fail을 추가
+*/
+.success-feedback {
+    color: #0984e3;
+    display: none;
+}
+
+.fail-feedback,
+.fail2-feedback {
+    color: #d63031;
+    display: none;
+}
+
+.field.success {
+    border-color: #0984e3;
+}
+
+.field.fail,
+.field.fail2 {
+    border-color: #d63031;
+}
+
+.field.success~.success-feedback,
+.field.fail~.fail-feedback,
+.field.fail2~.fail2-feedback {
+    display: block;
+}
