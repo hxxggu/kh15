@@ -4,8 +4,51 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+<link rel="stylesheet" type="text/css" href="./commons.css">
+<style>
+	.table.table-ellipsis>tbody>tr>th,
+	.table.table-ellipsis>tbody>tr>td {
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	    white-space: nowrap;
+	}
 
-<div class="container w-900">
+	.table {
+	    width: 100%;
+	    font-size: 16px;
+	    font-weight: 400;
+	    border-collapse: collapse;
+	}
+
+	.table.table-border,
+	.table.table-border>thead>tr>th,
+	.table.table-border>thead>tr>td,
+	.table.table-border>tbody>tr>th,
+	.table.table-border>tbody>tr>td,
+	.table.table-border>tfoot>tr>th,
+	.table.table-border>tfoot>tr>td {
+	    border: 1px solid #636363;
+	}
+	.table>thead>tr>th,
+	      .table>thead>tr>td,
+	      .table>tbody>tr>th,
+	      .table>tbody>tr>td,
+	      .table>tfoot>tr>th,
+	      .table>tfoot>tr>td {
+	          padding: 0.25em;
+	          font-weight: inherit;
+	      }
+     .table.table-stripe>thead,
+     .table.table-stripe>tbody>tr:nth-child(2n) {
+         background-color: #ffedfa;
+     }
+     
+      .table.table-hover>tbody>tr:hover {
+      	background-color: #ffddfd;
+     }
+</style>
+
+<div class="container w-1000">
 	<div class="cell center">
 		<h2>자유 게시판</h2>
 		<p>글은 자신의 인격입니다.<br>(*무분별한 비방 시 글이 삭제될 수 있습니다.)</p>
@@ -94,7 +137,12 @@
 	</table>
 	</div>
 	<div class="cell right">
-		<a href="write" class="btn btn-neutral">글쓰기</a>
+		<a href="write" class="btn btn-neutral">
+			<i class="fa-regular fa-pen-to-square"></i> 글쓰기
+		</a>
+		<a href="/" class="btn btn-neutral">
+			<i class="fa-solid fa-house"></i>
+		</a>
 	</div>
 	
 	<!-- 페이지 네비게이터 -->
@@ -110,7 +158,9 @@
 					<option value="board_writer" ${param.column == 'board_writer' ? 'selected' : ''}>작성자</option>
 				</select>
 				<input type="text" name="keyword" value="${param.keyword}" class="field">
-				<button class="btn btn-positive">검색</button>
+				<button class="btn btn-positive">
+					<i class="fa-solid fa-magnifying-glass"></i>
+				</button>
 			</form>
 		</div>
 	</div>

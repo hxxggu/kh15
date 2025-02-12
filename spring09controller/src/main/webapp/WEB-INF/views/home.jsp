@@ -15,13 +15,13 @@
 <%-- 동적 include --%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<div class="container w-700">
+<div class="container w-1000">
 	<div class="cell center">
-		<h1>welcome :)</h1>
+		<h2>Main Page</h2>
 	</div>
 	
-	<div class="cell">
-		<img src="https://placehold.co/100x100" width="100%">
+	<div class="cell center">
+		<img src="https://placehold.co/50x50" width="50%">
 	</div>
 </div>
 

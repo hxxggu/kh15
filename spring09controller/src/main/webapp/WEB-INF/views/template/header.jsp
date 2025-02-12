@@ -101,7 +101,7 @@
 	                    	<img src="/images/하츄핑.jpg" width="100px">
 	                	</div>
 	                	<div class="cell center">
-	                    	<i class="fa-solid fa-user"></i>
+	                    	<i class="fa-regular fa-user"></i>
 	                    	${sessionScope.userId} 님
 	                	</div>
 	                	<div class="cell center">

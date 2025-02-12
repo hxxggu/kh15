@@ -38,25 +38,25 @@
             font-weight: inherit;
         }
         
-        .table.table-stripe>thead,
-        .table.table-stripe>tbody>tr:nth-child(2n) {
-            background-color: rgb(255, 255, 205);
-        }
-        
-         .table.table-hover>tbody>tr:hover {
-         	background-color: rgb(243, 243, 118);
-        }
+     .table.table-stripe>thead,
+     .table.table-stripe>tbody>tr:nth-child(2n) {
+         background-color: #ffedfa;
+     }
+     
+      .table.table-hover>tbody>tr:hover {
+      	background-color: #ffddfd;
+     }
      
 	</style>
 <br>
 <body>
     <div class="container w-500">
         <div class="cell center">
-            <h2>[ 포켓몬 리스트 ]</h2>
+            <h2>[ Pokemon List ]</h2>
         </div>
         <div class="cell right">
-            <a href="#" class="btn btn-nuetral">Main</a>
-            <a href="#" class="btn btn-nuetral">+신규등록</a>
+		<a href="add" class="btn btn-neutral"><i class="fa-solid fa-plus"></i> 추가</a>
+		<a href="/" class="btn btn-neutral"><i class="fa-solid fa-house"></i></a>
         </div>
         <!-- 검색창 -->
 		<div class="cell center">

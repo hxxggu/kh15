@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
- <link rel="stylesheet" type="text/css" href="./commons.css">
+<link rel="stylesheet" type="text/css" href="./commons.css">
 <style>
 	.table.table-ellipsis>tbody>tr>th,
 	.table.table-ellipsis>tbody>tr>td {
@@ -39,14 +39,15 @@
 	          font-weight: inherit;
 	      }
       
-	.table.table-stripe>thead,
-	.table.table-stripe>tbody>tr:nth-child(2n) {
-	    background-color: rgb(255, 255, 205);
-	}
-      
-	 .table.table-hover>tbody>tr:hover {
-	 	background-color: rgb(243, 243, 118);
-	}
+     .table.table-stripe>thead,
+     .table.table-stripe>tbody>tr:nth-child(2n) {
+         background-color: #ffedfa;
+     }
+     
+      .table.table-hover>tbody>tr:hover {
+      	background-color: #ffddfd;
+     }
+     
 </style>
 
 <body>
@@ -55,8 +56,8 @@
             <h2>[ 국가 목록 ]</h2>
         </div>
         <div class="cell right">
-            <a href="add" class="btn btn-nuetral">+국가등록</a>
-            <a href="/" class="btn btn-nuetral">Main</a>
+			<a href="add" class="btn btn-neutral"><i class="fa-solid fa-plus"></i> 추가</a>
+			<a href="/" class="btn btn-neutral"><i class="fa-solid fa-house"></i></a>
         </div>
         <div class="cell">
             <form action="list" method="get">
