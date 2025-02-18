@@ -158,7 +158,7 @@
 					<option value="board_writer" ${param.column == 'board_writer' ? 'selected' : ''}>작성자</option>
 				</select>
 				<input type="text" name="keyword" value="${param.keyword}" class="field">
-				<button class="btn btn-positive">
+				<button class="btn btn-purple">
 					<i class="fa-solid fa-magnifying-glass"></i>
 				</button>
 			</form>

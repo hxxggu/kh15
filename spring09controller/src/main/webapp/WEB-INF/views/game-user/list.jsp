@@ -52,6 +52,12 @@
 	<div class="cell center">
 		<h2>[ Game User List ]</h2>
 	</div>
+	
+	<div class="cell right">
+		<a href="add" class="btn btn-pink"><i class="fa-solid fa-plus"></i> 신규 유저</a>
+		<a href="/" class="btn btn-pink"><i class="fa-solid fa-house"></i></a>
+	</div>
+	
 	<!-- 검색창 -->
 	<div class="cell center">
 		<form action="list" method="get">
@@ -60,15 +66,12 @@
 				<option ${column=='직업' ? 'selected' : ''}>직업</option>
 			</select>
 			<input type="search" name="keyword" value="${keyword}" class="field">
-			<button class="btn btn-positive">검색</button>
+			<button class="btn btn-purple">
+				<i class="fa-solid fa-magnifying-glass"></i>
+			</button>
 		</form>
 	</div>
-	
-	<div class="cell right">
-		<a href="add" class="btn btn-pink"><i class="fa-solid fa-plus"></i> 신규 유저</a>
-		<a href="/" class="btn btn-pink"><i class="fa-solid fa-house"></i></a>
-	</div>
-	
+		
 	<!-- 테이블 -->
 	<div class="cell">
 		<table class="table table-border table-stripe">

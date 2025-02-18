@@ -66,7 +66,9 @@
 					<option  ${column=='속성' ? 'selected' : ''}>속성</option>
 				</select>
 				<input type="search" name="keyword" value="${keyword}" class="field">
-				<button class="btn btn-positive">검색</button>
+				<button class="btn btn-purple">
+					<i class="fa-solid fa-magnifying-glass"></i>
+				</button>
 			</form>
 		</div>
 		
