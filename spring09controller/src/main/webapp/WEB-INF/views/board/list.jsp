@@ -137,10 +137,10 @@
 	</table>
 	</div>
 	<div class="cell right">
-		<a href="write" class="btn btn-neutral">
+		<a href="write" class="btn btn-pink">
 			<i class="fa-regular fa-pen-to-square"></i> 글쓰기
 		</a>
-		<a href="/" class="btn btn-neutral">
+		<a href="/" class="btn btn-purple">
 			<i class="fa-solid fa-house"></i>
 		</a>
 	</div>

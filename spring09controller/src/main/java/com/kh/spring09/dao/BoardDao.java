@@ -232,4 +232,35 @@ public class BoardDao {
 		return jdbcTemplate.update(sql, data) > 0;
 	}
 	
+
+//	게시글 좋아요 관련 처리 기능
+	
+	// 좋아요 설정
+	public void insertBoardLike(String memberId, int boardNo) {
+		String sql = "insert into board_like(member_id, board_no) values(?,?)";
+		Object[] data = {memberId, boardNo};
+		jdbcTemplate.update(sql, data);
+	}
+	
+	// 좋아요 해제
+	public void deleteBoardLike(String memberId, int boardNo) {
+		String sql = "delete board_like where member_id=? and board_no=?";
+		Object[] data = {memberId, boardNo};
+		jdbcTemplate.update(sql, data);
+	}
+	
+	// 좋아요 검사
+	public boolean checkBoardLike(String memberId, int boardNo) {
+		String sql = "select count(*) from board_like where member_id=? and board_no=?";
+		Object[] data = {memberId, boardNo};
+		return jdbcTemplate.queryForObject(sql, int.class, data) > 0;
+	}
+	
+	// 좋아요 개수
+	public int cntBoardLike(int boardNo) {
+		String sql = "select count(*) from board_like where board_no=?";
+		Object[] data = {boardNo};
+		return jdbcTemplate.queryForObject(sql, int.class, data);
+	}
+	
 }

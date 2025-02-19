@@ -24,23 +24,23 @@
 <hr>
 
 <div>
-	| 좋아요 <b>${boardDto.boardLike}</b> | 
-	댓글 <b>${boardDto.boardReply}</b> |
+	  | <i class="fa-solid fa-thumbs-up"></i> 좋아요 <b>${boardDto.boardLike}</b> | 
+	<i class="fa-regular fa-comment-dots"></i> 댓글 <b>${boardDto.boardReply}</b> |
 </div>
 <br>
-<div>
-	<button><a href="write">글쓰기</a></button>
-	<button><a href="write?boardTarget=${boardDto.boardNo}">답글쓰기</a></button>
+<div class="cell">
+	<a href="write" class="btn btn-pink"><i class="fa-solid fa-pen"></i> 글쓰기</a>
+	<a href="write?boardTarget=${boardDto.boardNo}" class="btn btn-purple"><i class="fa-solid fa-pen"></i> 답글쓰기</a>
 	
 	<!-- 소유자일 경우만 수정과 삭제를 표시 -->
 	<c:if test="${sessionScope.userId != null}">
 		<c:if test="${sessionScope.userId == boardDto.boardWriter}">
-			<button><a href="edit?boardNo=${boardDto.boardNo}">수정</a></button>
-			<button><a href="delete?boardNo=${boardDto.boardNo}">삭제</a></button>
+			<a href="edit?boardNo=${boardDto.boardNo}"  class="btn btn-pink"><i class="fa-solid fa-pen-to-square"></i> 수정</a>
+			<a href="delete?boardNo=${boardDto.boardNo}"  class="btn btn-purple"><i class="fa-solid fa-trash-can"></i> 삭제</a>
 		</c:if>
 	</c:if>
 	
-	<button><a href="list">목록</a></button>
+	<a href="list" class="btn btn-pink"><i class="fa-solid fa-list-ul"></i> 목록</a>
 </div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

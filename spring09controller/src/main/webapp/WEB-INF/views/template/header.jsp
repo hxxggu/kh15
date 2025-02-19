@@ -89,7 +89,7 @@
 			   			<c:if test="${sessionScope.userLevel == '관리자'}">
 			   		<li><a href="/admin/home">Admin Menu</a></li>
         				</c:if>
-        				<li><a href="/member/logout">Logout</a></li>
+        				<li><a href="/member/logout"><i class="fa-solid fa-right-from-bracket"></i> logout</a></li>
         			</ul>
        			</li>
        			</c:if>
@@ -110,7 +110,7 @@
 	                    	${sessionScope.userId} 님
 	                	</div>
 	                	<div class="cell center">
-	                    	<a href="/member/mypage">my page</a>
+	                    	<a href="/member/mypage"><i class="fa-solid fa-house-user"></i> My Info</a>
 	                	</div>
 					</c:when>
 					<c:otherwise>

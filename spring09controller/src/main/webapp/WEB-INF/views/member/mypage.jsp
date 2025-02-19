@@ -5,7 +5,7 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<h2>▶ 마이페이지</h2>
+<h2><i class="fa-solid fa-house-user"></i> 마이페이지</h2>
 
 <table border="1" width="400">
 	<tr>

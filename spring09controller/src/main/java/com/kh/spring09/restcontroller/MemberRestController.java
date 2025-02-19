@@ -23,5 +23,9 @@ public class MemberRestController {
 		return memberDto == null; // 사용 가능하면 true 반환
 	}
 	
-//	@RequestMapping("/checkMemberNickname")
+	@RequestMapping("/checkMemberNickname")
+	public boolean checkMemberNickname(@RequestParam String memberNickname) {
+		MemberDto memberDto = memberDao.selectOneByMemberNickname(memberNickname);
+		return memberDto != null;
+	}
 }
