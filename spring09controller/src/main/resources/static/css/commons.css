@@ -575,18 +575,18 @@ textarea.field {
 .table.table-border>tbody>tr>td,
 .table.table-border>tfoot>tr>th,
 .table.table-border>tfoot>tr>td {
-    border: 1px solid #636e72;
+    border: 1px solid #636363;
 }
 
 /* 확장 스타일(2) - 줄무늬 테이블 */
 .table.table-stripe>thead,
 .table.table-stripe>tbody>tr:nth-child(2n) {
-    background-color: #dfe6e9;
+    background-color: #ffedfa;
 }
 
 /* 확장 스타일(3) - 마우스 반응 테이블 */
 .table.table-hover>tbody>tr:hover {
-    background-color: #c7cdcf;
+    background-color: #ffddfd;
 }
 
 /* 확장 스타일(4) - 말줄임표 처리되는 테이블 */

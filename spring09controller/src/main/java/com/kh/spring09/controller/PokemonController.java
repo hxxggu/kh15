@@ -70,20 +70,10 @@ public class PokemonController {
 	//목록 매핑
 	//- 데이터베이스에서 조회한 결과(List<PokemonDto>)를 화면에 전달
 	@RequestMapping("/list")
-	public String list(
-			@RequestParam(required = false) String column,
-			@RequestParam(required = false) String keyword,
-			Model model) {
-		boolean search = column != null && keyword != null;
-		if(search) {
-			model.addAttribute("list", pokemonDao.selectList(column, keyword));
-		}
-		else {
-			model.addAttribute("list", pokemonDao.selectList());
-		}
-		model.addAttribute("search", search);
-		model.addAttribute("column", column);
-		model.addAttribute("keyword", keyword);
+	public String list(Model model, 
+				@ModelAttribute("pageVO") PageVO pageVO) {
+		List<PokemonDto> list = pokemonDao.selectList();
+		model.addAttribute("list", list);
 		return "/WEB-INF/views/pokemon/list.jsp";
 	}
 	
@@ -171,6 +161,22 @@ public class PokemonController {
 			return "redirect:/images/empty.jpg";
 			//return "redirect:https://placehold.co/400x400?text=P";
 		}
+	}
+	
+	//여러 개의 포켓몬 번호(PK)가 전달될 때 이를 받아서 일괄 삭제하는 매핑
+	//데이터 형태 - pokemonNo=1&pokemonNo=2&pokemonNo=3
+	@PostMapping("/deleteAll")
+	public String deletAll(@RequestParam(value = "pokemonNo") 
+											List<Integer> pokemonNoList) {
+		for(int pokemonNo : pokemonNoList) {
+			try {//첨부파일 삭제를 시도해보고
+				int attachmentNo = pokemonDao.findAttachment(pokemonNo);
+				attachmentService.delete(attachmentNo);
+			}
+			catch(Exception e) {/* 첨부파일이 없을 경우 예외 발생*/}
+			pokemonDao.delete(pokemonNo);
+		}
+		return "redirect:list";
 	}
 	
 }
