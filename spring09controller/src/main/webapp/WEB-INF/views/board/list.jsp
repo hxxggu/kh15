@@ -63,10 +63,10 @@
 				<th>작성자</th>
 				<th>작성일</th>
 				<th>조회수</th>
-				<th>좋아요</th>
+				<!-- <th>좋아요</th>
 				<th>그룹</th>
 				<th>상위글</th>
-				<th>차수</th>
+				<th>차수</th>  -->
 			</tr>
 		</thead>
 		<c:choose>
@@ -109,8 +109,15 @@
 							
 							<!-- 댓글 표시 -->
 							<c:if test="${boardListViewDto.boardReply > 0}">
-							[${boardListViewDto.boardReply}]
+								[${boardListViewDto.boardReply}]
 							</c:if>
+							
+							<!-- 좋아요 표시 -->
+							<c:if test="${boardListViewDto.boardLike > 0}">
+								<i class="fa-solid fa-heart"></i>
+								${boardListViewDto.boardLike}
+							</c:if>
+							
 						</td>
 						<td>
 							<c:choose>
@@ -125,10 +132,10 @@
 	<%-- 				<td>${boardDto.getBoardWtimeString()}</td> --%>
 						<td>${boardListViewDto.boardWtimeString}</td>
 						<td>${boardListViewDto.boardRead}</td>
-						<td>${boardListViewDto.boardLike}</td>
+<%--						<td>${boardListViewDto.boardLike}</td>
 						<td>${boardListViewDto.boardGroup}</td>
 						<td>${boardListViewDto.boardTarget}</td>
-						<td>${boardListViewDto.boardDepth}</td>
+						<td>${boardListViewDto.boardDepth}</td> --%>
 					</tr>
 					</c:forEach>
 				</tbody>

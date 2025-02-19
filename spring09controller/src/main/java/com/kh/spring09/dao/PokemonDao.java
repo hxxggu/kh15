@@ -133,4 +133,28 @@ public class PokemonDao {
 			return jdbcTemplate.queryForObject(sql, int.class, data);
 		}
 		
+
+//		포켓몬 좋아요 관련 처리 기능
+		
+		// 좋아요 설정
+		public void insertPokemonLike(String memberId, int pokemonNo) {
+			String sql = "insert into pokemon_like(member_id, pokemon_no) values(?,?)";
+			Object[] data = { memberId, pokemonNo };
+			jdbcTemplate.update(sql, data);
+		}
+		// 좋아요 해제
+		public void deletePokemonLike(String memberId, int pokemonNo) {
+			String sql = "delete board_like where member_id=? and pokemon_no=?";
+			Object[] data = { memberId, pokemonNo };
+			jdbcTemplate.update(sql, data);
+		}
+		// 좋아요 개수
+		public int countPokemonLike(int pokemonNo) {
+			String sql = "select count(*) from board_like where pokemon_no=?";
+			Object[] data = {  pokemonNo };
+			return jdbcTemplate.queryForObject(sql, int.class, data);
+		}
+		
+		
+		
 }

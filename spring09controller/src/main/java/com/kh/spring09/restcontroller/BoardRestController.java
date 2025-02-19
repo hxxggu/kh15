@@ -29,11 +29,11 @@ public class BoardRestController {
 		
 		boolean done = boardDao.checkBoardLike(userId, boardNo);
 		// 내가 좋아요를 눌렀는지 누르지 않았는지 확인 가능
-		int cnt = boardDao.cntBoardLike(boardNo);
+		int count = boardDao.countBoardLike(boardNo);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("done", done); // 해당 회원의 좋아요 여부
-		map.put("cnt", cnt); // 해당 글의 좋아요 여부
+		map.put("count", count); // 해당 글의 좋아요 여부
 		return map;
 	}
 	
@@ -49,11 +49,13 @@ public class BoardRestController {
 			boardDao.insertBoardLike(userId, boardNo); // 등록
 		}
 		
-		int cnt = boardDao.cntBoardLike(boardNo); // 카운트 다시 구하기
+		int count = boardDao.countBoardLike(boardNo); // 카운트 다시 구하기
+		boardDao.updateBoardLike(boardNo, count); // 좋아요 개수 갱신
+		// boardDao.updateBoardLike(boardNo); // 좋아요 개수 갱신
 		
 		Map<String, Object> map = new HashMap<>(); 
 		map.put("done", !done); // 이 회원의 좋아요 여부
-		map.put("cnt", cnt); // 이 글의 좋아요 개수
+		map.put("count", count); // 이 글의 좋아요 개수
 		return map;
 	}
 	

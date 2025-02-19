@@ -11,13 +11,13 @@
                     <h3><i class="fa-solid fa-desktop"></i> KH정보교육원</h3>
                 </div>
                 <div class="cell">
-                    ㅇㅇ시 ㅇㅇ구 ㅇㅇ동 ㅇㅇㅇ-ㅇㅇㅇ번지
+                    <i class="fa-solid fa-map-location-dot"></i> ㅇㅇ시 ㅇㅇ구 ㅇㅇ동 ㅇㅇㅇ-ㅇㅇㅇ번지
                 </div>
                 <div class="cell">
                     대표자 : ㅇㅇㅇ
                 </div>
                 <div class="cell">
-                    고객센터 : 02) 0000-0000
+                    <i class="fa-solid fa-phone-volume"></i> 고객센터 : 02) 0000-0000
                 </div>
             </div>
 
@@ -26,28 +26,20 @@
                     <h3><i class="fa-solid fa-location-dot"></i> 지점 정보</h3>
                 </div>
                 <div class="cell">
-                    강남지점
-                    <a href="#">
-                    	<i class="fa-solid fa-arrow-up-right-from-square"></i>
-                    </a>
+                      강남지점
+                    <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                 </div>
                 <div class="cell">
-                    종로지점
-                    <a href="#">
-                    	<i class="fa-solid fa-arrow-up-right-from-square"></i>
-                    </a>
+   	               종로지점
+   	              <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                 </div>
                 <div class="cell">
-                    당산지점
-                    <a href="#">
-                    	<i class="fa-solid fa-arrow-up-right-from-square"></i>
-                    </a>
+                   당산지점
+                   <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                 </div>
                 <div class="cell">
-                    부산지점
-                    <a href="#">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                    </a>
+                   부산지점
+                   <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                 </div>
             </div>
 
@@ -62,7 +54,7 @@
                     <a href="#">개인정보 처리방침</a>
                 </div>
                 <div class="cell">
-                    <h3><i class="fa-solid fa-handshake"></i> 파트너쉽</h3>
+                    <h3><i class="fa-solid fa-handshake"></i> Partners</h3>
                 </div>
                 <div class="cell">
 					<a href="https://www.google.com"><i class="fa-brands fa-google"></i></a>

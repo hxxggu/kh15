@@ -70,6 +70,7 @@
 	<!-- 전체 삭제를 위해 테이블 전체를 감싸는 form 생성 -->
 	<form class="form-delete" action="deleteAll" method="post">
 </c:if>
+
     <div class="container w-500">
         <div class="cell center">
             <h2>[ Pokemon List ]</h2>
@@ -104,10 +105,11 @@
 	                    		<input type="checkbox" class="check-all">
 	                    	</th>
                     	</c:if>
-                        <th>이미지</th>
-                        <th>번호</th>
+                        <th>Image</th>
+                        <th>No.</th>
                         <th>이름</th>
                         <th>속성</th>
+                        <th><i class="fa-solid fa-heart-circle-check"></i></th>
                     </tr>
                 </thead>
 
@@ -129,7 +131,11 @@
 							</a>
 						</td>
 						<td>${pokemonDto.pokemonType}</td>
-					</tr>
+						<c:if test="${pokemonDto.pokemonLike > 0}">
+							<i class="fa-solid fa-check"></i>
+							${pokemonDto.pokemonLike}
+						</c:if>
+						</tr>
 				</c:forEach>
 			</table>
 		</div>

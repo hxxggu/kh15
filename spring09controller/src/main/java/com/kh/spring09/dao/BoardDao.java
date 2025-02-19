@@ -238,29 +238,42 @@ public class BoardDao {
 	// 좋아요 설정
 	public void insertBoardLike(String memberId, int boardNo) {
 		String sql = "insert into board_like(member_id, board_no) values(?,?)";
-		Object[] data = {memberId, boardNo};
+		Object[] data = { memberId, boardNo };
 		jdbcTemplate.update(sql, data);
 	}
 	
 	// 좋아요 해제
 	public void deleteBoardLike(String memberId, int boardNo) {
 		String sql = "delete board_like where member_id=? and board_no=?";
-		Object[] data = {memberId, boardNo};
+		Object[] data = { memberId, boardNo };
 		jdbcTemplate.update(sql, data);
 	}
 	
 	// 좋아요 검사
 	public boolean checkBoardLike(String memberId, int boardNo) {
 		String sql = "select count(*) from board_like where member_id=? and board_no=?";
-		Object[] data = {memberId, boardNo};
+		Object[] data = { memberId, boardNo };
 		return jdbcTemplate.queryForObject(sql, int.class, data) > 0;
 	}
 	
 	// 좋아요 개수
-	public int cntBoardLike(int boardNo) {
+	public int countBoardLike(int boardNo) {
 		String sql = "select count(*) from board_like where board_no=?";
-		Object[] data = {boardNo};
+		Object[] data = { boardNo };
 		return jdbcTemplate.queryForObject(sql, int.class, data);
+	}
+	
+	// 좋아요 개수를 갱신하는 메서드
+	public boolean updateBoardLike(int boardNo, int count) {
+		String sql = "update board set board_like=? where board_no=?";
+		Object[] data = { count, boardNo };
+		return jdbcTemplate.update(sql, data) > 0;
+	}
+	public boolean updateBoardLike(int boardNo) {
+		String sql = "update board set board_like = (select count(*) from board_like where board_no=?"
+				+ ") where board_no=?";
+		Object[] data = { boardNo, boardNo };
+		return jdbcTemplate.update(sql, data) > 0;
 	}
 	
 }

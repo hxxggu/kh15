@@ -3,32 +3,36 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<h2>[${pokemonDto.pokemonName}] 포켓몬 정보</h2>
+<div class="container w-400">
 
-<img src="image?pokemonNo=${pokemonDto.pokemonNo}" width="300"> <!-- 동적 -->
-
-<table border="1" width="300">
-	<tr>
-		<th width="30%">번호</th>
-		<td>${pokemonDto.pokemonNo}</td>
-	</tr>
+	<div class="cell">
+		<h2><i class="fa-solid fa-angles-right"></i> ${pokemonDto.pokemonName}</h2>		
+	</div>
+	<div class="cell center">
+		<img src="image?pokemonNo=${pokemonDto.pokemonNo}" width="300"> <!-- 동적 -->		
+	</div>
+	<div class="cell">
+		<b><label>No.</label></b>
+		${pokemonDto.pokemonNo}
+	</div>
 	
-	<tr>
-		<th>이름</th>
-		<td>${pokemonDto.pokemonName}</td>
-	</tr>
+	<div class="cell">
+		<b><label>이름</label></b>
+		${pokemonDto.pokemonName}
+	</div>
 	
-	<tr>
-		<th>속성</th>
-		<td>${pokemonDto.pokemonType}</td>
-	</tr>
-</table>
+	<div class="cell">
+		<b><label style="width: 40%">속성</label></b>
+		${pokemonDto.pokemonType}
+	</div>
+	
+	<div class="cell center">
+		<a href="add" class="btn btn-pink p-25">신규등록</a>
+		<a href="list" class="btn btn-purple p-25">목록보기</a>
+		<a href="edit?pokemonNo=${pokemonDto.pokemonNo}" class="btn btn-pink p-25">수정하기</a>
+		<a href="delete?pokemonNo=${pokemonDto.pokemonNo}" class="btn btn-purple p-25">삭제하기</a>
+	</div>
+</div>
 
-<h2>
-	<button><a href="add">신규등록</a></button>
-	<button><a href="list">목록보기</a></button>
-	<button><a href="edit?pokemonNo=${pokemonDto.pokemonNo}">수정하기</a></button>
-	<button><a href="delete?pokemonNo=${pokemonDto.pokemonNo}">삭제하기</a></button>
-</h2>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

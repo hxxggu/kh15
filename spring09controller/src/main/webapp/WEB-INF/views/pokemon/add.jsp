@@ -39,7 +39,7 @@
 <!-- <form action ="add" method="post"> -->
 
 <form action="add" method="post" enctype="multipart/form-data" autocomplete="off" onsubmit="return checkForm();">
-	<div class="container w-500">    
+	<div class="container w-400">    
 		<div class="cell center">
 		    <h2>[ 포켓몬 등록 ]</h2>
 		</div>
@@ -75,7 +75,7 @@
 		</div>
 		
 		<div class="cell" mt-30>
-		    <button type="submit" class="btn btn-positive w-100">
+		    <button type="submit" class="btn btn-blue w-100">
 		    	<i class="fa-solid fa-plus"></i> 등록
 		    </button>
 		</div>
