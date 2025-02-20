@@ -134,27 +134,48 @@ public class PokemonDao {
 		}
 		
 
-//		포켓몬 좋아요 관련 처리 기능
+//		게시글 좋아요 관련 처리 기능
 		
 		// 좋아요 설정
 		public void insertPokemonLike(String memberId, int pokemonNo) {
-			String sql = "insert into pokemon_like(member_id, pokemon_no) values(?,?)";
+			String sql = "insert into pokemon_like(member_id, pokemon_no) values(?, ?)";
 			Object[] data = { memberId, pokemonNo };
 			jdbcTemplate.update(sql, data);
 		}
+		
 		// 좋아요 해제
 		public void deletePokemonLike(String memberId, int pokemonNo) {
-			String sql = "delete board_like where member_id=? and pokemon_no=?";
+			String sql = "delete pokemon_like where member_id=? and pokemon_no=?";
 			Object[] data = { memberId, pokemonNo };
 			jdbcTemplate.update(sql, data);
 		}
+		
+		// 좋아요 검사
+		public boolean checkPokemonLike(String memberId, int pokemonNo) {
+			String sql = "select count(*) from pokemon_like where member_id=? and pokemon_no=?";
+			Object[] data = { memberId, pokemonNo };
+			return jdbcTemplate.queryForObject(sql, int.class, data) > 0;
+		}
+		
 		// 좋아요 개수
 		public int countPokemonLike(int pokemonNo) {
-			String sql = "select count(*) from board_like where pokemon_no=?";
-			Object[] data = {  pokemonNo };
+			String sql = "select count(*) from pokemon_like where pokemon_no=?";
+			Object[] data = { pokemonNo };
 			return jdbcTemplate.queryForObject(sql, int.class, data);
 		}
 		
-		
+		//좋아요 개수를 갱신하는 메소드
+			public boolean updatePokemomLike(int pokemonNo, int count) {
+				String sql = "update pokemon set pokemon_like = ? where pokemon_no = ?";
+				Object[] data = {count, pokemonNo};
+				return jdbcTemplate.update(sql, data) > 0;
+			}
+			public boolean updatePokemonLike(int pokemonNo) {
+				String sql = "update pokemon set pokemon_like = ("
+									+ "select count(*) from pokemon_like where pokemon_no = ?"
+								+ ") where pokemon_no = ?";
+				Object[] data = {pokemonNo, pokemonNo};//홀더 개수와 순서에 맞게
+				return jdbcTemplate.update(sql, data) > 0;
+			}
 		
 }

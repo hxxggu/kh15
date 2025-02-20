@@ -10,7 +10,7 @@
 	$(function(){
 		// 자바 스크립트에서 파라미터를 읽기 위한 방법
 		var params = new URLSearchParams(location.search)
-		var pokemonNo = params.get("pokemonNo"); // 파라미터에 있는 boardNo 의 값
+		var pokemonNo = params.get("pokemonNo"); // 파라미터에 있는 pokemonNo 의 값
 		
 		// 시작하자마자 좋아요 여부를 체크하여 결과를 표시
 		$.ajax({
@@ -66,7 +66,7 @@
 	</div>
 	
 	<div class="cell">
-		<b><label><i class="fa-solid fa-heart-circle-check"></i></label></b>
+		<button class="btn btn-negative btn-like"><i class="fa-solid fa-heart-circle-check"></i></button>
 		${pokemonDto.pokemonLike}
 	</div>
 	

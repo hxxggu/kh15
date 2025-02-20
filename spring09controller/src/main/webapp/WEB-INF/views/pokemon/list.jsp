@@ -131,11 +131,13 @@
 							</a>
 						</td>
 						<td>${pokemonDto.pokemonType}</td>
-						<c:if test="${pokemonDto.pokemonLike > 0}">
-							<i class="fa-solid fa-check"></i>
-							${pokemonDto.pokemonLike}
-						</c:if>
-						</tr>
+						<td>
+							<c:if test="${pokemonDto.pokemonLike > 0}">
+								<i class="fa-solid fa-check"></i>
+								${pokemonDto.pokemonLike}
+							</c:if>
+						</td>
+					</tr>
 				</c:forEach>
 			</table>
 		</div>
