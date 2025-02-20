@@ -37,7 +37,7 @@ public class BoardRestController {
 		return map;
 	}
 	
-	// 좋아요 설정 / 해제 매핑
+	// 좋아요 설정 / 해제 매핑 → 게시글의 좋아요 개수를 갱신
 	@RequestMapping("/action")
 	public Map<String, Object> action(
 			@RequestParam int boardNo, HttpSession session) {

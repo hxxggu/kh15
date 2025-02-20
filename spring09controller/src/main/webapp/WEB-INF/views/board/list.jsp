@@ -63,7 +63,7 @@
 				<th>작성자</th>
 				<th>작성일</th>
 				<th>조회수</th>
-				<!-- <th>좋아요</th>
+		<!-- <th>좋아요</th>
 				<th>그룹</th>
 				<th>상위글</th>
 				<th>차수</th>  -->
@@ -114,7 +114,8 @@
 							
 							<!-- 좋아요 표시 -->
 							<c:if test="${boardListViewDto.boardLike > 0}">
-								<i class="fa-solid fa-heart"></i>
+								&nbsp;&nbsp;
+								<i class="fa-solid fa-heart red"></i>
 								${boardListViewDto.boardLike}
 							</c:if>
 							

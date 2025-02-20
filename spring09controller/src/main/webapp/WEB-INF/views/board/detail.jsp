@@ -14,21 +14,57 @@
 		
 		// 시작하자마자 좋아요 여부를 체크하여 결과를 표시
 		$.ajax({
-			url : "/rest/board/check",
-			method : "post",
-			data : {boardNo : boardNo},
-			success : function(response) { // 해당 response에는 done 과 count 가 있다
-				$(".fa-heart").addClass(response.done ? "fa-solid red" : "fa-regular");
+			url:"/rest/board/check",
+			method:"post",
+			data: {boardNo : boardNo},
+			success:function(response) {//response에는 done, count가 있다
+				$(".fa-heart").removeClass("fa-solid fa-regular")
+					.addClass(response.done ? "fa-solid" : "fa-regular");
 				$(".heart-count").text(response.count);
 			}
 		});
 		
 		// 하트를 클릭하면 좋아요 설정 / 해제를 구현
-		
+		$(".fa-heart").click(function(){
+			$.ajax({
+				url:"/rest/board/action",
+				method:"post",
+				data: {boardNo : boardNo},
+				success:function(response) {//response에는 done, count가 있다
+					$(".fa-heart").removeClass("fa-solid fa-regular")
+						.addClass(response.done ? "fa-solid" : "fa-regular");
+					$(".heart-count").text(response.count);
+				}
+			});
+		});
 	});
 	
 </script>
 </c:if>
+
+<!-- 댓글 관련 스크립트 -->
+<script type="text/javascript">
+	$(function(){
+		// 글 번호 읽기
+		var params = ;
+		var boardNo = ;'
+		
+		// 최초 1회 목록을 불러오도록 처리
+		loadList();
+		
+		// 목록을 불러오는 함수
+		function loadList() {
+			$.ajax({
+				url : "/rest/reply/list",
+				method : "post",
+				data : { replyOrigin : boardNo },
+				success : function(response){
+					console.log(response);
+				}
+			})
+		}
+	});
+</script>
 
 
 <h2>${boardDto.boardTitle}</h2>
