@@ -17,7 +17,11 @@
 
 <div class="container w-950">
 	<div class="cell center">
-		<h2>Main Page</h2>
+		<h2>
+			<i class="fa-solid fa-dog"></i>
+			<i class="fa-solid fa-bone"></i>
+			<i class="fa-solid fa-paw"></i>
+		</h2>
 	</div>
 	
 	<div class="cell center">

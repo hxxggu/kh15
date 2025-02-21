@@ -16,7 +16,8 @@
 <script src="/js/summernote-custom.js"></script>
 
 
-<h2>게시글 수정</h2>
+
+<h2><i class="fa-solid fa-pen-to-square"></i> 게시글 수정</h2>
 
 <form action="edit" method="post">
 	<input type="hidden" name="boardNo" value="${boardDto.boardNo}">
@@ -24,6 +25,6 @@
 	<!-- textarea는 value가 없고 태그 사이에 입력값을 적는다(여러줄이라서) -->
 	<textarea name="boardContent" rows="10" cols="60" required>${boardDto.boardContent}</textarea>
 	<br><br>
-	<button>수정 완료</button>
+	<button class="btn btn-pink"><i class="fa-solid fa-pen-to-square"></i>수정 완료</button>
 </form>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

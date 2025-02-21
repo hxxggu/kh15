@@ -55,16 +55,17 @@
 	</div>
 	<div class="cell w-100">
 		<label class="cell"><b>No.</b></label>
-		${pokemonDto.pokemonNo}
+		<label>${pokemonDto.pokemonNo}</label>
 	</div>
 	
-	<div class="cell">
-		<label><b>이름</b></label>${pokemonDto.pokemonName}
+	<div class="cell w-100">
+		<label><b>이름</b></label>
+		<label>${pokemonDto.pokemonName}</label>
 	</div>
 	
 	<div class="cell">
 		<b><label style="width: 40%">속성</label></b>
-		${pokemonDto.pokemonType}
+		<label>${pokemonDto.pokemonType}</label>
 	</div>
 	
 	<div class="cell">

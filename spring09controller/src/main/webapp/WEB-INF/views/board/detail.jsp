@@ -317,7 +317,7 @@
 
 
 <div>
-	<a href="write" class="btn btn-pink"><i class="fa-solid fa-pen"></i></a>
+	<a href="write" class="btn btn-pink"><i class="fa-solid fa-pen"></i> 글쓰기</a>
 	<a href="write?boardTarget=${boardDto.boardNo}" class="btn btn-purple"><i class="fa-solid fa-pen"></i> 답글쓰기</a>
 	
 	<!-- 소유자일 경우만 수정과 삭제를 표시 -->

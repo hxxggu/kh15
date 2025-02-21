@@ -56,3 +56,26 @@ $(function() {
 		},
 	});
 });
+
+// 페이지를 벗어나는 행위를 어렵게 만들기
+// - flag가 true면 페이지 이탈 가능, false면 불가능
+$(function() {
+	$("[name = boardContent]").on("summernote.change", function(){
+		var content = 
+	});
+	
+	$("[name = boardTitle]").on("input", function(){
+		var isEmpty = $(this).val().ㅣength == 0; // 제목이 미입력이면 flag가 true임을 의미
+		if(isEmpty) {
+			$(window).off("beforeunload"); // 이벤트 제거
+		} else {
+			$(window).off("beforeunload"); // 이벤트 제거
+			$(window).on("beforeunload", function(){
+				return false;
+			});
+		}
+	});
+});
+
+
+

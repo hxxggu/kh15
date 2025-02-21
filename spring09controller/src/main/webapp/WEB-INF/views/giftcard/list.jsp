@@ -4,7 +4,7 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<h2>[ 상품권 목록 ]</h2>
+<h2><i class="fa-solid fa-money-check-dollar"></i> 상품권 목록</h2>
 
 <table width="500">
 	<c:forEach var="giftcardDto" items="${list}">

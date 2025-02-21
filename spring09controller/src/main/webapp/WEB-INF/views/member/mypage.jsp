@@ -67,16 +67,33 @@
 </table>
 
 <!-- 구매내역 출력 -->
-<h2>▶ 포인트 구매내역</h2>
 
-<table border="1">
-	<thead>
-		<tr>
-			<th>구매 항목</th>
-			<th>구매 일시</th>
-			<th>구매 금액</th>
-		</tr>
-	</thead>
+<div class="container w-500">
+        <div class="cell center">
+            <h2><i class="fa-solid fa-credit-card"></i> 포인트 구매 내역</h2>
+        </div>
+
+        <div class="cell">
+            <label><i class="fa-solid fa-check"></i> 구매 항목</label>
+            
+        </div>
+
+        <div class="cell">
+            <label><i class="fa-solid fa-check"></i> 구매 일시</label>
+        </div>
+
+        <div class="cell">
+            <label><i class="fa-solid fa-check"></i> 구매 금액</label>
+           	<span>
+            	${purchaseHistoryDto.giftcardPrice}원 
+				x 
+				${purchaseHistoryDto.giftcardPurchaseQty}개 
+				= 
+				${purchaseHistoryDto.giftcardPurchaseTotal}원
+            </span>
+        </div>
+    </div>
+
 	<tbody>
 		<c:forEach var="purchaseHistoryDto" items="${purchaseHistoryList}">
 		<tr>
@@ -95,9 +112,11 @@
 </table>
 
 <br><br>
-<button><a href="password">비밀번호 변경</a></button>
-<button><a href="change">개인정보 변경</a></button>
-<button><a href="exit">회원 탈퇴</a></button>
+<div class="cell center">
+<a href="password" class="btn btn-purple">비밀번호 변경</a>
+<a href="change" class="btn btn-pink">개인정보 변경</a>
+<a href="exit" class="btn btn-purple">회원 탈퇴</a>
+</div>
 <br><br>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
