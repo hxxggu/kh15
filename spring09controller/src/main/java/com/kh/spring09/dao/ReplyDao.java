@@ -46,7 +46,7 @@ public class ReplyDao {
 	}
 	
 	public ReplyDto selectOne(int replyNo) {
-		String sql = "select * from reply where reply_no  = ?";
+		String sql = "select * from reply where reply_no = ?";
 		Object[] data = {replyNo};
 		List<ReplyDto> list = jdbcTemplate.query(sql, replyMapper, data);
 		return list.isEmpty() ? null : list.get(0);

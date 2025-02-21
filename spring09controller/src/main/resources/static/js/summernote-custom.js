@@ -15,5 +15,44 @@ $(function() {
 			["tool", ["ol", "ul", "table", "hr", "fullscreen"]],
 			// ["action", ["undo", "redo"]],
 		],
+		// 상황에 맞는 callback 함수들
+		callbacks : {
+		    onImageUpload : function(files){ // files : 선택한 파일
+		        // 예상 시나리오
+		        // 1. 서버로 파일을 업로드
+		        // - 이미지는 multipart/form-data 형태여야 한다
+		        // - 상황 상 form 을 쓸 수가 없으므로 ajax 를 써야 한다
+		        // 2. 업로드한 이미지에 접근할 수 있는 정보 획득
+		        // 3. 획득한 정보로 <img> 생성
+		        // 4. 에디터에 추가
+		        // - $("[name = boardContent]").summernote("insertNode", 이미지태그객체);
+
+		        // console.log(files);
+		        if(files.length == 0) return;
+
+		        var form = new FormData(); // form을 대신할 도구
+		        for(var i=0; i<files.length; i++) {
+		            form.append("attach", files[0]);
+		        }
+
+		        $.ajax({
+		            processData : false, //파일업로드를 위해 반드시 필요한 설정
+		            contentType : false, //파일업로드를 위해 반드시 필요한 설정
+		            url : "/rest/board/uploads",
+		            method : "post",
+		            data: form,
+		            success:function(response){//첨부파일번호들(List<Integer>)
+		                //첨부파일 번호를 이용해서 src 생성
+		                //http://localhost:8080/attachment/download?attachmentNo=번호
+		                for(var i=0; i<response.length; i++) {
+		                    var tag = $("<img>").attr("src", "/attachment/download?attachmentNo=" + response[i])
+		                                                 .addClass("summernote-img")
+														 .attr("data-attachment-no", response[i]);
+		                    $("[name=boardContent]").summernote("insertNode", tag[0]);
+		                }
+		            }
+		        });
+		    },
+		},
 	});
 });

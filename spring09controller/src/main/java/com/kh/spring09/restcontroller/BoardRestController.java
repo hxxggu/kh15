@@ -1,7 +1,9 @@
 package com.kh.spring09.restcontroller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,6 +77,17 @@ public class BoardRestController {
 			throw new TargetNotFoundException("첨부파일이 없습니다");
 		}
 		return attachmentService.save(attach);
+	}
+	@PostMapping("/uploads")
+	public List<Integer> uploads(
+			@RequestParam(value="attach") List<MultipartFile> attachList) throws IllegalStateException, IOException {
+		List<Integer> numbers = new ArrayList<>();
+		for(MultipartFile attach : attachList) {
+			if(attach.isEmpty()) continue;
+			int attachmentNo = attachmentService.save(attach);
+			numbers.add(attachmentNo);
+		}
+		return numbers;
 	}
 	
 	

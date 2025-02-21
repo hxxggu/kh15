@@ -31,8 +31,8 @@
 	</c:if>
 	
 	
-	<div class="container w-500">
-	    <div class="cell">
+	<div class="container w-800">
+	    <div class="cell center">
 	        <h2>게시글 작성</h2>
 	    </div>
 	    

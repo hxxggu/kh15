@@ -131,8 +131,7 @@
 						</td>
 						<td>${pokemonDto.pokemonType}</td>
 						<td>
-							<c:if test="${pokemonDto.pokemonLike > 0}">
-								<i class="fa-solid fa-check"></i>
+							<c:if test="${pokemonDto.pokemonLike >= 0}">
 								${pokemonDto.pokemonLike}
 							</c:if>
 						</td>
