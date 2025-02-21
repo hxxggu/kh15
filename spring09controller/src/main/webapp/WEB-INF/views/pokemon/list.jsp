@@ -4,7 +4,6 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<link rel="stylesheet" type="text/css" href="./commons.css">
 
 <style>
 	.table.table-ellipsis>tbody>tr>th,
@@ -69,7 +68,7 @@
 <c:if test="${sessionScope.userLevel == '관리자'}">
 	<!-- 전체 삭제를 위해 테이블 전체를 감싸는 form 생성 -->
 	<form class="form-delete" action="deleteAll" method="post">
-</c:if>
+	</c:if>
 
     <div class="container w-500">
         <div class="cell center">

@@ -165,7 +165,7 @@ public class PokemonDao {
 		}
 		
 		//좋아요 개수를 갱신하는 메소드
-			public boolean updatePokemomLike(int pokemonNo, int count) {
+			public boolean updatePokemonLike(int pokemonNo, int count) {
 				String sql = "update pokemon set pokemon_like = ? where pokemon_no = ?";
 				Object[] data = {count, pokemonNo};
 				return jdbcTemplate.update(sql, data) > 0;
@@ -174,7 +174,7 @@ public class PokemonDao {
 				String sql = "update pokemon set pokemon_like = ("
 									+ "select count(*) from pokemon_like where pokemon_no = ?"
 								+ ") where pokemon_no = ?";
-				Object[] data = {pokemonNo, pokemonNo};//홀더 개수와 순서에 맞게
+				Object[] data = {pokemonNo, pokemonNo}; //홀더 개수와 순서에 맞게
 				return jdbcTemplate.update(sql, data) > 0;
 			}
 		

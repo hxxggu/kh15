@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-<link rel="stylesheet" type="text/css" href="./commons.css">
+
 <style>
 	.table.table-ellipsis>tbody>tr>th,
 	.table.table-ellipsis>tbody>tr>td {
@@ -109,14 +109,20 @@
 							
 							<!-- 댓글 표시 -->
 							<c:if test="${boardListViewDto.boardReply > 0}">
-								[${boardListViewDto.boardReply}]
+<%--								[${boardListViewDto.boardReply}] --%>
+								<span class="mt-10">
+									<i class="fa-solid fa-comment-dots blue"></i>
+									 ${boardListViewDto.boardReply}
+								</span>
 							</c:if>
 							
 							<!-- 좋아요 표시 -->
 							<c:if test="${boardListViewDto.boardLike > 0}">
 								&nbsp;&nbsp;
-								<i class="fa-solid fa-heart red"></i>
-								${boardListViewDto.boardLike}
+								<span>
+									<i class="fa-solid fa-heart red"></i>
+									 ${boardListViewDto.boardLike}
+								</span>
 							</c:if>
 							
 						</td>

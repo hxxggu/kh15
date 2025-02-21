@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-<link rel="stylesheet" type="text/css" href="./commons.css">
+
 <style>
 	.table.table-ellipsis>tbody>tr>th,
 	.table.table-ellipsis>tbody>tr>td {

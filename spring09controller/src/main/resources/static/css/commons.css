@@ -468,8 +468,8 @@ textarea.field {
 
 /* 컬러 버튼 - 보라 */
 .btn.btn-purple {
-    border-color: #eacbff;
-    background-color: #eacbff;
+    border-color: #dbb1f8;
+    background-color: #dbb1f8;
     color: white;
 }
 
@@ -484,6 +484,13 @@ textarea.field {
 .btn.btn-blue {
     border-color: #94bbfa;
     background-color: #94bbfa;
+    color: white;
+}
+
+/* 컬러 버튼 - 빨강 */
+.btn.btn-red {
+    border-color: #e76a6a;
+    background-color: #e76a6a;
     color: white;
 }
 
@@ -575,18 +582,18 @@ textarea.field {
 .table.table-border>tbody>tr>td,
 .table.table-border>tfoot>tr>th,
 .table.table-border>tfoot>tr>td {
-    border: 1px solid #636363;
+    border: 1px solid #636e72;
 }
 
 /* 확장 스타일(2) - 줄무늬 테이블 */
 .table.table-stripe>thead,
 .table.table-stripe>tbody>tr:nth-child(2n) {
-    background-color: #ffedfa;
+    background-color: #dfe6e9;
 }
 
 /* 확장 스타일(3) - 마우스 반응 테이블 */
 .table.table-hover>tbody>tr:hover {
-    background-color: #ffddfd;
+    background-color: #c7cdcf;
 }
 
 /* 확장 스타일(4) - 말줄임표 처리되는 테이블 */
@@ -729,7 +736,7 @@ textarea.field {
 }
 
 .menu li:hover {
-    background-color: #ffddfd
+    background-color: #ffddfd;
 }
 
 /* (5) */
@@ -787,6 +794,7 @@ textarea.field {
     color: #0984e3;
     display: none;
     }
+    
     .fail-feedback,
     .fail2-feedback {
     color: #d63031;

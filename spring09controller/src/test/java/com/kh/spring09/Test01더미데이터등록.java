@@ -16,12 +16,12 @@ public class Test01더미데이터등록 {
 	
 	@Test // 이 메서드를 테스트할 때 실행 해주세요 (JUnit 기술 사용)
 	public void test() {
-		for(int i=1; i<=20; i++) {
+		for(int i=1 ; i<=10 ; i++) {
 			ReplyDto replyDto = ReplyDto.builder()
 					.replyNo(replyDao.sequence())
 					.replyWriter("testuser1")
 					.replyOrigin(13) // 게시글의 해당 번호
-					.replyContent("테스트용 댓글" +i)
+					.replyContent("테스트용 댓글" + i)
 					.build();
 			replyDao.insert(replyDto);
 		}

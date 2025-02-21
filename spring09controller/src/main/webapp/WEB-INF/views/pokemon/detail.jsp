@@ -45,19 +45,21 @@
 <div class="container w-400">
 
 	<div class="cell">
-		<h2><i class="fa-solid fa-angles-right"></i> ${pokemonDto.pokemonName}</h2>		
+		<div class="cell left">
+			<h2><i class="fa-solid fa-angles-right"></i> ${pokemonDto.pokemonName}</h2>
+			<i class="fa-heart fa-regular red"></i> <b class="heart-count">${pokemonDto.pokemonLike}</b>
+		</div>
 	</div>
 	<div class="cell center">
 		<img src="image?pokemonNo=${pokemonDto.pokemonNo}" width="300"> <!-- 동적 -->		
 	</div>
-	<div class="cell">
-		<b><label>No.</label></b>
+	<div class="cell w-100">
+		<label class="cell"><b>No.</b></label>
 		${pokemonDto.pokemonNo}
 	</div>
 	
 	<div class="cell">
-		<b><label>이름</label></b>
-		${pokemonDto.pokemonName}
+		<label><b>이름</b></label>${pokemonDto.pokemonName}
 	</div>
 	
 	<div class="cell">
@@ -66,8 +68,7 @@
 	</div>
 	
 	<div class="cell">
-		<button class="btn btn-negative btn-like"><i class="fa-solid fa-heart-circle-check"></i></button>
-		${pokemonDto.pokemonLike}
+
 	</div>
 	
 	<div class="cell center">

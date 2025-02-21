@@ -31,11 +31,11 @@ public class PokemonRestController {
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("done", done); // 해당 회원의 좋아요 여부
-		map.put("count", count); // 해당 글의 좋아요 여부
+		map.put("count", count); // 해당 포켓몬의 좋아요 여부
 		return map;
 	}
 	
-	// 좋아요 설정 / 해제 매핑 → 게시글의 좋아요 개수를 갱신
+	// 좋아요 설정 / 해제 매핑 → 포켓몬의 좋아요 개수를 갱신
 	@RequestMapping("/action")
 	public Map<String, Object> action(
 			@RequestParam int pokemonNo, HttpSession session) {
@@ -53,7 +53,7 @@ public class PokemonRestController {
 		
 		Map<String, Object> map = new HashMap<>(); 
 		map.put("done", !done); // 이 회원의 좋아요 여부
-		map.put("count", count); // 이 글의 좋아요 개수
+		map.put("count", count); // 이 포켓몬의 좋아요 개수
 		return map;
 
 	}

@@ -2,6 +2,20 @@
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
+<!-- summernote cdn -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
+<style>
+	.note-editor {
+		border: 1px solid #636e72 !important;
+	}
+	.note-editable {
+	    background-color: white !important;
+	}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
+<script src="/js/summernote-custom.js"></script>
+
+
 <h2>게시글 수정</h2>
 
 <form action="edit" method="post">

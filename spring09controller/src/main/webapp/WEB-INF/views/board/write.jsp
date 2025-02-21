@@ -12,17 +12,38 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
+<!-- summernote cdn -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
+<style>
+	.note-editor {
+		border: 1px solid #636e72 !important;
+	}
+	.note-editable {
+	    background-color: white !important;
+	}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
+<script src="/js/summernote-custom.js"></script>
+
 <form action="write" method="post" autocomplete="off">
+	<c:if test="${param.boardTarget != null}">
+		<input type="hidden" name="boardTarget" value="${param.boardTarget}">
+	</c:if>
+	
+	
 	<div class="container w-500">
 	    <div class="cell">
 	        <h2>게시글 작성</h2>
 	    </div>
+	    
 	    <div class="cell">
 	        <input type="text" class="field w-100" name="boardTitle" placeholder="제목">
 	    </div>
+	    
 	    <div class="cell">
-	        <textarea class="field w-100" name="boardContent" rows="15" placeholder="내용"></textarea>
+	        <textarea class="field w-100" name="boardContent" placeholder="내용"></textarea>
 	    </div>
+	    
 	    <div class="cell mt-30 right">
 	    	<a href="list" class="btn btn-neutral">게시글 목록</a>
 	        <button type="submit" class="btn btn-positive">작성 완료</button>
