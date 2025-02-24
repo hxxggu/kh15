@@ -30,6 +30,7 @@ $(function() {
             memberPwReinput : false,
             memberNickname : false,
             memberEmail : false,
+			memberEmailCert : false,
             memberBirth : true,
             memberContact : true,
             memberAddress : true,
@@ -37,7 +38,8 @@ $(function() {
                 return this.memberId && this.memberPw
                         && this.memberPwReinput && this.memberNickname
                         && this.memberEmail && this.memberBirth
-                        && this.memberContact && this.memberAddress;
+                        && this.memberContact && this.memberAddress
+						&& this.memberEmailCert;
             },
         };
 
@@ -98,32 +100,88 @@ $(function() {
         });
 
         // nickname (memberNickname) 닉네임 관련 처리
-        $("[name=memberNickname]").blur(function(){
-            var regex = /^[가-힣0-9]{2,10}$/;
-            var memberNickname = $(this).val();
+		$("[name=memberNickname]").blur(function() {
+			var regex = /^[가-힣0-9]{2,10}$/;
+			var memberNickname = $(this).val();
 
-            if(regex.test(memberNickname)) { // 형식 ok
-                $.ajax({
-                    url : "/rest/member/checkMemberNickname",
-                    method : "post",
-                    data : { memberNickname : memberNickname },
-                    success : function(response){
-                        status.memberNickname = response;
-                        $("[name = memberNickname]").removeClass("success fail fail2").addClass(response ? "success" : "fail2");
-                    }
-                });
-            } else { // 형식 X
-                status.memberNickname = false; // 선처리 후 화면 전환
-                $("[name = memberNickname]").removeClass("success fail fail2").addClass("fail");
-            }
-        });
+			if (regex.test(memberNickname)) {//형식 ok
+				$.ajax({
+					url: "/rest/member/checkMemberNickname",
+					method: "post",
+					data: { memberNickname: memberNickname },
+					success: function(response) {
+						status.memberNickname = response;
+						$("[name=memberNickname]").removeClass("success fail fail2")
+							.addClass(response ? "success" : "fail2");
+					}
+				});
+			}
+			else {//형식 nok
+				status.memberNickname = false;
+				$("[name=memberNickname]").removeClass("success fail fail2")
+					.addClass("fail");
+			}
+		});
 
         // email (memberEmail) 이메일 관련 처리
-        $("[name = memberEmail]").blur(function() {
-            var isValid = $(this).val().length > 0;
-            $(this).removeClass("success fail").addClass(isValid ? "success" : "fail");
-            status.memberEmail= isValid;
-        });
+		$("[name=memberEmail]").blur(function() {
+			var isValid = $(this).val().length > 0;
+			$(this).removeClass("success fail").addClass(isValid ? "success" : "fail");
+			status.memberEmail = isValid;
+		});
+		
+		// email (memberEmailCert) 이메일 인증처리
+		$(".btn-send-cert").click(function(){
+			var email = $("[name=memberEmail]").val();//입력된 이메일 가져옴
+			var regex = /^[A-Za-z0-9]+@[A-Za-z0-9.]+$/;
+			if(regex.test(email) == false) return;//형식에 맞지 않으면 차단
+			
+			$.ajax({
+				url:"/rest/cert/send",
+				method:"post",
+				data:{ email : email },
+				success:function(response){
+					$(".cert-input-wrapper").fadeIn();
+				},
+				beforeSend:function(){
+					$(".btn-send-cert").prop("disabled", true);
+					$(".btn-send-cert").find("span").text("이메일 발송중");
+					$(".btn-send-cert").find("i").removeClass("fa-paper-plane")
+															.addClass("fa-spinner fa-spin");
+				},
+				complete:function(){
+					$(".btn-send-cert").prop("disabled", false);
+					$(".btn-send-cert").find("span").text("인증메일 발송");
+					$(".btn-send-cert").find("i").removeClass("fa-spinner fa-spin")
+															.addClass("fa-paper-plane");
+				}
+			});
+		});
+		$(".btn-confirm-cert").click(function(){
+			var certEmail = $("[name=memberEmail]").val();
+			var certNumber = $("[name=certNumber]").val();
+			var regex = /^[0-9]{8}$/;
+			if(regex.test(certNumber) == false) return;
+			
+			$.ajax({
+				url:"/rest/cert/check",
+				method:"post",
+				data:{ certEmail : certEmail, certNumber : certNumber },
+				success:function(response){//response는 true/false 중 하나
+					status.memberEmailCert = response;//결과를 상태값에 적용
+					$("[name = certNumber]").addClass(response ? "success" : "fail");
+					if(response == true) {
+						$(".cert-input-wrapper").hide();
+						$(".btn-send-cert").prop("disabled", true)
+												.removeClass("btn-neutral")
+												.addClass("btn-positive");
+						$(".btn-confirm-cert").prop("disabled", true);
+						$(".btn-send-cert").find("span").text("인증 완료");
+						$(".btn-send-cert").find("i").removeClass("fa-paper-plane").addClass("fa-thumbs-up");
+					}
+				}
+			});
+		});
 
         // Contact (memberContact) 연락처 관련 처리
         // : 숫자만 입력 가능하도록 처리
@@ -246,6 +304,9 @@ $(function() {
         // ** 폼 검사
         $(".form-check").submit(function(){
             $("[name], #pw-reinput").trigger("blur");
+			if(status.memberEmailCert == false) {
+				window.alert("반드시 이메일 인증을 진행하셔야 합니다");
+			}
             return status.ok();
         });
     });

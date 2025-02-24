@@ -22,7 +22,7 @@ public class CertDao {
 		jdbcTemplate.update(sql, data);
 	}
 	public boolean update(CertDto certDto) {
-		String sql = "update cert set cert_number=? where cert_email=?";
+		String sql = "update cert set cert_number=?, cert_time = systimestamp, cert_confirm = null where cert_email=?";
 		Object[] data = {certDto.getCertNumber(), certDto.getCertEmail()};
 		return jdbcTemplate.update(sql, data) > 0;
 	}

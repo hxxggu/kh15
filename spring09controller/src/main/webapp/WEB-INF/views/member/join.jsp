@@ -29,7 +29,6 @@
 		    <div class="success-feedback">올바른 아이디 입니다</div>
 		</div>
 		
-		
 		<div class="cell">
 		    <label><i class="fa-solid fa-lock"></i> Password </label>
 		    <input type="password" name="memberPw" class="field w-100" placeholder="* 비밀번호">
@@ -51,12 +50,28 @@
 			<div class="success-feedback">입력 완료</div>
 		</div>
 		
-		<div class="cell">
-		    <label><i class="fa-regular fa-envelope"></i> Email</label>
-		    <input type="email" inputmode="email" name="memberEmail" class="field w-100" placeholder="[필수] 이메일">
-		    <div class="fail-feedback">이메일은 필수 항목입니다</div>
-		    <div class="success-feedback">입력 완료</div>
-		</div>
+	    <div class="cell">
+	        <label><i class="fa-regular fa-envelope"></i> 이메일</label>
+	    </div>
+	    <div class="cell">
+	        <input type="email" inputmode="email" name="memberEmail" class="field" maxlength="30">
+	        <button type="button" class="btn btn-purple btn-send-cert">
+	        	<i class="fa-solid fa-paper-plane"></i>
+	        	<span>인증메일 발송</span>
+	        </button>
+	        <div class="fail-feedback">이메일은 필수 항목입니다</div>
+	    </div>
+	    <div class="cell cert-input-wrapper" style="display:none;">
+	    	<input type="text" inputmode="numeric" class="field"
+	    				name="certNumber" placeholder="인증번호 입력">
+	    	<button type="button" class="btn btn-positive btn-confirm-cert">
+	    		<i class="fa-solid fa-check"></i>
+	    		<span>인증 확인</span>
+	    	</button>
+			<div class="success-feedback">인증이 완료되었습니다</div>
+	    	<div class="fail-feedback">인증 번호가 일치하지 않습니다</div>
+	    </div>
+
 		
 		<div class="cell">
 		    <label><i class="fa-solid fa-cake-candles"></i> 생년월일</label>
@@ -73,7 +88,7 @@
 		</div>
 		
 		<div class="cell">
-		    <label><i class="fa-solid fa-location-dot"></i>주소</label>
+		    <label><i class="fa-solid fa-location-dot"></i> 주소</label>
 		</div>
 		<div class="cell">
 		    <input type="text" name="memberPost" size="6" maxlength="6" class="field" placeholder="우편번호">

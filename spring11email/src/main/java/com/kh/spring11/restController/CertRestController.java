@@ -1,4 +1,4 @@
-package com.kh.spring11.restcontroller;
+package com.kh.spring11.restController;
 
 import java.time.Duration;
 import java.time.LocalDateTime;

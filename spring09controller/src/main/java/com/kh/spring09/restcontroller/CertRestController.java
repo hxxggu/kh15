@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kh.spring09.configuration.CertProperties;
 import com.kh.spring09.dao.CertDao;
 import com.kh.spring09.dto.CertDto;
 import com.kh.spring09.service.CertService;
@@ -25,6 +26,9 @@ public class CertRestController {
 	
 	@Autowired
 	private CertDao certDao;
+	
+	@Autowired
+	private CertProperties certProperties;
 	
 	@PostMapping("/send")
 	public void send(@RequestParam String email) {
@@ -48,7 +52,7 @@ public class CertRestController {
 		LocalDateTime t1 = findDto.getCertTime().toLocalDateTime(); // 발송 시각
 		LocalDateTime t2 = LocalDateTime.now(); // 현재 시각
 		Duration duration = Duration.between(t1, t2); // 차이 계산
-		boolean condition2 = duration.toMinutes() < 10; // 10분 미만
+		boolean condition2 = duration.toMinutes() < certProperties.getExpireMinutes(); // 제한 시간 판정
 		boolean isValid = condition1 && condition2;
 		if(isValid) { // 인증 번호가 일치한다면 인증번호 발송 내역을 삭제
 //			certDao.delete(certDto.getCertEmail()); // 나중을 위해 보류 처리
@@ -56,4 +60,5 @@ public class CertRestController {
 		}
 		return isValid;
 	}
+	
 }

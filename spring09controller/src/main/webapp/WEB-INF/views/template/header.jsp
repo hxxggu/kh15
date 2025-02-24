@@ -57,17 +57,17 @@
         <div>
         	<ul class="menu">
         		<li>
-        			<a>Data</a>
+        			<a><i class="fa-solid fa-bars"></i></a>
         			<ul>
-        				<li><a href="/pokemon/list">Pokemon</a></li>
-        				<li><a href="/country/list">Country</a></li>
+        				<li><a href="/pokemon/list"><i class="fa-solid fa-chevron-right"></i> Pokemon</a></li>
+        				<li><a href="/country/list"><i class="fa-solid fa-chevron-right"></i> Country</a></li>
         				<c:if test="${sessionScope.userId != null}">
-        					<li><a href="/game-user/list">Game User</a></li>
+        					<li><a href="/game-user/list"><i class="fa-solid fa-chevron-right"></i> Game User</a></li>
         				</c:if>
         			</ul>
         		</li>
         		
-        		<li><a href="/board/list">Board</a></li>
+        		<li><a href="/board/list"><i class="fa-solid fa-chevron-right"></i> Board</a></li>
         		<c:if test="${sessionScope.userId!=null && sessionScope.userLevel!='관리자'}">
         			<li><a href="/giftcard/list">Purchase</a></li>
         		</c:if>
@@ -75,9 +75,9 @@
         		<!-- 회원 메뉴는 우측에 -->
         		<c:if test="${sessionScope.userId == null}">
         		<li class="menu-end">
-        			<a href="/member/login">Login</a>
+        			<a href="/member/login"><i class="fa-solid fa-chevron-right"></i> Login</a>
         			<ul>
-        				<li><a href="/member/join">Join</a></li>
+        				<li><a href="/member/join"><i class="fa-solid fa-chevron-right"></i> Join</a></li>
         			</ul>
         		</li>
         		</c:if>
@@ -87,7 +87,7 @@
         			<a href="/member/mypage">${sessionScope.userId}</a>
         			<ul>
 			   			<c:if test="${sessionScope.userLevel == '관리자'}">
-			   		<li><a href="/admin/home">Admin Menu</a></li>
+			   		<li><a href="/admin/home"><i class="fa-solid fa-chevron-right"></i> Admin Menu</a></li>
         				</c:if>
         				<li><a href="/member/logout"><i class="fa-solid fa-right-from-bracket"></i> logout</a></li>
         			</ul>
