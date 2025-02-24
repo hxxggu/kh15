@@ -15,7 +15,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import com.kh.spring11.configuration.EmailProperties;
 
 @SpringBootTest
-public class Test02인증번호발송 {
+public class Test02인증번호발송2 {
 	
 	@Autowired
 	private EmailProperties emailProperties;
@@ -30,8 +30,8 @@ public class Test02인증번호발송 {
 		// [2] 
 		sender.setHost("smtp.gmail.com"); // 이용할 업체의 별칭 또는 IP(위치 정보)
 		sender.setPort(587); // 이용할 업체의 서비스 실행 번호
-		sender.setUsername("kh15.semi.final"); //이용할 업체의 사용자 계정이름
-		sender.setPassword("muxixbwwvcmvmfim"); //이용할 업체의 사용자 계정 비밀번호(구글은 앱 비밀번호)
+		sender.setUsername(emailProperties.getUsername()); // 이용할 업체의 사용자 계정이름
+		sender.setPassword(emailProperties.getPassword()); // 이용할 업체의 사용자 계정 비밀번호(구글은 앱 비밀번호)
 		
 		Properties props = new Properties(); // 추가 정보 저장소 생성
 		props.setProperty("mail.smtp.auth", "true"); // 인증 후 이용 설정
