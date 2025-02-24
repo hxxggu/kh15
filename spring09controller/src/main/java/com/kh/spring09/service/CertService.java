@@ -1,13 +1,14 @@
-package com.kh.spring11.service;
+package com.kh.spring09.service;
+
+import java.util.random.RandomGenerator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import com.kh.spring11.dao.CertDao;
-import com.kh.spring11.dto.CertDto;
-import com.kh.spring11.util.RandomGenerator;
+import com.kh.spring09.dao.CertDao;
+import com.kh.spring09.dto.CertDto;
 
 @Service
 public class CertService { // service : 두 가지 이상의 일을 하기 위해 묶은 것

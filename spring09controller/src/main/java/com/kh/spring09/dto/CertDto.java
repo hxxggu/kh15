@@ -1,4 +1,4 @@
-package com.kh.spring11.dto;
+package com.kh.spring09.dto;
 
 import java.sql.Timestamp;
 

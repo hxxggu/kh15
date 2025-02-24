@@ -1,4 +1,4 @@
-package com.kh.spring11.dao;
+package com.kh.spring09.dao;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.kh.spring11.dto.CertDto;
-import com.kh.spring11.mapper.CertMapper;
+import com.kh.spring09.dto.CertDto;
+import com.kh.spring09.mapper.CertMapper;
 
 @Repository
 public class CertDao {

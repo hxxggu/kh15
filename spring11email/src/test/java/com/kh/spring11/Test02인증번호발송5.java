@@ -33,7 +33,7 @@ public class Test02인증번호발송5 {
 		
 		//인증번호 생성
 		String number = randomGenerator.randomNumber(8);
-		String email = "kh15.semi.final@gmail.com";//수신인
+		String email = "kh15.semi.fanal@gmail.com";//수신인
 		
 		//[3]
 		SimpleMailMessage message = new SimpleMailMessage();
