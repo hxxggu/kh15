@@ -50,7 +50,7 @@
 <body>
 	<div class="container w-700">
 		<div class="cell center">
-			<h2>[ Game User List ]</h2>
+			<h2><i class="fa-solid fa-bars"></i>&nbsp;Game User List</h2>
 		</div>
 		
 		<div class="cell right">

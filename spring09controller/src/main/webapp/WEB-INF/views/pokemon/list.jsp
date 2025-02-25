@@ -72,7 +72,7 @@
 
     <div class="container w-500">
         <div class="cell center">
-            <h2>[ Pokemon List ]</h2>
+            <h2><i class="fa-solid fa-bars"></i>&nbsp; Pokemon List</h2>
         </div>
         <div class="cell right">
         <c:if test="${sessionScope.userLevel == '관리자'}">
@@ -108,7 +108,7 @@
                         <th>No.</th>
                         <th>이름</th>
                         <th>속성</th>
-                        <th><i class="fa-solid fa-heart-circle-check"></i></th>
+                        <th><i class="fa-solid fa-heart-circle-check red"></i></th>
                     </tr>
                 </thead>
 
@@ -130,11 +130,7 @@
 							</a>
 						</td>
 						<td>${pokemonDto.pokemonType}</td>
-						<td>
-							<c:if test="${pokemonDto.pokemonLike >= 0}">
-								${pokemonDto.pokemonLike}
-							</c:if>
-						</td>
+						<td>${pokemonDto.pokemonLike}</td>
 					</tr>
 				</c:forEach>
 			</table>

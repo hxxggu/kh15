@@ -53,7 +53,7 @@
 <body>
     <div class="container w-500">
         <div class="cell center">
-            <h2>[ Country List ]</h2>
+            <h2><i class="fa-solid fa-bars"></i>&nbsp; Country List</h2>
         </div>
         <div class="cell right">
 			<a href="add" class="btn btn-pink"><i class="fa-solid fa-plus"></i> 추가</a>

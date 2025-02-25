@@ -69,7 +69,7 @@
         		
         		<li><a href="/board/list"><i class="fa-solid fa-chevron-right"></i> Board</a></li>
         		<c:if test="${sessionScope.userId!=null && sessionScope.userLevel!='관리자'}">
-        			<li><a href="/giftcard/list">Purchase</a></li>
+        			<li><a href="/giftcard/list"><i class="fa-solid fa-chevron-right"></i> Purchase</a></li>
         		</c:if>
         		
         		<!-- 회원 메뉴는 우측에 -->

@@ -21,6 +21,7 @@
 		     <p>회원 정보 입력</p>
 		 </div>
 		 
+		 <!-- 아이디 -->
 		<div class="cell">
 		    <label><i class="fa-regular fa-user"></i> ID</label>
 		    <input type="text" name="memberId" class="field w-100" placeholder="* 아이디">
@@ -29,12 +30,15 @@
 		    <div class="success-feedback">올바른 아이디 입니다</div>
 		</div>
 		
+		<!-- 비밀번호 -->
 		<div class="cell">
 		    <label><i class="fa-solid fa-lock"></i> Password </label>
 		    <input type="password" name="memberPw" class="field w-100" placeholder="* 비밀번호">
 		    <div class="fail-feedback">비밀번호가 형식에 맞지 않습니다</div>
 		    <div class="success-feedback">비밀번호 입력 완료</div>
 		</div>
+		
+		<!-- 비밀번호 확인 -->
 		<div class="cell">
 		    <label><i class="fa-solid fa-lock"></i> Password Check </label>
 		    <input type="password" id="pw-reinput" class="field w-100" placeholder="* 비밀번호 확인">
@@ -43,6 +47,7 @@
 		    <div class="fail2-feedback">비밀번호를 우선 입력해주세요</div>
 		</div>
 		 
+		 <!-- 닉네임 -->
 		<div class="cell">
 			<label><i class="fa-regular fa-face-kiss-wink-heart"></i> Nickname</label>
 			<input type="text" name="memberNickname" class="field w-100" placeholder="[필수] 닉네임">
@@ -50,11 +55,12 @@
 			<div class="success-feedback">입력 완료</div>
 		</div>
 		
+		<!-- 이메일  -->
 	    <div class="cell">
-	        <label><i class="fa-regular fa-envelope"></i> 이메일</label>
+	    	<label style="display:block;"><i class="fa-regular fa-envelope"></i> 이메일</label>
 	    </div>
 	    <div class="cell">
-	        <input type="email" inputmode="email" name="memberEmail" class="field" maxlength="30">
+	        <input type="email" inputmode="email" name="memberEmail" class="field" >
 	        <button type="button" class="btn btn-purple btn-send-cert">
 	        	<i class="fa-solid fa-paper-plane"></i>
 	        	<span>인증메일 발송</span>
@@ -62,8 +68,7 @@
 	        <div class="fail-feedback">이메일은 필수 항목입니다</div>
 	    </div>
 	    <div class="cell cert-input-wrapper" style="display:none;">
-	    	<input type="text" inputmode="numeric" class="field"
-	    				name="certNumber" placeholder="인증번호 입력">
+	    	<input type="text" inputmode="numeric" class="field" name="certNumber" placeholder="인증번호 입력">
 	    	<button type="button" class="btn btn-positive btn-confirm-cert">
 	    		<i class="fa-solid fa-check"></i>
 	    		<span>인증 확인</span>
@@ -72,21 +77,23 @@
 	    	<div class="fail-feedback">인증 번호가 일치하지 않습니다</div>
 	    </div>
 
-		
+		<!-- 생년월일 -->
 		<div class="cell">
 		    <label><i class="fa-solid fa-cake-candles"></i> 생년월일</label>
 		    <input type="text" name="memberBirth" class="field w-100">
 		    <div class="fail-feedback">생년월일을 입력해주세요</div>
 		    <div class="success-feedback">생년월일 입력 완료</div>
 		</div>
-
+		
+		<!-- 핸드폰 번호 -->
 		<div class="cell">
-		    <label> <i class="fa-solid fa-mobile-screen-button"></i> Contact</label>
+		    <label> <i class="fa-solid fa-mobile-screen-button"></i> 연락처</label>
 		    <input type="tel" name="memberContact" class="field w-100" placeholder="* 휴대전화번호">
 		    <div class="fail-feedback">형식이 맞지 않습니다</div>
 		    <div class="success-feedback"></div>
 		</div>
 		
+		<!-- 주소 -->
 		<div class="cell">
 		    <label><i class="fa-solid fa-location-dot"></i> 주소</label>
 		</div>

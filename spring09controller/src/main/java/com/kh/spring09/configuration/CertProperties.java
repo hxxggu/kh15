@@ -10,5 +10,6 @@ import lombok.Data;
 @ConfigurationProperties(prefix ="custom.cert")
 public class CertProperties {
 	private int expireMinutes; // custom.cert.expire-minutes 를 읽어와라
+	private int expireAccept;
 	//	** 자바는 무조건 카멜 케이스
 }

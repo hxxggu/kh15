@@ -5,7 +5,8 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<h2><i class="fa-solid fa-house-user"></i> 마이페이지</h2>
+<h2><i class="fa-solid fa-house-user"></i>&nbsp;My Info</h2>
+
 
 <table border="1" width="400">
 	<tr>
@@ -80,8 +81,9 @@
 
         <div class="cell">
             <label><i class="fa-solid fa-check"></i> 구매 일시</label>
+            ${purchaseHistoryDto.giftcardName}
+            ${purchaseHistoryDto.giftcardPurchaseTime}
         </div>
-
         <div class="cell">
             <label><i class="fa-solid fa-check"></i> 구매 금액</label>
            	<span>

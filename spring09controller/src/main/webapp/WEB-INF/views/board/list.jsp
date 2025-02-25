@@ -50,16 +50,16 @@
 
 <div class="container w-950">
 	<div class="cell center">
-		<h2><i class="fa-solid fa-ellipsis"></i> 자유 게시판 <i class="fa-solid fa-ellipsis"></i></h2>
-		<p>글은 자신의 인격입니다.<br>(*무분별한 비방 시 글이 삭제될 수 있습니다.)</p>
-
+		<h2><i class="fa-solid fa-paw"></i>&nbsp;&nbsp;자유 게시판&nbsp;&nbsp;<i class="fa-solid fa-paw"></i></h2>
+		<p><b>글은 자신의 인격입니다.</b><br>(* 무분별한 비방 시 글이 삭제될 수 있습니다.)</p>
+		
 	<!-- 테이블 -->
 	<div class="cell">
 		<table class="table table-border table-hover table-ellipsis">
 		<thead>
 			<tr>
-				<th>번호</th>
-				<th width="width:450px; max-width:450px;">제목</th>
+				<th>No.</th>
+				<th width="width:450px; max-width:450px;">Title</th>
 				<th>작성자</th>
 				<th>작성일</th>
 				<th>조회수</th>
@@ -99,16 +99,19 @@
 								<c:forEach var="i" begin="1" end="${boardListViewDto.boardDepth}" step="1">
 								&nbsp;&nbsp;
 								</c:forEach>
-									→
+									<i class="fa-solid fa-angles-right"></i>
 							</c:if>
 									
 							<!-- 게시글 제목 -->
+							&nbsp;
 							<a href="detail?boardNo=${boardListViewDto.boardNo}">
 								${boardListViewDto.boardTitle}
 							</a>
 							
 							<!-- 댓글 표시 -->
+							
 							<c:if test="${boardListViewDto.boardReply > 0}">
+								&nbsp;
 <%--								[${boardListViewDto.boardReply}] --%>
 								<span class="mt-10">
 									<i class="fa-solid fa-comment-dots blue"></i>
@@ -118,7 +121,7 @@
 							
 							<!-- 좋아요 표시 -->
 							<c:if test="${boardListViewDto.boardLike > 0}">
-								&nbsp;&nbsp;
+								&nbsp;
 								<span>
 									<i class="fa-solid fa-heart red"></i>
 									 ${boardListViewDto.boardLike}

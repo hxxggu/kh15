@@ -268,12 +268,11 @@
 <h2>${boardDto.boardTitle}</h2>
 <div>
 <%--${boardDto.boardWriter}--%>
-	${memberDto.memberNickname}
-	(${memberDto.memberLevel})<br>
-	작성자 : <b>${boardDto.boardWriter}</b>
+	<i class="fa-regular fa-user"></i>&nbsp; ${memberDto.memberNickname} &nbsp;(${memberDto.memberLevel})<br>
+	<i class="fa-solid fa-user-pen"></i>&nbsp;작성자 : <b>${boardDto.boardWriter}</b>
 	<br>
-	[ ${boardDto.boardWtime} ]
-	[조회 : ${boardDto.boardRead}]
+	<i class="fa-solid fa-calendar-days"></i> ${boardDto.boardWtime}
+	(조회 : ${boardDto.boardRead})
 </div>
 
 <hr>
@@ -286,7 +285,7 @@
 
 <div>
 	<i class="fa-heart fa-regular red"></i>
-	좋아요 <span class="heart-count" >${boardDto.boardLike}</span>  
+	좋아요 <span class="heart-count" >${boardDto.boardLike}</span>&nbsp;  
 	<i class="fa-regular fa-comment-dots blue"></i>
 	댓글 <span class="reply-count">${boardDto.boardReply}</span>
 </div>

@@ -8,7 +8,7 @@
             
             <div class="w-50">
                 <div class="cell">
-                    <h3><i class="fa-solid fa-bars"></i> KH정보교육원</h3>
+                    <h3><i class="fa-solid fa-bars"></i>&nbsp;&nbsp;KH정보교육원</h3>
                 </div>
                 <div class="cell m-10">
                     <i class="fa-solid fa-map-location-dot"></i> ㅇㅇ시 ㅇㅇ구 ㅇㅇ동 ㅇㅇㅇ-ㅇㅇㅇ번지
@@ -23,7 +23,7 @@
 
             <div class="w-25">
                 <div class="cell">
-                    <h3><i class="fa-solid fa-bars"></i> 지점 정보</h3>
+                    <h3><i class="fa-solid fa-bars"></i>&nbsp;&nbsp;지점 정보</h3>
                 </div>
                 <div class="cell m-10">
                       <i class="fa-solid fa-location-dot"></i> 강남지점
@@ -45,7 +45,7 @@
 
             <div class="w-25">
                 <div class="cell">
-                    <h3><i class="fa-solid fa-bars"></i> 운영 방침</h3>
+                    <h3><i class="fa-solid fa-bars"></i>&nbsp;&nbsp;운영 방침</h3>
                 </div>
                 <div class="cell m-10">
                     <a href="#">홈페이지 이용약관</a>
@@ -54,7 +54,7 @@
                     <a href="#">개인정보 처리방침</a>
                 </div>
                 <div class="cell">
-                    <h3><i class="fa-solid fa-bars"></i> Partners</h3>
+                    <h3><i class="fa-solid fa-bars"></i>&nbsp;&nbsp;협력사</h3>
                 </div>
                 <div class="cell left m-10">
 					<a href="https://www.google.com"><i class="fa-brands fa-google"></i></a>
