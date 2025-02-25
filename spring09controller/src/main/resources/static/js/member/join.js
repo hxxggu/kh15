@@ -93,33 +93,31 @@ $(function() {
             } else if(memberPw != memberPwReinput) {//비밀번호 다름
                 $(this).addClass("fail");
                 status.memberPwReinput = false;
-            } else {//비밀번호 일치
+            } else { // 비밀번호 일치
                 $(this).addClass("success");
                 status.memberPwReinput = true;
             }
         });
 
         // nickname (memberNickname) 닉네임 관련 처리
-		$("[name=memberNickname]").blur(function() {
+		$("[name = memberNickname]").blur(function() {
 			var regex = /^[가-힣0-9]{2,10}$/;
 			var memberNickname = $(this).val();
 
-			if (regex.test(memberNickname)) {//형식 ok
+			if (regex.test(memberNickname)) { // 형식 ok
 				$.ajax({
 					url: "/rest/member/checkMemberNickname",
 					method: "post",
 					data: { memberNickname: memberNickname },
 					success: function(response) {
 						status.memberNickname = response;
-						$("[name=memberNickname]").removeClass("success fail fail2")
-							.addClass(response ? "success" : "fail2");
+						$("[name=memberNickname]").removeClass("success fail fail2").addClass(response ? "success" : "fail2");
 					}
 				});
 			}
-			else {//형식 nok
+			else { // 형식 nok
 				status.memberNickname = false;
-				$("[name=memberNickname]").removeClass("success fail fail2")
-					.addClass("fail");
+				$("[name=memberNickname]").removeClass("success fail fail2").addClass("fail");
 			}
 		});
 
@@ -133,7 +131,7 @@ $(function() {
 		// email (memberEmailCert) 이메일 인증처리
 		$(".btn-send-cert").click(function(){
 			var email = $("[name=memberEmail]").val();//입력된 이메일 가져옴
-			var regex = /^[A-Za-z0-9]+@[A-Za-z0-9.]+$/;
+			var regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 			if(regex.test(email) == false) return;//형식에 맞지 않으면 차단
 			
 			$.ajax({
@@ -152,8 +150,7 @@ $(function() {
 				complete:function(){
 					$(".btn-send-cert").prop("disabled", false);
 					$(".btn-send-cert").find("span").text("인증메일 발송");
-					$(".btn-send-cert").find("i").removeClass("fa-spinner fa-spin")
-															.addClass("fa-paper-plane");
+					$(".btn-send-cert").find("i").removeClass("fa-spinner fa-spin").addClass("fa-paper-plane");
 				}
 			});
 		});
@@ -177,7 +174,7 @@ $(function() {
 												.addClass("btn-positive");
 						$(".btn-confirm-cert").prop("disabled", true);
 						$(".btn-send-cert").find("span").text("인증 완료");
-						$(".btn-send-cert").find("i").removeClass("fa-paper-plane").addClass("fa-thumbs-up");
+						$(".btn-send-cert").find("i").removeClass("fa-paper-plane").addClass("fa-regular fa-circle-check");
 					}
 				}
 			});

@@ -8,8 +8,12 @@
 <form action="login" method="post">
 	<i class="fa-solid fa-id-badge"></i> 아이디 <input type="text" name="memberId"><br><br>
 	<i class="fa-solid fa-lock"></i> 비밀번호 <input type="password" name="memberPw"><br><br>
-	<button class="btn btn-purple">Login</button>
-	<a href="join" class="btn btn-purple">Join</a>
+	<button class="cell mt-20 btn btn-purple">Login</button>
+	<a href="join" class="cell mt-20 btn btn-purple">Join</a>
+	<div class="cell mt-20 btn btn-purple">
+		<a href="findPw">비밀번호가 기억이 나지 않습니다</a>
+	</div>
+	
 </form>
 
 <!-- if(error라는 파라미터가 있으면) { -->

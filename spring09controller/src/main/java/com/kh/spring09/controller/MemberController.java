@@ -1,5 +1,7 @@
 package com.kh.spring09.controller;
 
+import java.io.IOException;
+
 import javax.naming.NoPermissionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,9 @@ import com.kh.spring09.dao.MemberDao;
 import com.kh.spring09.dao.PurchaseHistoryDao;
 import com.kh.spring09.dto.CertDto;
 import com.kh.spring09.dto.MemberDto;
+import com.kh.spring09.service.EmailService;
 
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -28,6 +32,8 @@ public class MemberController {
 	private PurchaseHistoryDao purchaseHistoryDao;
 	@Autowired
 	private CertDao certDao;
+	@Autowired
+	private EmailService emailService;
 	
 	//회원가입 매핑
 	@GetMapping("/join")
@@ -37,7 +43,7 @@ public class MemberController {
 	@PostMapping("/join")
 	public String join(
 			@ModelAttribute MemberDto memberDto,
-			@RequestParam String certNumber) throws NoPermissionException {
+			@RequestParam String certNumber) throws NoPermissionException, MessagingException, IOException {
 		// 이메일과 인증 번호를 이용한 이메일 진위 여부 검사 추가
 		CertDto certDto = certDao.selectOne(memberDto.getMemberEmail());
 		if(certDto == null) { // 인증 메일 발송 내역 자체가 없을 경우
@@ -51,7 +57,8 @@ public class MemberController {
 			throw new NoPermissionException("비정상적인 회원가입");
 		}
 		certDao.delete(memberDto.getMemberEmail()); // 데이터를 점유하게 하지 않고 바로 지워줌
-		memberDao.insert(memberDto);
+		memberDao.insert(memberDto); // 회원가입
+		emailService.welcomeMail(memberDto); //환영메일 발송
 		return "redirect:joinFinish";
 	}
 	@RequestMapping("/joinFinish")
@@ -201,4 +208,29 @@ public class MemberController {
 	public String exitFinish() {
 		return "/WEB-INF/views/member/exitFinish.jsp";
 	}
+	
+	// 비밀번호 찾기 매핑
+	@GetMapping("/findPw")
+	public String findPw() {
+		return "/WEB-INF/views/member/findPw.jsp";
+	}
+	
+	@PostMapping("/findPw")
+	public String findPw(@ModelAttribute MemberDto memberDto) {
+		// emailService.sendResetMail(memberDto);
+		return "redirect:findPwSend";
+	}
+	
+	
+	@GetMapping("/findPwSend")
+	public String findPwSend() {
+		return "/WEB-INF/views/member/findPwSend.jsp";
+	}
+	
+//	@GetMapping("/reset")
+	
+//	@PostMapping("/resetFinish")
+	
+//	@GetMapping("/resetFinish")
 }
+
