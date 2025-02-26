@@ -15,7 +15,10 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.kh.spring09.dao.CertDao;
+import com.kh.spring09.dto.CertDto;
 import com.kh.spring09.dto.MemberDto;
+import com.kh.spring09.util.RandomGenerator;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -26,8 +29,14 @@ public class EmailService {
 	@Autowired
 	private JavaMailSender sender;
 	
-	// 환영 메일 작성
-	public void welcomeMail(MemberDto  memberDto) throws MessagingException, IOException {
+	@Autowired
+	private RandomGenerator randomGenerator;
+	
+	@Autowired
+	private CertDao certDao;
+	
+	// 환영 메일 전송
+	public void sendWelcomeMail(MemberDto  memberDto) throws MessagingException, IOException {
 		
 		// sender에게 기본 마임메세지 인스턴스를 생성하도록 지시
 		MimeMessage message = sender.createMimeMessage();
@@ -77,6 +86,59 @@ public class EmailService {
 		
 		// 전송
 		sender.send(message);
+	
+	}
+
+	public void sendResetMail(MemberDto memberDto) throws MessagingException, IOException {
+		//sender에게 기본 마임메세지 인스턴스를 생성하도록 지시
+		MimeMessage message = sender.createMimeMessage();
+		
+		//복잡한 설정과정을 도와주는 도우미를 생성
+		MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
+		
+		//도우미를 통해서 메세지에 정보를 설정
+		helper.setTo(memberDto.getMemberEmail());
+		helper.setSubject("[KH 정보교육원] 비밀번호 재설정 안내");
+		
+		//외부에 존재하는 템플릿 HTML을 불러와서 전송
+		//- classpath - src 내부에 존재하는 위치
+		//- filepath - 프로젝트상의 위치
+		ClassPathResource resource = 
+				new ClassPathResource("templates/reset.html");
+		File target = resource.getFile();//파일추출
+		Scanner sc = new Scanner(target);//입력도구
+		StringBuffer buffer = new StringBuffer();//저장버퍼생성
+		while(sc.hasNextLine()) {//남아있는 줄이 있다면
+			buffer.append(sc.nextLine());//읽어서 버퍼에 추가
+		}
+		sc.close();//도구 정리
+		
+		//인증번호 생성
+		String number = randomGenerator.randomNumber(8);
+		
+		//buffer의 내용을 HTML로 해석해서 원하는 값을 교체
+		String html = buffer.toString();
+		Document document = Jsoup.parse(html);
+		//필요한 문서 내용을 수정
+		Element link = document.selectFirst(".reset-link");
+		link.attr("href", ServletUriComponentsBuilder
+								.fromCurrentContextPath()
+								.path("/member/reset")
+								.queryParam("memberId", memberDto.getMemberId())
+								.queryParam("certEmail", memberDto.getMemberEmail())
+								.queryParam("certNumber", number)
+							.build().toUriString());
+		
+		helper.setText(document.toString(), true);//HTML 사용
+		
+		//전송
+		sender.send(message);
+		
+		//DB에 인증번호 내역을 저장
+		certDao.insertOrUpdate(CertDto.builder()
+					.certEmail(memberDto.getMemberEmail())
+					.certNumber(number)
+				.build());
 	}
 	
 }

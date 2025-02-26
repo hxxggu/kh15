@@ -25,15 +25,15 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
 <script src="/js/summernote-custom.js"></script>
 
+
 <form action="write" method="post" autocomplete="off">
 	<c:if test="${param.boardTarget != null}">
 		<input type="hidden" name="boardTarget" value="${param.boardTarget}">
 	</c:if>
-	
-	
+
 	<div class="container w-800">
 	    <div class="cell center">
-	        <h2>게시글 작성</h2>
+	        <h2><i class="fa-solid fa-pen"></i> 게시글 작성 </h2>
 	    </div>
 	    
 	    <div class="cell">
@@ -45,8 +45,8 @@
 	    </div>
 	    
 	    <div class="cell mt-30 right">
-	    	<a href="list" class="btn btn-neutral">게시글 목록</a>
-	        <button type="submit" class="btn btn-positive">작성 완료</button>
+	    	<a href="list" class="btn btn-pink">게시글 목록</a>
+	        <button type="submit" class="btn btn-purple">작성 완료</button>
 	    </div>
 	</div>
 </form>
