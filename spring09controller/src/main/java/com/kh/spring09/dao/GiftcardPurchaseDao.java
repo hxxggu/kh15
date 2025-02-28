@@ -22,7 +22,7 @@ public class GiftcardPurchaseDao {
 	}
 	public void insert(GiftcardPurchaseDto giftcardPurchaseDto) {
 		String sql = "insert into giftcard_purchase("
-							+ "giftcard_purchase_no, giftcard_purchase_target,"
+							+ "giftcard_purchase_no, giftcard_purchase_target, "
 							+ "giftcard_purchase_member, giftcard_purchase_qty"
 						+ ") "
 						+ "values(?, ?, ?, ?)";
@@ -36,3 +36,17 @@ public class GiftcardPurchaseDao {
 	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

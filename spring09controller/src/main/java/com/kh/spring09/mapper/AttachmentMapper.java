@@ -9,8 +9,7 @@ import org.springframework.stereotype.Component;
 import com.kh.spring09.dto.AttachmentDto;
 
 @Component
-public class AttachmentMapper implements RowMapper<AttachmentDto>{
-
+public class AttachmentMapper implements RowMapper<AttachmentDto> {
 	@Override
 	public AttachmentDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 		AttachmentDto attachmentDto = new AttachmentDto();
@@ -20,5 +19,4 @@ public class AttachmentMapper implements RowMapper<AttachmentDto>{
 		attachmentDto.setAttachmentSize(rs.getLong("attachment_size"));
 		return attachmentDto;
 	}
-	
 }

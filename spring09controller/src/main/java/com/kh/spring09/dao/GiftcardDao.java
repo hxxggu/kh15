@@ -24,7 +24,7 @@ public class GiftcardDao {
 	}
 	public void insert(GiftcardDto giftcardDto) {
 		String sql = "insert into giftcard("
-							+ "giftcard_no, giftcard_name, giftcard_content,"
+							+ "giftcard_no, giftcard_name, giftcard_content, "
 							+ "giftcard_charge, giftcard_price"
 						+ ") values(?, ?, ?, ?, ?)";
 		Object[] data = {
@@ -64,3 +64,7 @@ public class GiftcardDao {
 	}
 	
 }
+
+
+
+

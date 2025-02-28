@@ -10,7 +10,6 @@ import com.kh.spring09.dto.GiftcardPurchaseDto;
 
 @Component
 public class GiftcardPurchaseMapper implements RowMapper<GiftcardPurchaseDto>{
-
 	@Override
 	public GiftcardPurchaseDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 		return GiftcardPurchaseDto.builder()
@@ -21,5 +20,4 @@ public class GiftcardPurchaseMapper implements RowMapper<GiftcardPurchaseDto>{
 					.giftcardPurchaseTime(rs.getTimestamp("giftcard_purchase_time"))
 				.build();
 	}
-
 }
