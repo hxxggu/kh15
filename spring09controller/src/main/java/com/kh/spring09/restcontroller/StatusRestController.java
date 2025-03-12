@@ -37,7 +37,7 @@ public class StatusRestController {
 	public List<StatusVO> memberJoin() {
 		return statusDao.memberJoin();
 	}
-	
+
 	@RequestMapping("/board-write")
 	public List<StatusVO> boardWrite() {
 		return statusDao.boardWrite();

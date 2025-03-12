@@ -14,6 +14,11 @@ public class GiftcardDto {
 	private int giftcardPrice; //판매가
 	
 	public int getDiscountRate() {	
-		return (giftcardCharge - giftcardPrice) * 100 / giftcardCharge;
+	    try {
+	        return (giftcardPrice - giftcardCharge) / giftcardPrice * 100;
+	    } catch (ArithmeticException e) {
+	        // 예외 발생 시 기본값 0 반환
+	        return 0;
+	    }
 	}
 }

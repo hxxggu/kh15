@@ -4,23 +4,23 @@
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<h2>월별 가입자 현황</h2>
 
-<table border="1" width="350">
-	<thead>
-		<tr>
-			<th>기간</th>
-			<th>가입자수</th>
-		</tr>
-	</thead>
-	<tbody align="center">
-	 	<c:forEach var="statusVO" items="${list}">
-	 	<tr>
-	 		<td>${statusVO.key}</td>
-	 		<td>${statusVO.value}</td>
-	 	</tr>
-	 	</c:forEach>
-	</tbody>
-</table>
+<div class="container w-800">
+	<div class="cell">
+		<h2><i class="fa-solid fa-angles-right"></i> 월별 회원가입 현황</h2>
+	</div>
+	<div class="cell">
+		<c:forEach var="statusVO" items="${list}">
+		<div class="cell">
+			<label><b>${statusVO.key}</b> &nbsp; ${statusVO.value}명</label>
+		</div>
+		<hr>
+		</c:forEach>
+	</div>
+	<div class="cell">
+		<a href="/admin/home" class="btn btn-pink" style="border-radius: 10px"><i class="fa-solid fa-user-tie black"></i> 관리자 홈</a>
+		<a href="/admin/home" class="btn btn-purple" style="border-radius: 10px"><i class="fa-solid fa-house"></i> 메인</a>
+	</div>
+</div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

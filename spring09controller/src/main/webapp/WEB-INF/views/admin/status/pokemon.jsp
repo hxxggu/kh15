@@ -4,26 +4,20 @@
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<h2>포켓몬스터 속성별 개체 수</h2>
-
-<table border="1" width="300">
-
-	<thead>
-		<tr>
-			<th>속성</th>
-			<th>개체 수</th>
-		</tr>
-	</thead>
-	
-	<tbody align="center">
-		<c:forEach var="statusVO" items="${list}">
-			<tr>
-				<td>${statusVO.key}</td>
-				<td>${statusVO.value}</td>
-			</tr>
+<div class="container w-800">
+	<div class="cell">
+		<h2><i class="fa-solid fa-angles-right"></i> 포켓몬스터 속성별 개체 수</h2>
+	</div>
+	<div class="cell">
+		<c:forEach var="statusVO" items="${list }">
+			<b>${statusVO.key}</b> &nbsp; ${statusVO.value}<br>
+			<hr style="">
 		</c:forEach>
-	</tbody>
-	
-</table>
+	</div>
+	<div class="cell">
+		<a href="/admin/home" class="btn btn-pink"><i class="fa-solid fa-user-tie black"></i> 관리자 홈</a>
+		<a href="/" class="btn btn-purple"><i class="fa-solid fa-house"></i> 메인</a>
+	</div>
+</div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

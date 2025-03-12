@@ -1,76 +1,88 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
+<div class="container w-600">
+	<div class="cell" style="margin: 10px; padding: 10px">
+	
+	    <div class="cell">
+	        <h2><i class="fa-regular fa-user"></i> 회원 상세 정보</h2>
+	    </div>
+		    
+	    <div class="cell">
+	        <h3>아이디</h3>
+	        <p>${memberDto.memberId}</p>
+	    </div>
+	    
+	    <div class="cell">
+	        <h3>닉네임</h3>
+	        <p>${memberDto.memberNickname}</p>
+	    </div>
+	
+	    <div class="cell">
+	        <h3>생년월일 </h3>
+	        <p>${memberDto.memberBirth}</p>
+	    </div>
+	
+	    <div class="cell">
+	        <h3>연락처</h3>
+	        <p>${memberDto.memberContact}</p>
+	    </div>
+		
+	    <div class="cell">
+	        <h3>이메일</h3>
+	        <p>${memberDto.memberEmail}</p>
+	    </div>
+		
+	    <div class="cell">
+	        <h3>주소</h3>
+	        <p>(${memberDto.memberPost})</p>
+	        <p>${memberDto.memberAddress1}</p>
+	        <p>${memberDto.memberAddress2}</p>
+	    </div>
+	    
+	    <div class="cell">
+	        <h3>등급</h3>
+	        <p>${memberDto.memberLevel}</p>
+	    </div>
+	
+	    <div class="cell">
+	        <h3>포인트</h3>
+	        <p>${memberDto.memberPoint} point</p>
+	    </div>
+	    
+	    <div class="cell">
+	        <h3>가입일시</h3>
+	        <p>
+	        	<fmt:formatDate value="${memberDto.memberJoin}" pattern="y년 M월 d일 a h시 m분 s초"/>
+	        </p>
+	    </div>
+	
+	    <div class="cell">
+	        <h3>최종 로그인</h3>
+	        <p>
+	        	<fmt:formatDate value="${memberDto.memberLogin}" pattern="y년 M월 d일 a h시 m분 s초"/>
+	        </p>
+	    </div>  
+	    
+	    <div class="cell">
+	        <h3>비밀번호 변경일</h3>
+	        <p>
+	        	<fmt:formatDate value="${memberDto.memberChange}" pattern="y년 M월 d일 a h시 m분 s초"/>
+	        </p>
+	    </div>
+	</div>
+</div>
 
-<h2>${memberDto.memberId}님의 상세정보</h2>
+<div class="cell center" style="margin: 10px; padding: 10px;">
+    <a href="#" class="btn btn-pink" style="border-radius: 10px;"><i class="fa-solid fa-lock"></i> 임시 비밀번호 발급</a>
+    <a href="edit?memberId=${memberDto.memberId}" class="btn btn-purple" style="border-radius: 10px;"><i class="fa-regular fa-pen-to-square"></i> 개인정보 변경</a>
+    <a href="delete?memberId=${memberDto.memberId}" class="btn btn-red" style="border-radius: 10px;"><i class="fa-solid fa-xmark"></i> 회원 탈퇴</a>
+    <a href="#" class="btn btn-red" style="border-radius: 10px;"><i class="fa-solid fa-xmark"></i> 블랙리스트 등록</a>
+    <a href="list" class="btn btn-blue" style="border-radius: 10px;"><i class="fa-solid fa-list-ul"></i> 리스트</a>
+</div>
 
-
-
-<table border="1" width="400">
-	<tr>
-		<th width="25%">아이디</th>
-		<td>${memberDto.memberId}</td>
-	</tr>
-	<tr>
-		<th>닉네임</th>
-		<td>${memberDto.memberNickname}</td>
-	</tr>
-	<tr>
-		<th>이메일</th>
-		<td>${memberDto.memberEmail}</td>
-	</tr>
-	<tr>
-		<th>생년월일</th>
-		<td>${memberDto.memberBirth}</td>
-	</tr>
-	<tr>
-		<th>연락처</th>
-		<td>${memberDto.memberContact}</td>
-	</tr>
-	<tr>
-		<th>주소</th>
-		<td>
-			[${memberDto.memberPost}]
-			${memberDto.memberAddress1}
-			${memberDto.memberAddress2}
-		</td>
-	</tr>
-	<tr>
-		<th>등급</th>
-		<td>${memberDto.memberLevel}</td>
-	</tr>
-	<tr>
-		<th>포인트</th>
-		<td>${memberDto.memberPoint} point</td>
-	</tr>
-	<tr>
-		<th>가입일시</th>
-		<td>
-			<fmt:formatDate value="${memberDto.memberJoin}" pattern="y년 M월 d일 a h시 m분 s초"/>
-		</td>
-	</tr>
-	<tr>
-		<th>최종 로그인</th>
-		<td>
-			<fmt:formatDate value="${memberDto.memberLogin}" pattern="y년 M월 d일 a h시 m분 s초"/>
-		</td>
-	</tr>
-	<tr>
-		<th>비밀번호<br>변경일</th>
-		<td>
-			<fmt:formatDate value="${memberDto.memberChange}" pattern="y년 M월 d일 a h시 m분 s초"/>
-		</td>
-	</tr>
-</table>
-
-<br>
-<button><a href="#">임시 비밀번호 발급</a></button>
-<button><a href="edit?memberId=${memberDto.memberId}">개인정보 변경</a></button>
-<button><a href="delete?memberId=${memberDto.memberId}">회원 탈퇴</a></button>
-<button><a href="#">회원 블랙리스트 등록</a></button>
-<button><a href="list">돌아가기</a></button>
-<br>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

@@ -57,37 +57,37 @@
         <div>
         	<ul class="menu">
         		<li>
-        			<a><i class="fa-solid fa-bars"></i></a>
+        			<a><i class="fa-solid fa-angles-down"></i> More</a>
         			<ul>
-        				<li><a href="/pokemon/list"><i class="fa-solid fa-chevron-right"></i> Pokemon</a></li>
-        				<li><a href="/country/list"><i class="fa-solid fa-chevron-right"></i> Country</a></li>
+        				<li><a href="/pokemon/list"><i class="fa-solid fa-angles-right"></i> Pokemon</a></li>
+        				<li><a href="/country/list"><i class="fa-solid fa-angles-right"></i> Country</a></li>
         				<c:if test="${sessionScope.userId != null}">
-        					<li><a href="/game-user/list"><i class="fa-solid fa-chevron-right"></i> Game User</a></li>
+        					<li><a href="/game-user/list"><i class="fa-solid fa-angles-right"></i> Game User</a></li>
         				</c:if>
         			</ul>
         		</li>
         		
-        		<li><a href="/board/list"><i class="fa-solid fa-chevron-right"></i> Board</a></li>
+        		<li><a href="/board/list"><i class="fa-solid fa-angles-right"></i> Board</a></li>
         		<c:if test="${sessionScope.userId!=null && sessionScope.userLevel!='관리자'}">
-        			<li><a href="/giftcard/list"><i class="fa-solid fa-chevron-right"></i> Purchase</a></li>
+        			<li><a href="/giftcard/list"><i class="fa-solid fa-angles-right"></i> Purchase</a></li>
         		</c:if>
         		
         		<!-- 회원 메뉴는 우측에 -->
         		<c:if test="${sessionScope.userId == null}">
         		<li class="menu-end">
-        			<a href="/member/login"><i class="fa-solid fa-chevron-right"></i> Login</a>
+        			<a href="/member/login"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>
         			<ul>
-        				<li><a href="/member/join"><i class="fa-solid fa-chevron-right"></i> Join</a></li>
+        				<li><a href="/member/join"><i class="fa-solid fa-user-plus"></i> Join</a></li>
         			</ul>
         		</li>
         		</c:if>
         		
         		<c:if test="${sessionScope.userId!=null}">
         		<li class="menu-end">
-        			<a href="/member/mypage">${sessionScope.userId}</a>
+        			<a href="/member/mypage"><i class="fa-regular fa-circle-user"></i> ${sessionScope.userId}</a>
         			<ul>
 			   			<c:if test="${sessionScope.userLevel == '관리자'}">
-			   		<li><a href="/admin/home"><i class="fa-solid fa-chevron-right"></i> Admin Menu</a></li>
+			   		<li><a href="/admin/home"><i class="fa-solid fa-angles-right"></i> 관리자 메뉴</a></li>
         				</c:if>
         				<li><a href="/member/logout"><i class="fa-solid fa-right-from-bracket"></i> logout</a></li>
         			</ul>

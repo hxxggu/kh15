@@ -31,6 +31,7 @@ public class StatusDao {
 						+ "order by value desc, key asc";
 		return jdbcTemplate.query(sql, statusMapper);
 	}
+
 	
 	//등급별 회원현황
 	public List<StatusVO> member() {

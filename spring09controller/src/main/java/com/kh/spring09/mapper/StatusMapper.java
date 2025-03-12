@@ -15,6 +15,7 @@ public class StatusMapper implements RowMapper<StatusVO> {
 		StatusVO statusVO = new StatusVO();
 		statusVO.setKey(rs.getString("key"));
 		statusVO.setValue(rs.getLong("value"));
+		
 		return statusVO;
 	}
 }
