@@ -22,11 +22,12 @@
 	    background-color: white !important;
 	}
 </style>
+
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
 <script src="/js/summernote-custom.js"></script>
 
 
-<form action="write" method="post" autocomplete="off">
+<form action="write" method="post" autocomplete="off" class="form-check">
 	<c:if test="${param.boardTarget != null}">
 		<input type="hidden" name="boardTarget" value="${param.boardTarget}">
 	</c:if>

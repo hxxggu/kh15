@@ -16,10 +16,9 @@
 <script src="/js/summernote-custom.js"></script>
 
 
-
 <h2><i class="fa-solid fa-pen-to-square"></i> 게시글 수정</h2>
 
-<form action="edit" method="post">
+<form action="edit" method="post" class="form-check">
 	<input type="hidden" name="boardNo" value="${boardDto.boardNo}">
 	<input type="text" name="boardTitle" value="${boardDto.boardTitle}" style="width:440" required> <br><br>
 	<!-- textarea는 value가 없고 태그 사이에 입력값을 적는다(여러줄이라서) -->

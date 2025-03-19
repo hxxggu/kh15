@@ -28,15 +28,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" type="text/css" href="/css/commons.css">
-    <!-- <link rel="stylesheet" type="text/css" href="/css/test.css"> -->
+ <!--     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/test.css"> -->
     <style>
         
     </style>
     
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-	<script src="\js\checkbox.js"></script>
-   	<script src="\js\link-confirm.js"></script>
-    
+    <script src="/js/checkbox.js"></script>
+     <script src="/js/link-confirm.js"></script>
+
+	<script type="text/javascript">
+		$.ajaxSetup({
+			beforeSend: function(xhr, settings) { // 전송 직전에 호출되는 전처리 (훅)
+				if(settings.url.startsWith("/")) { // 통신 주소가 '/ (슬래시)' 로 시작하면
+					// context path를 계산하여 추가하겠다
+					settings.url = "${pageContext.request.contextPath}" + settings.url; // 초기 URL
+				} 
+			}
+		});
+	</script>    
 </head>
 
 <body>
@@ -67,7 +77,7 @@
         			</ul>
         		</li>
         		
-        		<li><a href="/board/list"><i class="fa-solid fa-angles-right"></i> Board</a></li>
+        		<li><a href="board/list"><i class="fa-solid fa-angles-right"></i> Board</a></li>
         		<c:if test="${sessionScope.userId!=null && sessionScope.userLevel!='관리자'}">
         			<li><a href="/giftcard/list"><i class="fa-solid fa-angles-right"></i> Purchase</a></li>
         		</c:if>

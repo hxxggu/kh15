@@ -52,4 +52,10 @@ public class ReplyRestController {
 		replyDao.delete(replyNo); // 댓글 삭제
 		boardDao.updateBoardReply(replyDto .getReplyOrigin()); // 댓글 개수 갱신
 	}
+	
+	//댓글 수정
+	@PostMapping("/edit")
+	public void edit(@ModelAttribute ReplyDto replyDto) {
+		replyDao.update(replyDto);
+	}
 }

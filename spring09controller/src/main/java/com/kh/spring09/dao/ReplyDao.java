@@ -51,6 +51,16 @@ public class ReplyDao {
 		List<ReplyDto> list = jdbcTemplate.query(sql, replyMapper, data);
 		return list.isEmpty() ? null : list.get(0);
 	}
-	
+
+	public boolean update(ReplyDto replyDto) {
+		String sql = "update reply "
+						+ "set reply_content=?, reply_etime=systimestamp "
+						+ "where reply_no=?";
+		Object[] data = {
+				replyDto.getReplyContent(),
+				replyDto.getReplyNo()
+		};
+		return jdbcTemplate.update(sql, data) > 0;
+	}	
 	
 }
