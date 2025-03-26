@@ -19,8 +19,8 @@ import com.kh.spring09.aop.TestLogInterceptor;
 //- application.properties에서 할 수 없는 복잡한 설정을 구현할 때 사용
 //- @Configuration으로 등록
 @Configuration
-public class InterceptorConfiguration implements WebMvcConfigurer { //configuration은 한 개만 있어도 됨, interception은 필요한 만큼 생성
-	
+public class InterceptorConfiguration implements WebMvcConfigurer {
+
 	@Autowired
 	private TestLogInterceptor testLogInterceptor;
 	@Autowired
@@ -44,36 +44,44 @@ public class InterceptorConfiguration implements WebMvcConfigurer { //configurat
 		//회원 전용 기능에 대해 인터셉터를 등록
 		//- 와일드카드를 한개(*) 쓰면 엔드포인트를 유지하며 패턴 검색
 		//- 와일드카드를 두개(**) 쓰면 엔드포인트 이하의 모든 주소 패턴 검색
-		registry.addInterceptor(memberLoginInterceptor).addPathPatterns(List.of(
-				"/member/**",
-				"/game-user/**",
-				"/board/**",
-				"/giftcard/**"
-				))
-				.excludePathPatterns(List.of(
-					//"/member/join",
-					//"/member/joinFinish",
-					"/member/join*", //join 어쩌구
-					"/member/login",
-					"/member/exitFinish",
-					"/member/findPw*",
-					"/member/reset*",
-					"/board/list",
-					"/board/detail"
-				));
+		registry.addInterceptor(memberLoginInterceptor)
+					.addPathPatterns(List.of(
+						"/member/**",
+						"/game-user/**",
+						"/board/**",
+						"/giftcard/**"
+					))
+					.excludePathPatterns(List.of(
+						//"/member/join",
+						//"/member/joinFinish",
+						"/member/join*",//join어쩌구
+						"/member/login",
+						"/member/exitFinish",
+						"/member/findPw*",
+						"/member/reset*",
+						"/board/list",
+						"/board/detail"
+					));
 		
 		//게시글 소유자 검사 인터셉터 추가
 		registry.addInterceptor(boardOwnerInterceptor)
-				.addPathPatterns(List.of(
-				"/board/edit",
-				"/board/delete"
-				));
-	
+						.addPathPatterns(List.of(
+							"/board/edit",
+							"/board/delete"
+						));
+		
 		//조회 수 증가처리 인터셉터 등록
-		registry.addInterceptor(boardReadInterceptor3).addPathPatterns("/board/detail");
+		registry.addInterceptor(boardReadInterceptor3)
+						.addPathPatterns("/board/detail");
 		
 		//관리자 검사 인터셉터 등록
 		registry.addInterceptor(adminLoginInterceptor)
-		.addPathPatterns("/admin/**");
+						.addPathPatterns("/admin/**");
 	}
 }
+
+
+
+
+
+

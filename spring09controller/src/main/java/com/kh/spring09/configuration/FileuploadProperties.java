@@ -9,8 +9,8 @@ import lombok.Data;
 
 @Data
 @Component
-@ConfigurationProperties(prefix="custom.fileupload")
-public class FileUploadProperties {
+@ConfigurationProperties(prefix = "custom.fileupload")
+public class FileuploadProperties {
 	private String root;
 	
 	public File getRootDir() {

@@ -25,7 +25,7 @@ public class PokemonRestController {
 	// - 작업은 C, R, U, D 네 가지가 있다
 	// - Get, Post, Put, Delete 방식을 각각의 작업에 연결하여 사용
 	// - 조회(GET), 삭제(DELETE), 등록(POST), 수정(PUT-전체수정 / PATCH-부분수정)
-	// - 주소에
+	// - 주소에 기능은 가급적 배제하고 Entity 만 기재
 	
 	
 	@GetMapping("/list")
