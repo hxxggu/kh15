@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.spring09.configuration.FileUploadProperties;
+import com.kh.spring09.configuration.FileuploadProperties;
 import com.kh.spring09.dao.AttachmentDao;
 import com.kh.spring09.dto.AttachmentDto;
 import com.kh.spring09.error.TargetNotFoundException;
@@ -18,20 +18,20 @@ public class AttachmentService {
 
 	@Autowired
 	private AttachmentDao attachmentDao;
-
-	@Autowired
-	private FileUploadProperties fileUploadProperties;
 	
+	@Autowired
+	private FileuploadProperties fileuploadProperties;
+
 	//파일 저장
 	public int save(MultipartFile attach) throws IllegalStateException, IOException {
 		if(attach.isEmpty()) return -1;
 		//저장위치 생성
-		/* File dir = new File(fileUploadProperties.getRoot()); */ // 문자열을 달라고 하던가
-		File dir = fileUploadProperties.getRootDir(); // 직접 만들던가 위 아래 둘 다 가능
+		//File dir = new File(fileuploadProperties.getRoot());
+		File dir = fileuploadProperties.getRootDir();
 		dir.mkdirs();
 		//물리 파일 저장
-		int attachmentNo = attachmentDao.sequence();// 시퀀스번호 추출
-		File target = new File(dir, String.valueOf(attachmentNo));// 파일명으로 설정
+		int attachmentNo = attachmentDao.sequence();//시퀀스번호 추출
+		File target = new File(dir, String.valueOf(attachmentNo));//파일명으로 설정
 		attach.transferTo(target);//저장
 		//파일 정보 저장
 		AttachmentDto attachmentDto = new AttachmentDto();
@@ -47,7 +47,7 @@ public class AttachmentService {
 	//파일 삭제
 	public void delete(int attachmentNo) {
 		//[1] 실제 파일을 지우고
-		File dir = fileUploadProperties.getRootDir();
+		File dir = fileuploadProperties.getRootDir();
 		File target = new File(dir, String.valueOf(attachmentNo));
 		if(target.isFile() == false) return;
 		
@@ -66,7 +66,7 @@ public class AttachmentService {
 		}
 		
 		//[2] 실제 파일이 존재하는지 확인
-		File dir = fileUploadProperties.getRootDir();
+		File dir = fileuploadProperties.getRootDir();
 		File target = new File(dir, String.valueOf(attachmentNo));
 		if(target.isFile() == false) {
 			throw new TargetNotFoundException("파일이 존재하지 않습니다");
