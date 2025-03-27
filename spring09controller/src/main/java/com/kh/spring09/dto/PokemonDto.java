@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class PokemonDto {
 	private int pokemonNo;
-	private String PokemonName;
-	private String PokemonType;
+	private String pokemonName;
+	private String pokemonType;
 	private int pokemonLike;
 }

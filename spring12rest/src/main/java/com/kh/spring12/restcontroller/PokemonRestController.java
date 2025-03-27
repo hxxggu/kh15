@@ -4,12 +4,17 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.spring12.dao.PokemonDao;
 import com.kh.spring12.dto.PokemonDto;
+import com.kh.spring12.error.TargetNotFoundException;
 
 @CrossOrigin
 @RestController
@@ -28,8 +33,25 @@ public class PokemonRestController {
 	// - 주소에 기능은 가급적 배제하고 Entity 만 기술
 	
 	
-	@GetMapping("/list")
+	@GetMapping("/")
 	public List<PokemonDto> list() {
 		return pokemonDao.selectList();
+	}
+	
+	@DeleteMapping("/{pokemonNo}")
+	public void delete(@PathVariable int pokemonNo) {
+		PokemonDto pokemonDto = pokemonDao.selectOne(pokemonNo);
+		if(pokemonDto == null) {
+			throw new TargetNotFoundException();
+		}
+		pokemonDao.delete(pokemonNo);
+	}
+	
+	// 이 방식에서 @ModelAttribute는 사용이 어렵다
+	// JSON 으로 전달되는 데이터는 @RequestBody로 읽는다
+	// (*주의) RequestBody가 두 개가 있는데, 잘 골라야 합니다 (Spring으로)
+	@PostMapping("/")
+	public void insert(@RequestBody PokemonDto pokemonDto) {
+		pokemonDao.insert(pokemonDto);
 	}
 }
