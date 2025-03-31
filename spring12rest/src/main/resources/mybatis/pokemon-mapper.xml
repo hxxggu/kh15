@@ -87,7 +87,9 @@
 	 	
 	 	select * from pokemon
 	 	<if test="column != null and keyword != null">
-	 	where instr(${column}, #{keyword}) > 0
+	 	where
+<!-- 	 	instr(${column}, #{keyword}) > 0 -->
+		${column} like #{keyword} || '%'
 	 	</if>
 	 	order by
 	 	<if test="column != null and keyword != null">
