@@ -14,6 +14,13 @@
 	<select id="list" resultType="PokemonDto">
 		select * from pokemon order by pokemon_no asc
 	</select>
+	<!--
+		myBatis에서는 조회할 때 만들 형태만 알려주며,
+		목록인지 단일 데이터인지는 호출할 때 결정함 
+	 -->
+	<select id="find" resultType="PokemonDto">
+		select * from pokemon where pokmeon_no = #{pokemonNo}
+	</select>
 	
 	<!--
 		등록 구문
@@ -41,6 +48,17 @@
 	  <delete id="delete">
 	  	delete pokemon where pokemon_no = #{pokemonNo}
 	  </delete>
+	  
+	  <!--
+	  	수정
+	  	- resultType은 작성 금지 
+	   -->
+	   <update id="edit">
+	   	update pokemon
+		   	set pokemon_name = #{pokemonName},
+		   	pokemon_type = #{pokemonType}
+	   	where pokemon_no = #{pokemonNo}
+	   </update>
+	  
 	
 </mapper>
-

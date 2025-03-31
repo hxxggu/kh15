@@ -47,59 +47,16 @@ public class PokemonDao {
 	
 	
 	// 수정 메소드
-//	public boolean update(PokemonDto pokemonDto) {
-//		String sql = "update pokemon "
-//				+ "set pokemon_name = ?, pokemon_type = ? "
-//				+ "where pokemon_no = ?";
-//		Object[] data = {
-//				pokemonDto.getPokemonName(),
-//				pokemonDto.getPokemonType(),
-//				pokemonDto.getPokemonNo()
-//		};
-//		int rows = jdbcTemplate.update(sql, data);
-//		
-////				if(rows > 0) {
-////					return true;
-////				}
-////				else {
-////					return false;
-////				}
-//		return rows > 0;
-//	}
+	public boolean update(PokemonDto pokemonDto) {
+		return sqlSession.update("pokemon.edit", pokemonDto) > 0;
+	}
 	
+	// 상세조회 메소드
+	public PokemonDto selectOne(int pokemonNo) {
+		// 단일조회는 부를 때, selectOne으로 부른다
+		return sqlSession.selectOne("pokemon.find", pokemonNo);
+	}
 	
-	// 목록 조회 메소드
-//	public List<PokemonDto> selectList() {
-//		String sql = "select * from pokemon";
-//		return jdbcTemplate.query(sql, pokemonMapper);
-//	}
-	
-	// 검색에 사용할 컬럼에 대한 정보를 저장
-//	private Map<String, String> columnExamples = Map.of(
-//		"이름", "pokemon_name",
-//		"속성", "pokemon_type"
-//	);
-//	
-//	public List<PokemonDto> selectList(String column, String keyword) {
-//		String columnName = columnExamples.get(column);
-//		if(columnName == null) throw new RuntimeException("항목 오류");
-//		
-//		String sql = "select * from pokemon where instr(#1, ?) > 0 "
-//						+ "order by #1 asc, pokemon_no asc";
-//		sql = sql.replace("#1", columnName);
-//		Object[] data = {keyword};
-//		return jdbcTemplate.query(sql, pokemonMapper, data);
-//	}
-//	
-//	
-//	// 상세조회 메소드
-//	public PokemonDto selectOne(int pokemonNo) {
-//		String sql = "select * from pokemon where pokemon_no = ?";
-//		Object[] data = {pokemonNo};
-//		List<PokemonDto> list = jdbcTemplate.query(sql, pokemonMapper, data);
-//		return list.isEmpty() ? null : list.get(0);
-//	}
-//	
 //	// 포켓몬 이미지 등록(연결)
 //		public void connect(int pokemonNo, int attachmentNo) {
 //			String sql = "insert into pokemon_image ("
