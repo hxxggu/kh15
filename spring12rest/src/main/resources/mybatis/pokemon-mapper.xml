@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- DTD 선언: xml 기반 문서 내에 그 문서가 특정 문서 형식 정의(DTD)를 따름을 지정하는 것 --> 
+
+<mapper namespace="pokemon">
+	
+	<!-- 
+		CRUD 구문을 태그 형식으로 작성
+		- 모든 구문에는 ID를 작성해야 함 (그래야 호출이 가능)
+		- resultType에는 이 구문이 반환시킬 데이터의 형태를 작성
+	 -->
+	<select id="list" resultType="PokemonDto">
+		select * from pokemon order by pokemon_no asc
+	</select>
+	
+</mapper>
