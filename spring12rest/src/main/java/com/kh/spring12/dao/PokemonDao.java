@@ -1,5 +1,6 @@
 package com.kh.spring12.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.spring12.dto.PokemonDto;
+import com.kh.spring12.vo.SearchVO;
 
 // DAO는 영속성 항목을 제어하는 도구
 // - 영속성이라는건 파일이나 데이터베이스처럼 놔두면 영원히 유지되는것을 의미
@@ -25,6 +27,18 @@ public class PokemonDao {
 		// namespace = "pokemon" 영역을 찾아
 		// id = "list" 인 구문을 실행하시오
 		return sqlSession.selectList("pokemon.list");
+	}
+	
+	//검색
+	public List<PokemonDto> selectList(String column, String keyword) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("column", column);
+		param.put("keyword", keyword);
+		return sqlSession.selectList("pokemon.lostOrSearch", param);
+	}
+	
+	public List<PokemonDto> selectList(SearchVO searchVO) {
+		return sqlSession.selectList("pokemon.listOrSearch", searchVO);
 	}
 
 	// 등록 (1) - 시퀀스 자동 생성
@@ -44,7 +58,6 @@ public class PokemonDao {
 	public boolean delete(int pokemonNo) {
 		return sqlSession.delete("pokemon.delete", pokemonNo) > 0;
 	}
-	
 	
 	// 수정 메소드
 	public boolean update(PokemonDto pokemonDto) {

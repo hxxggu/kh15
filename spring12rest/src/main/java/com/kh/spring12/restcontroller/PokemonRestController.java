@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kh.spring12.dao.PokemonDao;
 import com.kh.spring12.dto.PokemonDto;
 import com.kh.spring12.error.TargetNotFoundException;
+import com.kh.spring12.vo.SearchVO;
 
 @CrossOrigin
 @RestController
@@ -54,4 +55,27 @@ public class PokemonRestController {
 	public void insert(@RequestBody PokemonDto pokemonDto) {
 		pokemonDao.insert(pokemonDto);
 	}
+	
+	// 컬럼 + 키워드 검색
+	// - 항목(column), 검색어(keyword)를 전달받아서 검색하도록 구현
+	// - 문제는 두 개의 데이터를 어떻게 받을 것인가?
+	// [1] 조회니까 GET 방식으로 수신하며, 각각의 데이터는 경로변수로 수신
+	// [2] 조회지만, 데이터가 많으니까 POST로 수신 (기본 규칙을 어기는 방식) : 좋지 않은 방식처럼 보이지만, 대다수의 업체들이 해당 방법을 사용함
+	
+	// [1]
+	// '@GetMapping("/{pokemonNo}")'과 구분이 되는가
+	@GetMapping("/column/{column}/keyword/{keyword}")
+	public List<PokemonDto> search(
+			@PathVariable String column,
+			@PathVariable String keyword) {
+		return pokemonDao.selectList(column, keyword);
+	}
+	
+	// [2]
+	@PostMapping("/search")
+	public List<PokemonDto> search(@RequestBody SearchVO searchVO) {
+		// return pokemonDao.selectList(searchVO.getColumn(), searchVO.getKeyword());
+		return pokemonDao.selectList(searchVO);
+	}
+	
 }
