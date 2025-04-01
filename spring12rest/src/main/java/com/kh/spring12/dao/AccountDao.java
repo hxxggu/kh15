@@ -15,9 +15,9 @@ public class AccountDao {
 	private PasswordEncoder encoder;
 	
 	public void insert(AccountDto accountDto) {
-		// 암호화 코드
-		String encrypt = encoder.encode(accountDto.getAccountPw());
-		accountDto.setAccountPw(encrypt);
-		sqlSession.insert("account.join", accountDto);
+ 		//암호화 코드
+ 		String encrypt = encoder.encode(accountDto.getAccountPw());
+ 		accountDto.setAccountPw(encrypt);
+ 		sqlSession.insert("account.join", accountDto);
 	}
 }
