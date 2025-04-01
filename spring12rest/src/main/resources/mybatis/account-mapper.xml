@@ -20,4 +20,9 @@
 		)
 	</insert>
 	
+	<!-- 상세조회 -->
+	<select id="find" resultType="AccountDto">
+		select * from account from account_id = #{accountId}
+	</select>
+	
 </mapper>

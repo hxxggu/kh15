@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.spring12.dao.AccountDao;
 import com.kh.spring12.dto.AccountDto;
+import com.kh.spring12.error.TargetNotFoundException;
 import com.kh.spring12.vo.AccountInsertVO;
+import com.kh.spring12.vo.AccountSignInVO;
 
 @CrossOrigin
 @RestController
@@ -27,5 +29,15 @@ public class AccountRestController {
 		
 		accountDao.insert(accountDto);
 	}
-
+	
+	//로그인
+	//@GetMapping("/accountId/{accountId}/accountPw/{accountPw}")
+	@PostMapping("/login")
+	public AccountDto login(@RequestBody AccountSignInVO vo) {
+		ModelMapper mapper = new ModelMapper();
+		AccountDto accountDto = mapper.map(vo, AccountDto.class);
+		AccountDto findDto = accountDao.login(accountDto);
+		if(findDto == null) throw new TargetNotFoundException("정보 불일치");
+		return findDto;
+	}
 }
