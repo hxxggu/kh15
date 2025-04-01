@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="account">
+
+	<!-- 회원가입(등록) -->
+	<insert id="join">
+		insert into account(
+			account_id, account_pw, account_nickname,
+			account_email, account_birth, account_contact,
+			account_post, account_address1, account_address2
+		)
+		values(
+			#{accountId}, #{accountPw}, #{accountNickname},
+			#{accountEmail}, #{accountBirth}, #{accountContact},
+			#{accountPost}, #{accountAddress1}, #{accountAddress2}
+		)
+	</insert>
+	
+</mapper>
