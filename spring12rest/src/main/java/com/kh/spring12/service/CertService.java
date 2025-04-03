@@ -2,7 +2,6 @@ package com.kh.spring12.service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.random.RandomGenerator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.spring12.dao.CertDao;
 import com.kh.spring12.dto.CertDto;
+import com.kh.spring12.util.RandomGenerator;
 
 @Service
 public class CertService {
