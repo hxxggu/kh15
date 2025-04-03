@@ -3,6 +3,8 @@ package com.kh.spring12.restcontroller;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,5 +41,18 @@ public class AccountRestController {
 		AccountDto findDto = accountDao.login(accountDto);
 		if(findDto == null) throw new TargetNotFoundException("정보 불일치");
 		return findDto;
+	}
+	
+	@GetMapping("/accountId/{accountId}")
+	public void findAccountId(@PathVariable String accountId) {
+		AccountDto accountDto = accountDao.selectOne(accountId);
+		if(accountDto == null) 
+			throw new TargetNotFoundException();//404처리
+	}
+	@GetMapping("/accountNickname/{accountNickname}")
+	public void findAccountNickname(@PathVariable String accountNickname) {
+		AccountDto accountDto = accountDao.selectOneByAccountNickname(accountNickname);
+		if(accountDto == null)
+			throw new TargetNotFoundException();//404처리
 	}
 }

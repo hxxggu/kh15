@@ -22,7 +22,13 @@
 	
 	<!-- 상세조회 -->
 	<select id="find" resultType="AccountDto">
-		select * from account from account_id = #{accountId}
+		select * from account where account_id = #{accountId}
+	</select>
+	
+	<!-- 아이디 중복검사(만들필요 없음) -->
+	<!-- 닉네임 중복검사 -->
+	<select id="findNickname" resultType="AccountDto">
+		select * from account where account_nickname = #{accountNickname}
 	</select>
 	
 </mapper>

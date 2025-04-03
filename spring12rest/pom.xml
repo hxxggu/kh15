@@ -154,6 +154,12 @@
 		    <version>3.2.2</version>
 		</dependency>
 		
+		<!-- 백엔드에 인증메일 보낼 수 있도록 하는 도구 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>		
+		
 		
 	</dependencies>
 
