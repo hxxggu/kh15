@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kh.spring12.dao.AccountDao;
 import com.kh.spring12.dto.AccountDto;
 import com.kh.spring12.error.TargetNotFoundException;
+import com.kh.spring12.service.TokenService;
 import com.kh.spring12.vo.AccountInsertVO;
 import com.kh.spring12.vo.AccountSignInResponseVO;
 import com.kh.spring12.vo.AccountSignInVO;
@@ -23,6 +24,8 @@ import com.kh.spring12.vo.AccountSignInVO;
 public class AccountRestController {
 	@Autowired
 	private AccountDao accountDao;
+	@Autowired
+	private TokenService tokenService;
 	
 	@PostMapping("/")
 	public void join(@RequestBody AccountInsertVO accountInsertVO) {
@@ -45,10 +48,13 @@ public class AccountRestController {
 		AccountDto findDto = accountDao.login(accountDto);
 		if(findDto == null) throw new TargetNotFoundException("정보 불일치");
 		
+		// 로그인 성공
 		// 사용자가 받아야 할 데이터를 생성하고 반환
 		return AccountSignInResponseVO.builder()
 					.userId(findDto.getAccountId())
 					.userLevel(findDto.getAccountLevel())
+					.accessToken(tokenService.generateAccessToken(findDto)) // accountDto: 아이디와 비밀번호만 존재
+					.refreshToken(tokenService.generateRefreshToken(findDto)) // 해당 토큰은 만들어지면서 DB에 기록이 되어야 함
 				.build();
 	}
 	
