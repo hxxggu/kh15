@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.spring12.dao.AccountDao;
+import com.kh.spring12.dao.AccountTokenDao;
 import com.kh.spring12.dto.AccountDto;
 import com.kh.spring12.error.TargetNotFoundException;
 import com.kh.spring12.service.TokenService;
@@ -28,6 +29,8 @@ public class AccountRestController {
 	private AccountDao accountDao;
 	@Autowired
 	private TokenService tokenService;
+	@Autowired
+	private AccountTokenDao accountTokenDao;
 	
 	@PostMapping("/")
 	public void join(@RequestBody AccountInsertVO accountInsertVO) {
@@ -65,6 +68,7 @@ public class AccountRestController {
 	// - 갱신할 때도 Authorization 항목에 refreshToken을 담아서 보내라
 	@PostMapping("/refresh")
 	public AccountSignInResponseVO refresh(
+//		@CookieValue("Authorization") String refreshToken
 		@RequestHeader("Authorization") String refreshToken
 	) {
 		// [1] refreshToken이 없거나 Bearer 토큰이 아니면 차단		
@@ -95,5 +99,12 @@ public class AccountRestController {
 		AccountDto accountDto = accountDao.selectOneByAccountNickname(accountNickname);
 		if(accountDto == null)
 			throw new TargetNotFoundException();//404처리
+	}
+	
+	// 로그아웃
+	@PostMapping("/logout")
+	public void logout(@RequestHeader("Authorization") String accessToken) {
+		ClaimVO claimVO = tokenService.parseBearerToken(accessToken);
+		accountTokenDao.clean(claimVO.getUserId());
 	}
 }

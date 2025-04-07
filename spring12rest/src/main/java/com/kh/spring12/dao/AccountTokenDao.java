@@ -25,7 +25,7 @@ public class AccountTokenDao {
 		long accountTokenNo = sqlSession.selectOne("accountToken.sequence");
 		accountTokenDto.setAccountTokenNo(accountTokenNo);
 		sqlSession.insert("accountToken.add", accountTokenDto);
-		// return accountTokenDto; // 현재 상태는 시간이 포함되지 않음
+		// return accountTokenDto; //현재 상태는 시간이 포함되지 않음
 		return sqlSession.selectOne("accountToken.find", accountTokenDto); // 모든 정보 포함
 	}
 	
@@ -36,4 +36,13 @@ public class AccountTokenDao {
 	public boolean delete(AccountTokenDto accountTokenDto) {
 		return sqlSession.delete("accountToken.delete", accountTokenDto) > 0;
 	}
+	
+	public boolean clean(String accountTokenTarget) {
+		return sqlSession.delete("accountToken.deleteByAccountTokenTarget", accountTokenTarget) > 0;
+	}
+	
+	public boolean clean(AccountTokenDto accountTokenDto) {
+		return sqlSession.delete("accountToken.deleteByAccountTokenTarget", accountTokenDto) > 0;
+	}
+	
 }
