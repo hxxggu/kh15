@@ -31,15 +31,15 @@ public class AccountRestController {
 	
 	@PostMapping("/")
 	public void join(@RequestBody AccountInsertVO accountInsertVO) {
-		//vo → dto 변경 (ModelMapper)
+		// vo → dto 변경 (ModelMapper)
 		ModelMapper mapper = new ModelMapper();
 		AccountDto accountDto = mapper.map(accountInsertVO, AccountDto.class);
 		
 		accountDao.insert(accountDto);
 	}
 	
-	//로그인
-	//@GetMapping("/accountId/{accountId}/accountPw/{accountPw}")
+	// 로그인
+	// @GetMapping("/accountId/{accountId}/accountPw/{accountPw}")
 	@PostMapping("/login")
 	public AccountSignInResponseVO login(@RequestBody AccountSignInVO vo) {
 		// 사용자가 입력한 내용을 AccountDto로 변환 (아이디/비밀번호)

@@ -19,6 +19,7 @@ public class TokenProperties {
 	private String secretKey; // secret-key
 	private int accessLimit; // expire-minutes
 	private int refreshLimit; // refresh-limit
+	private int renewalLimit; // renewal-limit
 	
 	// 키 반환 메서드
 	public SecretKey getKey() {

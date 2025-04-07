@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import com.kh.spring12.configuration.TokenProperties;
 import com.kh.spring12.service.TokenService;
 import com.kh.spring12.vo.ClaimVO;
 
@@ -19,6 +20,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class TokenRenewalInterceptor implements HandlerInterceptor {
+	
+	@Autowired
+	private TokenProperties tokenProperties;
 	
 	@Autowired
 	private TokenService tokenService;
@@ -38,7 +42,7 @@ public class TokenRenewalInterceptor implements HandlerInterceptor {
 			
 			// [3] 토큰 해석 (남은 시간 구하기)
 			long ms = tokenService.getRemainTime(accessToken);
-			if(ms >= 3600000L) return true;
+			if(ms >= tokenProperties.getRenewalLimit() * 60L * 1000L) return true; // 밀리초를 분으로 바꾸는 코드
 			
 			// [4] 재발행 후 응답정보에 추가
 			ClaimVO claimVO = tokenService.parseBearerToken(accessToken);
