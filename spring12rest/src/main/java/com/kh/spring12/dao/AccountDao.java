@@ -48,4 +48,8 @@ public class AccountDao {
 	public List<AccountDto> selectList(AccountSearchVO accountSearchVO) {
 		return sqlSession.selectList("account.complexSearch", accountSearchVO);
 	}
+	
+	public long count(AccountSearchVO accountSearchVO) {
+		return sqlSession.selectOne("account.complexSearchCount", accountSearchVO);
+	}
 }

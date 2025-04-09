@@ -1,7 +1,5 @@
 package com.kh.spring12.restcontroller;
 
-import java.util.List;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,6 +18,7 @@ import com.kh.spring12.dto.AccountDto;
 import com.kh.spring12.error.TargetNotFoundException;
 import com.kh.spring12.service.TokenService;
 import com.kh.spring12.vo.AccountInsertVO;
+import com.kh.spring12.vo.AccountSearchResponseVO;
 import com.kh.spring12.vo.AccountSearchVO;
 import com.kh.spring12.vo.AccountSignInResponseVO;
 import com.kh.spring12.vo.AccountSignInVO;
@@ -131,10 +130,24 @@ public class AccountRestController {
 		accountDao.update(accountDto);
 	}
 	
-	// 회원복합검색
+//	// 회원복합검색
+//	@PostMapping("/search")
+//	public List<AccountDto> search(
+//			@RequestBody AccountSearchVO accountSearchVO) {
+//		return accountDao.selectList(accountSearchVO);
+//	}
+	
 	@PostMapping("/search")
-	public List<AccountDto> search(
+	public AccountSearchResponseVO search(
 			@RequestBody AccountSearchVO accountSearchVO) {
-		return accountDao.selectList(accountSearchVO);
+		
+		long count = accountDao.count(accountSearchVO);
+		boolean isLast = accountSearchVO.getEndRow() == null
+				 || accountSearchVO.getEndRow() >= count;
+		
+		return AccountSearchResponseVO.builder()
+					.list(accountDao.selectList(accountSearchVO)) // 목록
+					.last(false) // 마지막인지
+				.build();
 	}
 }
