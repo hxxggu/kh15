@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
@@ -40,11 +41,10 @@ public class AccountDao {
 		boolean isValid = encoder.matches(accountDto.getAccountPw(), findDto.getAccountPw());
 		return isValid ? findDto : null;
 	}
-	
 	public boolean update(AccountDto accountDto) {
 		return sqlSession.update("account.editUnit", accountDto) > 0;
 	}
-	
+
 	public List<AccountDto> selectList(AccountSearchVO accountSearchVO) {
 		return sqlSession.selectList("account.complexSearch", accountSearchVO);
 	}
