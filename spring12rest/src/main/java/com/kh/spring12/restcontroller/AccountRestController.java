@@ -1,5 +1,7 @@
 package com.kh.spring12.restcontroller;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,6 +20,7 @@ import com.kh.spring12.dto.AccountDto;
 import com.kh.spring12.error.TargetNotFoundException;
 import com.kh.spring12.service.TokenService;
 import com.kh.spring12.vo.AccountInsertVO;
+import com.kh.spring12.vo.AccountSearchVO;
 import com.kh.spring12.vo.AccountSignInResponseVO;
 import com.kh.spring12.vo.AccountSignInVO;
 import com.kh.spring12.vo.ClaimVO;
@@ -125,5 +128,12 @@ public class AccountRestController {
 						@RequestBody AccountDto accountDto) {
 		accountDto.setAccountId(accountId);
 		accountDao.update(accountDto);
+	}
+	
+	// 회원 복합 검색
+	@PostMapping("/search")
+	public List<AccountDto> search(
+			@RequestBody AccountSearchVO accountSearchVO) {
+		return accountDao.selectList(accountSearchVO);
 	}
 }

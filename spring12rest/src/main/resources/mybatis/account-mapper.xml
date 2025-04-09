@@ -85,7 +85,12 @@
 		<!-- 모듈화된 top n query 헤더를 불러오도록 설정 -->
 		<include refid="top-n-header"></include>
 	
-		select * from account
+		select
+			account_id, account_nickname, account_email,
+			account_birth, account_contact, account_point,
+			account_level, account_post, account_address1, account_address2,
+			account_join, account_login, account_change
+		from account
 		
 		<!-- 
 			<where>를 통해 조건이 없으면 where 키워드가 생략되도록 처리
