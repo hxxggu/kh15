@@ -34,7 +34,7 @@ public class PokemonDao {
 		Map<String, Object> param = new HashMap<>();
 		param.put("column", column);
 		param.put("keyword", keyword);
-		return sqlSession.selectList("pokemon.lostOrSearch", param);
+		return sqlSession.selectList("pokemon.listOrSearch", param);
 	}
 	
 	public List<PokemonDto> selectList(SearchVO searchVO) {

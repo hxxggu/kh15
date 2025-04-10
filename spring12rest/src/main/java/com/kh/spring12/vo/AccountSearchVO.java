@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// 복합 검색에 필요한 데이터를 설정하는 클래스
+//복합 검색에 필요한 데이터를 설정하는 클래스
 @Data @Builder @NoArgsConstructor @AllArgsConstructor
 public class AccountSearchVO {
 	private String accountId;
@@ -21,4 +21,6 @@ public class AccountSearchVO {
 	private String accountAddress;
 	private Integer beginRow;
 	private Integer endRow;
+	private String order;
+	//private List<String> orders;//mapper에 foreach 필요
 }

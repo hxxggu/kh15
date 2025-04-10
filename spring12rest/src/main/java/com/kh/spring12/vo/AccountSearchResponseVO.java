@@ -9,9 +9,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// 복합 검색에 대한 응답 데이터
+//복합검색에 대한 응답데이터
 @Data @Builder @NoArgsConstructor @AllArgsConstructor
 public class AccountSearchResponseVO {
-	private List<AccountDto> list;	
+	private List<AccountDto> list;
 	private boolean last;
 }

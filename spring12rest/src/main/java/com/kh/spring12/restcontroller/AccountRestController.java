@@ -1,4 +1,7 @@
+
 package com.kh.spring12.restcontroller;
+
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,14 +108,14 @@ public class AccountRestController {
 			throw new TargetNotFoundException();//404처리
 	}
 	
-	// 로그아웃
+	//로그아웃
 	@PostMapping("/logout")
 	public void logout(@RequestHeader("Authorization") String accessToken) {
 		ClaimVO claimVO = tokenService.parseBearerToken(accessToken);
 		accountTokenDao.clean(claimVO.getUserId());
 	}
 	
-	// 회원탐색
+	//회원탐색
 	@GetMapping("/{accountId}")
 	public AccountDto find(@PathVariable String accountId) {
 		AccountDto accountDto = accountDao.selectOne(accountId);
@@ -122,7 +125,7 @@ public class AccountRestController {
 		return accountDto;
 	}
 	
-	// 회원정보수정
+	//회원정보수정
 	@PatchMapping("/{accountId}")
 	public void edit(@PathVariable String accountId, 
 						@RequestBody AccountDto accountDto) {
@@ -130,7 +133,7 @@ public class AccountRestController {
 		accountDao.update(accountDto);
 	}
 	
-//	// 회원복합검색
+	//회원복합검색
 //	@PostMapping("/search")
 //	public List<AccountDto> search(
 //			@RequestBody AccountSearchVO accountSearchVO) {
@@ -143,11 +146,11 @@ public class AccountRestController {
 		
 		long count = accountDao.count(accountSearchVO);
 		boolean isLast = accountSearchVO.getEndRow() == null
-				 || accountSearchVO.getEndRow() >= count;
+									|| accountSearchVO.getEndRow() >= count;
 		
 		return AccountSearchResponseVO.builder()
-					.list(accountDao.selectList(accountSearchVO)) // 목록
-					.last(false) // 마지막인지
+					.list(accountDao.selectList(accountSearchVO))//목록
+					.last(isLast)//마지막인지
 				.build();
 	}
 }

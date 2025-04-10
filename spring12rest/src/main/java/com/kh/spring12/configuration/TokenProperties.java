@@ -1,7 +1,6 @@
 package com.kh.spring12.configuration;
 
 import java.nio.charset.StandardCharsets;
-import java.util.concurrent.ConcurrentHashMap.KeySetView;
 
 import javax.crypto.SecretKey;
 
@@ -15,13 +14,13 @@ import lombok.Data;
 @Component
 @ConfigurationProperties(prefix = "custom.token")
 public class TokenProperties {
-	private String issuer; // issuer
-	private String secretKey; // secret-key
-	private int accessLimit; // expire-minutes
-	private int refreshLimit; // refresh-limit
-	private int renewalLimit; // renewal-limit
+	private String issuer;//issuer
+	private String secretKey;//secret-key
+	private int accessLimit;//access-limit
+	private int refreshLimit;//refresh-limit
+	private int renewalLimit;//renewal-limit
 	
-	// 키 반환 메서드
+	//키 반환 메소드
 	public SecretKey getKey() {
 		return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
 	}

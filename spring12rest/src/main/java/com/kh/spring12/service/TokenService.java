@@ -17,7 +17,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 
-// JWT 토큰을 발행하거나 해석하는 서비스
+//JWT 토큰을 발행하거나 해석하는 서비스
 @Slf4j
 @Service
 public class TokenService {
@@ -29,13 +29,13 @@ public class TokenService {
 	private AccountTokenDao accountTokenDao; 
 	
 	public String generateAccessToken(AccountDto accountDto) {
-		// 시간계산
+		//시간계산
 		Calendar c = Calendar.getInstance();
-		Date now = c.getTime(); // 현재시각
+		Date now = c.getTime();//현재시각
 		c.add(Calendar.MINUTE, tokenProperties.getAccessLimit());
-		Date limit = c.getTime(); // 만료시각
+		Date limit = c.getTime();//만료시각
 		
-		// 토큰생성
+		//토큰생성
 		return Jwts.builder()
 					.signWith(tokenProperties.getKey())
 					.expiration(limit)
@@ -47,13 +47,13 @@ public class TokenService {
 	}
 	
 	public String generateRefreshToken(AccountDto accountDto) {
-		// 시간계산
+		//시간계산
 		Calendar c = Calendar.getInstance();
-		Date now = c.getTime(); // 현재시각
+		Date now = c.getTime();//현재시각
 		c.add(Calendar.MINUTE, tokenProperties.getRefreshLimit());
-		Date limit = c.getTime(); // 만료시각
+		Date limit = c.getTime();//만료시각
 
-		// 토큰생성
+		//토큰생성
 		String tokenValue = Jwts.builder()
 			.signWith(tokenProperties.getKey())
 			.expiration(limit)
@@ -63,15 +63,15 @@ public class TokenService {
 			.claim("userLevel", accountDto.getAccountLevel())
 		.compact();
 		
-		// 토큰에 들어갈 정보들을 DB에 저장하는 코드
+		//토큰에 들어갈 정보들을 DB에 저장하는 코드
 		AccountTokenDto accountTokenDto = accountTokenDao.insert(
 			AccountTokenDto.builder()
-				.accountTokenTarget(accountDto.getAccountId()) // 발행한 대상
-				.accountTokenValue(tokenValue) // 발행한 토큰
+				.accountTokenTarget(accountDto.getAccountId())//발행한 대상
+				.accountTokenValue(tokenValue)//발행한 토큰
 			.build()
 		);
 		
-		// 토큰 반환
+		//토큰 반환
 		return tokenValue;
 	}
 	
@@ -90,7 +90,7 @@ public class TokenService {
 	}
 
 	public ClaimVO parseBearerToken(String bearerToken) {
-		// 토큰 형태 검사
+		//토큰 형태 검사
 		if(bearerToken == null)
 			throw new TargetNotFoundException("토큰 없음");
 		if(bearerToken.startsWith("Bearer ") == false)
@@ -100,18 +100,18 @@ public class TokenService {
 		return parse(token);
 	}
 
-	// Bearer 토큰의 유효성 검사
+	//Bearer 토큰의 유효성 검사
 	public boolean checkBearerToken(ClaimVO claimVO, String bearerToken) {
 		String token = bearerToken.substring(7);
 		AccountTokenDto accountTokenDto = 
 				accountTokenDao.findByTargetAndToken(
 						AccountTokenDto.builder()
-							.accountTokenTarget(claimVO.getUserId()) // 아이디와
-							.accountTokenValue(token) // 토큰으로
+							.accountTokenTarget(claimVO.getUserId())//아이디와
+							.accountTokenValue(token)//토큰으로
 						.build()
-				); // 찾으세요
-		if(accountTokenDto != null) { // 인증 성공(로그인 갱신 성공)
-			accountTokenDao.delete(accountTokenDto); // 내역 삭제
+				);//찾으세요
+		if(accountTokenDto != null) {//인증 성공(로그인 갱신 성공)
+			accountTokenDao.delete(accountTokenDto);//내역 삭제
 			return true;
 		}
 		return false;
@@ -124,28 +124,28 @@ public class TokenService {
 				.build());
 	}
 	public String generateRefreshToken(ClaimVO claimVO) {
-		return generateAccessToken(AccountDto.builder()
+		return generateRefreshToken(AccountDto.builder()
 					.accountId(claimVO.getUserId())
 					.accountLevel(claimVO.getUserLevel())
 				.build());
 	}
-	
+
 	public long getRemainTime(String bearerToken) {
-		// Bearer 접두사 제거
+		//Bearer 접두사 제거
 		String token = bearerToken.substring(7);
 		
-		// 토큰 해석
+		//토큰 해석
 		Claims claims = (Claims) Jwts.parser()
 				.verifyWith(tokenProperties.getKey())
 				.requireIssuer(tokenProperties.getIssuer())
 			.build()
 				.parse(token)
 				.getPayload();
-	      
-	      // 남은시간 구하기
-	      Date expire = claims.getExpiration(); // 만료시간
-	      Date now = new Date(); // 현재시각
-	      
-	      return expire.getTime() - now.getTime(); //만료시각 - 현재시각
-   }
+		
+		//남은시간 구하기
+		Date expire = claims.getExpiration();//만료시간
+		Date now = new Date();//현재시각
+		
+		return expire.getTime() - now.getTime();//만료시각 - 현재시각
+	}
 }
