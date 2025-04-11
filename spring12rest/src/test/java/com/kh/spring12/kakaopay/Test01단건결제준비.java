@@ -76,11 +76,16 @@ public class Test01단건결제준비 {
 		// Map response = restTemplate.postForObject(주소객체, 헤더+바디, 결과물의형태);
 		// 위의 세 가지를 알려줘서 통신을 보내게 함
 		Map response = restTemplate.postForObject(uri, entity, Map.class); // Map은 알아서 받아줌(연습할 때는 일단 Map 사용)
-		log.debug("response = {}", response);
-		
-		for(Object name : response.keySet()) {
-			Object value = response.get(name);
-			log.debug("{} = {}", name, value);
-		}
+		// log.debug("response = {}", response);
+			
+		System.out.println("partnerOrderId : " + partnerOrderId);
+		System.out.println("partnerUserId : " +partnerUserId);
+		System.out.println("tid : " + response.get("tid"));
+		System.out.println("url : " + response.get("next_redirect_pc_url"));
+//		for(Object name : response.keySet()) {
+//			Object value = response.get(name);
+//			log.debug("{} = {}", name, value);
+//			System.out.println(name + "=" + value);
+//		}
 	}
 }
