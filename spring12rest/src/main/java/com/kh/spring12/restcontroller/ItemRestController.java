@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring12.dao.ItemDao;
+import com.kh.spring12.dto.AttachmentDto;
 import com.kh.spring12.dto.ItemDto;
 import com.kh.spring12.error.TargetNotFoundException;
 import com.kh.spring12.service.AttachmentService;
@@ -56,7 +57,10 @@ public class ItemRestController {
 		
 		// 파일 유무에 따라 추가 처리
 		if(attach.isEmpty() == false) {
-			int attachmentNo = attachmentService.save(attach);
+			AttachmentDto attachmentDto = attachmentService.save(attach);
+			itemDao.connect(resultDto, attachmentDto);
+			
+			
 		}
 	}
 

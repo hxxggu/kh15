@@ -13,5 +13,5 @@ public class ItemDto {
 	private Integer itemPrice;
 	private Float itemDiscountRate;
 	private Integer itemQty;
-	private boolean itemEarly;
+	private String itemEarly;
 }

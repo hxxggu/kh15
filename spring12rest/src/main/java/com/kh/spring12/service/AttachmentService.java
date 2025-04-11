@@ -3,7 +3,7 @@ package com.kh.spring12.service;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.commons.io.FileUtils;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,8 +23,8 @@ public class AttachmentService {
 	private FileuploadProperties fileuploadProperties;
 
 	//파일 저장
-	public int save(MultipartFile attach) throws IllegalStateException, IOException {
-		if(attach.isEmpty()) return -1;
+	public AttachmentDto save(MultipartFile attach) throws IllegalStateException, IOException {
+		if(attach.isEmpty()) return null;
 		//저장위치 생성
 		//File dir = new File(fileuploadProperties.getRoot());
 		File dir = fileuploadProperties.getRootDir();
@@ -39,10 +39,10 @@ public class AttachmentService {
 		File target = new File(dir, String.valueOf(resultDto.getAttachmentNo()));//파일명으로 설정
 		attach.transferTo(target);//저장
 		//파일 번호 반환
-		return resultDto.getAttachmentNo();
+		return resultDto;
 	}
 	
-	//파일 삭제
+//	//파일 삭제
 //	public void delete(int attachmentNo) {
 //		//[1] 실제 파일을 지우고
 //		File dir = fileuploadProperties.getRootDir();
@@ -54,8 +54,8 @@ public class AttachmentService {
 //		//[2] DB 정보를 삭제
 //		attachmentDao.delete(attachmentNo);
 //	}
-
-	//파일 불러오기 (+유효성 검사)
+//
+//	//파일 불러오기 (+유효성 검사)
 //	public byte[] load(int attachmentNo) throws IOException {
 //		//[1] 유효한 파일 번호인지 확인
 //		AttachmentDto attachmentDto = attachmentDao.selectOne(attachmentNo);
@@ -76,8 +76,3 @@ public class AttachmentService {
 //		return data;
 //	}
 }
-
-
-
-
-
