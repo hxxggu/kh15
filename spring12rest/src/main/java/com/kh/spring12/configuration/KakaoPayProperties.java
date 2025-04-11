@@ -9,4 +9,5 @@ import lombok.Data;
 public class KakaoPayProperties {
 	
 	private String secretKey; // custom.kakao.secret-key
+	private String cid; // custom.kakao.cid
 }
