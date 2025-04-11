@@ -34,6 +34,11 @@
 		values(#{itemNo}, #{attachmentNo})
 	</insert>
 	
+	<!-- 이미지 찾기 -->
+	<select id="findImage" resultType="int">
+		select attachment_no from item_image where item_no = #{itemNo}
+	</select>
+	
 	
 	
 </mapper>

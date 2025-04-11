@@ -20,4 +20,8 @@ public class AttachmentDao {
 //		return sqlSession.selectOne("attachment.find", attachmentNo);
 	}
 
+	public AttachmentDto selectOne(int attachmentNo) {
+		return sqlSession.selectOne("attachment.find", attachmentNo);
+	}
+
 }

@@ -21,6 +21,9 @@ import com.kh.spring12.dto.ItemDto;
 import com.kh.spring12.error.TargetNotFoundException;
 import com.kh.spring12.service.AttachmentService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/api/item")
@@ -58,9 +61,22 @@ public class ItemRestController {
 		// 파일 유무에 따라 추가 처리
 		if(attach.isEmpty() == false) {
 			AttachmentDto attachmentDto = attachmentService.save(attach);
-			itemDao.connect(resultDto, attachmentDto);
-			
-			
+			itemDao.connect(resultDto, attachmentDto);			
+		}
+	}
+	
+	//이미지를 찾아서 반환하는 매핑
+	@GetMapping("/image/{itemNo}")
+	public void image(@PathVariable long itemNo,
+									HttpServletRequest request,
+									HttpServletResponse response) throws IOException {
+		String contextPath = request.getContextPath();
+		try {
+			int attachmentNo = itemDao.findImage(itemNo);
+			response.sendRedirect(contextPath+"/api/attachment/"+attachmentNo);
+		}
+		catch(Exception e) {
+			response.sendRedirect("https://dummyimage.com/400x400/000/fff");
 		}
 	}
 

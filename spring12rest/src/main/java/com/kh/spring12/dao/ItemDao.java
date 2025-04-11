@@ -31,11 +31,15 @@ public class ItemDao {
 		sqlSession.insert("item.add", itemDto);
 		return sqlSession.selectOne("item.find", sequence);
 	}
-	
+	// 이미지 연결
 	public void connect(ItemDto itemDto, AttachmentDto attachmentDto) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("itemNo", itemDto.getItemNo());
 		params.put("attachmentNo", attachmentDto.getAttachmentNo());
 		sqlSession.insert("item.connect", params);
+	}
+	//이미지 찾기
+	public int findImage(long itemNo) {
+		return sqlSession.selectOne("item.findImage", itemNo);
 	}
 }
