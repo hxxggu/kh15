@@ -10,6 +10,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.kh.spring12.configuration.KakaoPayProperties;
 import com.kh.spring12.vo.kakaopay.KakaoPayApproveResponseVO;
@@ -47,9 +48,14 @@ public class KakaoPayService {
 		body.put("total_amount", String.valueOf(vo.getTotalAmount()));
 		body.put("tax_free_amount", "0");
 		// * 카카오페이 개발자센터 플랫폼에 등록된 주소로 시작해야 함
-		body.put("approval_url", "http://localhost:8080/api/kakaopay/v1/approve" + vo.getPartnerOrderId()); // 회원만 결제할 수 있도록 구현
-		body.put("cancel_url", "http://localhost:8080/api/kakaopay/v1/cancel");
-		body.put("fail_url", "http://localhost:8080/api/kakaopay/v1/fail");
+		// <규칙>
+		// - 어떠한 주소가 오든 그 주소 뒤에 /success, /fail, /cancel 을 붙인다
+		// - 성공 시에는 partnerOrderId를 경로 변수로 추가
+		String baseUrl = ServletUriComponentsBuilder.fromCurrentRequest().toString(); // 현재 요청에 대한 주소를 구하라
+		// VO로 partnerOrderId를 받음으로서 회원만 결제가 가능하도록 구현
+		body.put("approval_url", baseUrl + "/success/" + vo.getPartnerOrderId());
+		body.put("cancel_url", baseUrl + "/cancel/" + vo.getPartnerOrderId());
+		body.put("fail_url", baseUrl + "/fail/" + vo.getPartnerOrderId());
 		
 		// 4 + 3
 		HttpEntity entity = new HttpEntity(body, headers);
@@ -82,6 +88,5 @@ public class KakaoPayService {
 		KakaoPayApproveResponseVO response = restTemplate.postForObject(uri, entity, KakaoPayApproveResponseVO.class);
 		
 		return response;
-}
-	// 
+	}
 }

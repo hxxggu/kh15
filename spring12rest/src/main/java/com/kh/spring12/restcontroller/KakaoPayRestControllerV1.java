@@ -1,5 +1,6 @@
 package com.kh.spring12.restcontroller;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -26,6 +27,7 @@ import com.kh.spring12.vo.kakaopay.KakaoPayApproveVO;
 import com.kh.spring12.vo.kakaopay.KakaoPayReadyResponseVO;
 import com.kh.spring12.vo.kakaopay.KakaoPayReadyVO;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @CrossOrigin // react에서 ajax로 결제 요청보내니까 필요
@@ -47,8 +49,7 @@ public class KakaoPayRestControllerV1 {
 	// : HashMap은 기본적으로 동기화되지 않은 컬렉션이라 동시 접근 시 NullPointerException, NullPointerException 예외 발생
 	private Map<String, KakaoPayApproveVO> flashMap = Collections.synchronizedMap(new HashMap<>()); // thread-safe
 
-	
-	@PostMapping("/ready")
+	@PostMapping("/buy")
 	public KakaoPayReadyResponseVO ready(
 			@RequestBody KakaoPayReadyVO vo,
 			@RequestHeader("Authorization") String bearerToken) throws URISyntaxException {
@@ -61,32 +62,49 @@ public class KakaoPayRestControllerV1 {
 		
 		// 승인을 위해 flashMap 정보를 저장
 		// flashMap.put(아이디, VO);
-		flashMap.put(claimVO.getUserId(),
+		flashMap.put(vo.getPartnerOrderId(),
 			KakaoPayApproveVO.builder()
 				.tid(response.getTid()) // 거래번호
 				.partnerOrderId(vo.getPartnerOrderId()) // 주문번호
 				.partnerUserId(vo.getPartnerUserId()) // 주문자
 			.build());
 		
-		return kakaoPayService.ready(vo);
+		return response;
 	}
-	
-	
-	
-	@GetMapping("/approve/{partnerUserId}")
-	public String approve(
-			@PathVariable String partnerUserId,
-			@RequestParam("pg_token") String pgToken
-			// HttpSession session
-			) throws URISyntaxException {
+		
+	@GetMapping("/buy/success/{partnerOrderId}")
+	public void approve(
+			@PathVariable String partnerOrderId,
+			@RequestParam("pg_token") String pgToken,
+			HttpServletResponse response
+			) throws URISyntaxException, IOException {
 		// System.out.println("[approve] sesison : " + session.getId());
 		// >> session 으로 처리하려고 했으나 사용 불가능, 데이터 연결이 안됨
-		KakaoPayApproveVO vo = flashMap.get(partnerUserId);
+		KakaoPayApproveVO vo = flashMap.get(partnerOrderId);
 		if(vo == null) throw new TargetNotFoundException("유효하지 않은 결제 정보");
 		
-		flashMap.remove(partnerUserId); // 한번 사용했으면 정보에 대해 지울 것		
+		flashMap.remove(partnerOrderId); // 한번 사용했으면 정보에 대해 지울 것		
 		vo.setPgToken(pgToken);
-		KakaoPayApproveResponseVO response = kakaoPayService.approve(vo);
-		return "승인페이지 - " + pgToken;
+		KakaoPayApproveResponseVO approveResponse = kakaoPayService.approve(vo);
+		
+		response.sendRedirect("http://localhost:5173/pay/v1/success");
+	}
+	
+	@GetMapping("/buy/cancel/{partnerOrderId}")
+	public void cancel(
+			HttpServletResponse response,
+			@PathVariable String partnerOrderId
+			) throws IOException {
+		flashMap.remove(partnerOrderId);
+		response.sendRedirect("http://localhost:5173/pay/v1/cancel");
+	}
+	
+	@GetMapping("/buy/fail")
+	public void fail(
+			HttpServletResponse response,
+			@PathVariable String partnerOrderId
+			) throws IOException {
+		flashMap.remove(partnerOrderId);
+		response.sendRedirect("http://localhost:5173/pay/v1/fail");
 	}
 }
