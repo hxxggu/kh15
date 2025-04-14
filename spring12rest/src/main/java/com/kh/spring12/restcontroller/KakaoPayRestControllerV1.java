@@ -1,11 +1,15 @@
 package com.kh.spring12.restcontroller;
 
 import java.net.URISyntaxException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -13,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kh.spring12.error.TargetNotFoundException;
 import com.kh.spring12.service.KakaoPayService;
 import com.kh.spring12.service.TokenService;
 import com.kh.spring12.vo.ClaimVO;
+import com.kh.spring12.vo.kakaopay.KakaoPayApproveResponseVO;
+import com.kh.spring12.vo.kakaopay.KakaoPayApproveVO;
 import com.kh.spring12.vo.kakaopay.KakaoPayReadyResponseVO;
 import com.kh.spring12.vo.kakaopay.KakaoPayReadyVO;
 
@@ -32,32 +39,54 @@ public class KakaoPayRestControllerV1 {
 	@Autowired
 	private TokenService tokenService;
 	
+	// Flash value를 저장하기 위한 저장소
+	// - 웹은 기본적으로 멀티스레드 환경이기 때문에 저장소를 만들 때는 "동기화"
+	// private Map<아이디, 결제승인요청정보> flashMap = new HashMap<>();
+	// private Map<String, KakaoPayApproveVO> flashMap = new HashMap<>();
+	// 해당 코드 사용 시 thread-safe 에러 발생 (thread-safe: 여러 스레드가 동시에 flashMap에 접근하거나 수정할 경우 에러 발생)
+	// : HashMap은 기본적으로 동기화되지 않은 컬렉션이라 동시 접근 시 NullPointerException, NullPointerException 예외 발생
+	private Map<String, KakaoPayApproveVO> flashMap = Collections.synchronizedMap(new HashMap<>()); // thread-safe
+
+	
 	@PostMapping("/ready")
 	public KakaoPayReadyResponseVO ready(
-//			HttpSession session,
 			@RequestBody KakaoPayReadyVO vo,
 			@RequestHeader("Authorization") String bearerToken) throws URISyntaxException {
-		// vo에는 상품명(itemName)과 결제 금액(totalAmount)만 있음
+		// VO에는 상품명(itemName)과 결제 금액(totalAmount)만 있음
 		vo.setPartnerOrderId(UUID.randomUUID().toString());
 		ClaimVO claimVO = tokenService.parseBearerToken(bearerToken); 
-		vo.setPartnerUserId(claimVO.getUserId());
-		// testuser1 이라고 쓰면 타인은 결제를 할 수 없음, 해당하는 값을 토큰에서 꺼내와야 함 (TokenService 이용)
+		vo.setPartnerUserId(claimVO.getUserId()); // testuser1 이라고 쓰면 타인은 결제를 할 수 없음, 해당하는 값을 토큰에서 꺼내와야 함 (TokenService 이용)
 		
-//		System.out.println("session : " + session.getId());
+		KakaoPayReadyResponseVO response = kakaoPayService.ready(vo);
+		
+		// 승인을 위해 flashMap 정보를 저장
+		// flashMap.put(아이디, VO);
+		flashMap.put(claimVO.getUserId(),
+			KakaoPayApproveVO.builder()
+				.tid(response.getTid()) // 거래번호
+				.partnerOrderId(vo.getPartnerOrderId()) // 주문번호
+				.partnerUserId(vo.getPartnerUserId()) // 주문자
+			.build());
 		
 		return kakaoPayService.ready(vo);
 	}
 	
-	@GetMapping("/approve")
+	
+	
+	@GetMapping("/approve/{partnerUserId}")
 	public String approve(
-			@RequestParam("pg_token") String pgToken,
-			HttpSession session
-			) {
-//		System.out.println("[approve] sesison : " + session.getId());
+			@PathVariable String partnerUserId,
+			@RequestParam("pg_token") String pgToken
+			// HttpSession session
+			) throws URISyntaxException {
+		// System.out.println("[approve] sesison : " + session.getId());
 		// >> session 으로 처리하려고 했으나 사용 불가능, 데이터 연결이 안됨
+		KakaoPayApproveVO vo = flashMap.get(partnerUserId);
+		if(vo == null) throw new TargetNotFoundException("유효하지 않은 결제 정보");
 		
-		// * 추가적으로 진행될 내용
-		// - 결제 준비에서 처리된 내용들을 이용하여 승인 처리
+		flashMap.remove(partnerUserId); // 한번 사용했으면 정보에 대해 지울 것		
+		vo.setPgToken(pgToken);
+		KakaoPayApproveResponseVO response = kakaoPayService.approve(vo);
 		return "승인페이지 - " + pgToken;
 	}
 }
