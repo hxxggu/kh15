@@ -18,6 +18,9 @@ import com.kh.spring12.vo.kakaopay.KakaoPayApproveVO;
 import com.kh.spring12.vo.kakaopay.KakaoPayReadyResponseVO;
 import com.kh.spring12.vo.kakaopay.KakaoPayReadyVO;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class KakaoPayService {
 	
@@ -51,11 +54,12 @@ public class KakaoPayService {
 		// <규칙>
 		// - 어떠한 주소가 오든 그 주소 뒤에 /success, /fail, /cancel 을 붙인다
 		// - 성공 시에는 partnerOrderId를 경로 변수로 추가
-		String baseUrl = ServletUriComponentsBuilder.fromCurrentRequest().toString(); // 현재 요청에 대한 주소를 구하라
+		String baseUrl = ServletUriComponentsBuilder.fromCurrentRequest().toUriString(); // 현재 요청에 대한 주소를 구하라
+		log.debug("baseUrl = {}", baseUrl);
 		// VO로 partnerOrderId를 받음으로서 회원만 결제가 가능하도록 구현
-		body.put("approval_url", baseUrl + "/success/" + vo.getPartnerOrderId());
-		body.put("cancel_url", baseUrl + "/cancel/" + vo.getPartnerOrderId());
-		body.put("fail_url", baseUrl + "/fail/" + vo.getPartnerOrderId());
+		body.put("approval_url", baseUrl + "/success/"+vo.getPartnerOrderId());
+		body.put("cancel_url", baseUrl + "/cancel/"+vo.getPartnerOrderId());
+		body.put("fail_url", baseUrl + "/fail/"+vo.getPartnerOrderId());
 		
 		// 4 + 3
 		HttpEntity entity = new HttpEntity(body, headers);
