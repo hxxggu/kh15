@@ -35,7 +35,9 @@ import com.kh.spring12.vo.kakaopay.KakaoPayReadyResponseVO;
 import com.kh.spring12.vo.kakaopay.KakaoPayReadyVO;
 
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @CrossOrigin
 @RestController
 @RequestMapping("/api/kakaopay/v2")
@@ -125,6 +127,7 @@ public class KakaoPayRestControllerV2 {
 	
 		KakaoPayApproveResponseVO approveResponse = kakaoPayService.approve(vo);
 		
+		log.debug("approve = {}", approveResponse);
 		// DB에 결제완료된 정보를 저장하는 처리를 추가
 		// - 저장하기 위해서는 상품 번호와 상품 수량이 담긴 목록이 필요
 		// - ready 시점에서 존재하는 데이터이므로 flash data로 저장해서 이동
