@@ -19,7 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kh.spring12.dao.BuyDao;
 import com.kh.spring12.dao.ItemDao;
+import com.kh.spring12.dto.BuyDetailDto;
+import com.kh.spring12.dto.BuyDto;
 import com.kh.spring12.dto.ItemDto;
 import com.kh.spring12.error.TargetNotFoundException;
 import com.kh.spring12.service.KakaoPayService;
@@ -39,21 +42,31 @@ import jakarta.servlet.http.HttpServletResponse;
 public class KakaoPayRestControllerV2 {
 	@Autowired
 	private ItemDao itemDao;
+	
 	@Autowired
 	private KakaoPayService kakaoPayService;
+	
 	@Autowired
 	private TokenService tokenService;
 	
-	//Flash value를 저장하기 위한 저장소
+	@Autowired
+	private BuyDao buyDao;
+	
+	// Flash value를 저장하기 위한 저장소
 	private Map<String, KakaoPayApproveVO> flashMap = 
-			Collections.synchronizedMap(new HashMap<>());//thread-safe
+			Collections.synchronizedMap(new HashMap<>()); // thread-safe
 	
-	//현재 거래번호가 완료되면 돌아갈 페이지 주소를 저장
-	private Map<String, String> returnUrlMap = 
-			Collections.synchronizedMap(new HashMap<>());//thread-safe
+	// 현재 거래번호가 완료되면 돌아갈 페이지 주소를 저장
+	private Map<String, String> returnUrlMap = Collections.synchronizedMap(new HashMap<>()); // thread-safe
 	
-	//구매 요청 시 클라이언트가 {상품번호,수량}을 배열 형태로 전송
-	//- 클래스를 만들어서 받을 수 있도록 준비해야한다
+	// 상품 번호 + 수량 목록을 저장
+	private Map<String, List<KakaoPayBuyVO>> buyListMap = Collections.synchronizedMap(new HashMap<>()); // thread-safe
+	
+	// 결제 준비 요청 정보를 저장
+	private Map<String, KakaoPayReadyVO> readyMap = Collections.synchronizedMap(new HashMap<>()); // thread-safe
+	
+	// 구매 요청 시 클라이언트가 {상품번호,수량}을 배열 형태로 전송
+	// - 클래스를 만들어서 받을 수 있도록 준비해야한다
 	@PostMapping("/buy")
 	public KakaoPayReadyResponseVO buy(
 			@RequestBody List<KakaoPayBuyVO> buyList,
@@ -68,8 +81,8 @@ public class KakaoPayRestControllerV2 {
 		ClaimVO claimVO = tokenService.parseBearerToken(bearerToken);
 		vo.setPartnerUserId(claimVO.getUserId());
 		
-		//결제에 필요한 정보를 계산 (itemName, totalAmount)
-		//- 상품명(itemName) : 상품이 1개일때는 해당상품명, 2개이상이면 ???외 ?건
+		// 결제에 필요한 정보를 계산 (itemName, totalAmount)
+		// - 상품명(itemName) : 상품이 1개일때는 해당상품명, 2개이상이면 ???외 ?건
 		StringBuffer buffer = new StringBuffer();		
 		ItemDto firstItemDto = itemDao.selectOne(buyList.get(0).getItemNo());
 		buffer.append(firstItemDto.getItemName());
@@ -95,6 +108,8 @@ public class KakaoPayRestControllerV2 {
 					.tid(response.getTid())
 				.build());
 		returnUrlMap.put(vo.getPartnerOrderId(), frontendUrl);
+		buyListMap.put(vo.getPartnerOrderId(), buyList);
+		readyMap.put(vo.getPartnerOrderId(), vo);
 		
 		return response;
 	}
@@ -110,8 +125,16 @@ public class KakaoPayRestControllerV2 {
 	
 		KakaoPayApproveResponseVO approveResponse = kakaoPayService.approve(vo);
 		
-		//DB에 결제완료된 정보를 저장하는 처리를 추가
+		// DB에 결제완료된 정보를 저장하는 처리를 추가
+		// - 저장하기 위해서는 상품 번호와 상품 수량이 담긴 목록이 필요
+		// - ready 시점에서 존재하는 데이터이므로 flash data로 저장해서 이동
+		List<KakaoPayBuyVO> buyList = buyListMap.get(partnerOrderId); // 해당 코드를 기반으로 정보를 저장하게 만듦
+		KakaoPayReadyVO readyVO = readyMap.remove(partnerOrderId);
 		
+		// DB 등록
+		kakaoPayService.insertDB(vo, readyVO, buyList); // service로 좀더 편하게 구현이 가능
+		
+		// react로 리다이렉트 처리
 		String returnUrl = returnUrlMap.remove(partnerOrderId);
 		response.sendRedirect(returnUrl + "/success");
 	}

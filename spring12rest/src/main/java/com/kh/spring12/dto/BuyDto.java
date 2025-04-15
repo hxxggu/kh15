@@ -13,8 +13,9 @@ import lombok.NoArgsConstructor;
 public class BuyDto {
 	private long buyNo;
 	private String buyOwner;
+	private String buyName;
 	private String buyTid;
-	private int buyTotal;
-	private int buyRemain;
+	private long buyTotal;
+	private long buyRemain;
 	private Timestamp buyTime;
 }

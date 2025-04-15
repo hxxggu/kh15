@@ -3,6 +3,7 @@ package com.kh.spring12.service;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,14 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.kh.spring12.configuration.KakaoPayProperties;
+import com.kh.spring12.dao.BuyDao;
+import com.kh.spring12.dao.ItemDao;
+import com.kh.spring12.dto.BuyDetailDto;
+import com.kh.spring12.dto.BuyDto;
+import com.kh.spring12.dto.ItemDto;
 import com.kh.spring12.vo.kakaopay.KakaoPayApproveResponseVO;
 import com.kh.spring12.vo.kakaopay.KakaoPayApproveVO;
+import com.kh.spring12.vo.kakaopay.KakaoPayBuyVO;
 import com.kh.spring12.vo.kakaopay.KakaoPayReadyResponseVO;
 import com.kh.spring12.vo.kakaopay.KakaoPayReadyVO;
 
@@ -26,6 +33,12 @@ public class KakaoPayService {
 	
 	@Autowired
 	private KakaoPayProperties kakaoPayProperties;
+	
+	@Autowired
+	private BuyDao buyDao;
+	
+	@Autowired
+	private ItemDao itemDao;
 	
 	// 결제 준비 (ready)
 	public KakaoPayReadyResponseVO ready(KakaoPayReadyVO vo) throws URISyntaxException {
@@ -92,5 +105,32 @@ public class KakaoPayService {
 		KakaoPayApproveResponseVO response = restTemplate.postForObject(uri, entity, KakaoPayApproveResponseVO.class);
 		
 		return response;
+	}
+	
+	// 결제 DB에 등록
+	public void insertDB(
+			KakaoPayApproveVO approveVO,
+			KakaoPayReadyVO readyVO,
+			List<KakaoPayBuyVO> buyList
+			) {
+		// buy 등록
+		long buyNo = buyDao.addBuy(BuyDto.builder()
+					.buyOwner(approveVO.getPartnerUserId()) // 주문자
+					.buyTid(approveVO.getTid()) // 거래 번호
+					.buyName(readyVO.getItemName()) // 구매상품
+					.buyTotal(readyVO.getTotalAmount()) // 구매 금액
+				.build());
+		
+		// buy_detail 등록 (반복문 사용)
+		for(KakaoPayBuyVO buyVO : buyList) {
+			ItemDto itemDto = itemDao.selectOne(buyVO.getItemNo());
+			buyDao.addBuyDetail(BuyDetailDto.builder()
+						.buyDetailOrigin(buyNo) // 구매 대표 번호
+						.buyDetailItem(buyVO.getItemNo()) // 구매 상품 번호
+						.buyDetailName(itemDto.getItemName()) // 구매 상품명
+						.buyDetailPrice(itemDto.getRealPrice()) // 구매 상품 가격 (개당)
+						.buyDetailQty(buyVO.getQty()) // 구매 상품 개수
+					.build());
+		}
 	}
 }
