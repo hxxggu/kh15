@@ -132,5 +132,6 @@ public class KakaoPayService {
 						.buyDetailQty(buyVO.getQty()) // 구매 상품 개수
 					.build());
 		}
+		// service는 비교적 더러워도 ㄱㅊ. 기능이 어떻게 돌아가는지만 명확하게 나와있다면
 	}
 }
