@@ -132,13 +132,36 @@ public class KakaoPayRestControllerV2 {
 		KakaoPayReadyVO readyVO = readyMap.remove(partnerOrderId);
 		
 		// DB 등록
-		kakaoPayService.insertDB(vo, readyVO, buyList); // service로 좀더 편하게 구현이 가능
+		kakaoPayService.insertDB(vo, readyVO, buyList); // service로 좀더 편하게 구현이 가능 
 		
 		// react로 리다이렉트 처리
 		String returnUrl = returnUrlMap.remove(partnerOrderId);
 		response.sendRedirect(returnUrl + "/success");
 	}
 	
-//	@GetMapping("/buy/cancel/{partnerOrderId}")
-//	@GetMapping("/buy/fail/{partnerOrderId}")
+	@GetMapping("/buy/cancel/{partnerOrderId}")
+	public void cancel(
+			@PathVariable String partnerOrderId,
+			HttpServletResponse response
+			) throws IOException {
+		flashMap.remove(partnerOrderId);
+		buyListMap.remove(partnerOrderId);
+		readyMap.remove(partnerOrderId);
+		
+		String url = returnUrlMap.remove(partnerOrderId);
+		response.sendRedirect(url + "/cancel");
+	}
+	
+	@GetMapping("/buy/fail/{partnerOrderId}")
+	public void fail(
+			@PathVariable String partnerOrderId,
+			HttpServletResponse response
+			) throws IOException {
+		flashMap.remove(partnerOrderId);
+		buyListMap.remove(partnerOrderId);
+		readyMap.remove(partnerOrderId);
+		
+		String url = returnUrlMap.remove(partnerOrderId);
+		response.sendRedirect(url + "/fail");
+	}
 }
