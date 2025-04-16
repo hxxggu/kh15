@@ -23,6 +23,7 @@ public class BuyDao {
 		sqlSession.insert("buy.addBuy", buyDto);
 		return buyNo;
 	}
+	
 	public long addBuyDetail(BuyDetailDto buyDetailDto) {
 		long buyDetailNo = sqlSession.selectOne("buy.buyDetailSequence");
 		buyDetailDto.setBuyDetailNo(buyDetailNo);
@@ -33,6 +34,7 @@ public class BuyDao {
 	public List<BuyDto> listBuy() {
 		return sqlSession.selectList("buy.listBuy");
 	}
+	
 	public List<BuyDetailDto> listBuyDetail(long buyDetailOrigin) {
 		return sqlSession.selectList("buy.listBuyDetail", buyDetailOrigin);
 	}
@@ -52,10 +54,16 @@ public class BuyDao {
 		}
 		return results;
 	}
+	
 	public List<BuyTotalVO> listTotalAuto() {
 		return sqlSession.selectList("buy.listBuyAuto");
 	}
+	
 	public List<BuyTotalVO> listTotalAuto(String userId) {
 		return sqlSession.selectList("buy.listBuyAuto", userId);
+	}
+	
+	public BuyDto selectOne(long buyNo) {
+		return sqlSession.selectOne("buy.findbuy", buyNo);
 	}
 }

@@ -95,4 +95,8 @@
 	 	order by buy_no desc
 	 </select>
 	 
+	 <select id="findbuy" resultType="BuyDto">
+	 	select * from buy where buy_no = #{buyNo}
+	 </select>
+	 
 </mapper>
