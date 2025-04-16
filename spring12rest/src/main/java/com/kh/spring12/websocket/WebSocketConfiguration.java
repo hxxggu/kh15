@@ -16,14 +16,15 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 // @EnableWebSocket // 순수 웹소켓 활성화
 @EnableWebSocketMessageBroker // STOMP 도우미 활성화
 @Configuration // 설정 파일임을 암시
-public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer { 
+public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer { // 역할 명시 : 웹소켓 도우미 설정 파일
 
 	// [1] 사용자가 접속하고 메시지를 보낼 수 있는 "채널"을 개설
 	// - 사용자는 구독(subscribe)를 통해 특정 채널의 메시지를 수신할 수 있다
-	// - 게시(publish)를 통해 특정 채널에 메시지를 전달할 수 있다 (구독 채널과 )
+	// - 게시(publish)를 통해 특정 채널에 메시지를 전달할 수 있다 (구독 채널과 다름)
 
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry registry) {
+		
 		// 구독 가능한 채널의 접두사를 설정
 		// - /public 을 포함한 어떤 채널도 사용 가능 (공개적인 대화 시 사용)
 		// - /private 을 포함한 어떤 채널도 사용 가능 (개인적인 대화 시 사용)
@@ -41,6 +42,5 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
 			.setAllowedOriginPatterns("*") // 허용 가능한 클라이언트 주소 패턴 (CORS와 비슷)
 			.withSockJS(); // SpringBoot에서 사용하는 기본 기술, WS를 HTTP처럼 쓸 수 있게 하며 유용한 기능을 제공
 	}
-	
 	
 }
