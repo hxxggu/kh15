@@ -74,7 +74,28 @@ public class BuyRestController {
 //	}
 	
 	// DeleteMapping을 결제 취소로 사용
-//	@DeleteMapping("/buy/{buyNo}") // 전체 취소
+	@DeleteMapping("/buy/{buyNo}") // 전체 취소
+	public void cancelAll(@PathVariable long buyNo) throws URISyntaxException {
+		// 상세 조회
+		BuyDto buyDto = buyDao.selectOne(buyNo);
+		if(buyDto == null) throw new TargetNotFoundException(); // 조회 내역이 없다면
+		
+		if(buyDto.getBuyRemain() == 0) { // 이미 다 취소되었다면 (남은 금액이 0이라면)
+			throw new TargetNotFoundException();
+		}
+		
+		// 카카오페이 취소 요청
+		KakaoPayCancelResponseVO response = kakaoPayService.cancel(
+				KakaoPayCancelVO.builder()
+					.tid(buyDto.getBuyTid())
+					.cancelAmount(buyDto.getBuyRemain())
+				.build()
+		);
+		
+		// DataBase 변경 (잔여 금액을 0으로, 세부 항목을 N으로)
+		buyDao.updateBuy(buyNo, 0L); // 잔여 금액을 0으로 변경
+		buyDao.cancelAll(buyNo);
+	}
 	
 	@DeleteMapping("/buyDetail/{buyDetailNo}") // 부분취소
 	public void cancelPart(@PathVariable long buyDetailNo) throws URISyntaxException {

@@ -73,6 +73,11 @@ public class BuyDao {
 		return sqlSession.selectOne("buy.findDetail", buyDetailNo);
 	}
 	
+//	public boolean cancelAll(long buyNo) {
+	public boolean cancelAll(long buyDetailNo) {
+		return sqlSession.selectOne("buy.cancelAll", buyDetailNo);
+	}
+	
 	public boolean cancelDetail(long buyDetailNo) {
 		return sqlSession.update("buy.cancelPart", buyDetailNo) > 0;
 	}

@@ -101,7 +101,9 @@
 	 
 	 <!-- 취소 (전체/부분) -->
 	 <update id="cancelAll">
-	 
+	 	update buy_detail
+	 	set buy_datail_status = 'N'
+	 	where buy_detail_origin = #{buyDetailOrigin}
 	 </update>
 	 
 	 <update id="cancelPart">
