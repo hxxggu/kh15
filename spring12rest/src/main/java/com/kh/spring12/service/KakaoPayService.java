@@ -22,6 +22,8 @@ import com.kh.spring12.dto.ItemDto;
 import com.kh.spring12.vo.kakaopay.KakaoPayApproveResponseVO;
 import com.kh.spring12.vo.kakaopay.KakaoPayApproveVO;
 import com.kh.spring12.vo.kakaopay.KakaoPayBuyVO;
+import com.kh.spring12.vo.kakaopay.KakaoPayOrderResponseVO;
+import com.kh.spring12.vo.kakaopay.KakaoPayOrderVO;
 import com.kh.spring12.vo.kakaopay.KakaoPayReadyResponseVO;
 import com.kh.spring12.vo.kakaopay.KakaoPayReadyVO;
 
@@ -33,26 +35,20 @@ public class KakaoPayService {
 	
 	@Autowired
 	private KakaoPayProperties kakaoPayProperties;
-	
 	@Autowired
 	private BuyDao buyDao;
-	
 	@Autowired
 	private ItemDao itemDao;
 	
+	@Autowired
+	private RestTemplate restTemplate;
+	@Autowired
+	private HttpHeaders headers;
+	
 	// 결제 준비 (ready)
 	public KakaoPayReadyResponseVO ready(KakaoPayReadyVO vo) throws URISyntaxException {
-		
-		// 1. 전송 도구 생성
-		RestTemplate restTemplate = new RestTemplate();
-		
 		// 2. 전송 주소 확인
 		URI uri = new URI("https://open-api.kakaopay.com/online/v1/payment/ready");
-		
-		// 3. 헤더 설정
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", "SECRET_KEY " + kakaoPayProperties.getSecretKey());
-		headers.add("Content-Type", "application/json");
 		
 		// 4. 바디 설정
 		Map<String, String> body = new HashMap<>();
@@ -78,24 +74,17 @@ public class KakaoPayService {
 		HttpEntity entity = new HttpEntity(body, headers);
 		
 		// 2 + (4 + 3)
-		KakaoPayReadyResponseVO response =
-				restTemplate.postForObject(uri, entity, KakaoPayReadyResponseVO.class);
+		KakaoPayReadyResponseVO response = restTemplate.postForObject(uri, entity, KakaoPayReadyResponseVO.class);
 		
 		return response;
 	}
 	
 	// 결제 승인 (approve)
-	public KakaoPayApproveResponseVO approve(KakaoPayApproveVO vo) throws URISyntaxException {
-		RestTemplate restTemplate = new RestTemplate();
-		
+	public KakaoPayApproveResponseVO approve(KakaoPayApproveVO vo) throws URISyntaxException{
 		URI uri = new URI("https://open-api.kakaopay.com/online/v1/payment/approve");
 		
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", "SECRET_KEY " + kakaoPayProperties.getSecretKey());
-		headers.add("Content-Type", "application/json");
-		
 		Map<String, String> body = new HashMap<>();
-		body.put("cid", kakaoPayProperties.getCid()); // 가맹점 번호
+		body.put("cid", kakaoPayProperties.getCid());
 		body.put("tid", vo.getTid());
 		body.put("partner_order_id", vo.getPartnerOrderId());
 		body.put("partner_user_id", vo.getPartnerUserId());
@@ -105,6 +94,20 @@ public class KakaoPayService {
 		KakaoPayApproveResponseVO response = restTemplate.postForObject(uri, entity, KakaoPayApproveResponseVO.class);
 		
 		return response;
+	}
+	
+	// 결제 조회 (order)
+	public KakaoPayOrderResponseVO order(KakaoPayOrderVO vo) throws URISyntaxException {
+		URI uri = new URI("https://open-api.kakaopay.com/online/v1/payment/order");
+		
+		Map<String, String> body = new HashMap<>();
+		body.put("cid", kakaoPayProperties.getCid());
+		body.put("tid", vo.getTid());
+		
+		HttpEntity entity = new HttpEntity(body, headers);
+		
+		return restTemplate.postForObject(
+							uri, entity, KakaoPayOrderResponseVO.class);
 	}
 	
 	// 결제 DB에 등록
@@ -132,6 +135,6 @@ public class KakaoPayService {
 						.buyDetailQty(buyVO.getQty()) // 구매 상품 개수
 					.build());
 		}
-		// service는 비교적 더러워도 ㄱㅊ. 기능이 어떻게 돌아가는지만 명확하게 나와있다면
 	}
+
 }

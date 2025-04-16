@@ -31,4 +31,68 @@
 		)
 	</insert>
 	
+	<!-- 조회 -->
+	<select id="listBuy" resultType="BuyDto">
+		select * from buy order by buy_no desc
+	</select>
+	
+	<select id="listBuyDetail" resultType="BuyDetailDto">
+		select * from buy_detail
+		where buy_detail_origin = #{buyDetailOrigin}
+		order by buy_detail_no asc
+	</select>
+	
+	<!--
+		mybatis에서 계층형 조회를 처리할 수 있도록 구현
+		 - mybatis에서 자동으로 처리해 주는 건 1 depth 까지이다
+		 - 그보다 복잡하거나 구조를 변경해줘야 하는 경우에는 수동으로 조회해야 함
+		 - 수동으로 조회하기 위해서는 조회할 구조를 <resultMap>으로 생성
+		 
+		 - type = 실제 자료형
+		 - id = 매퍼에서 부르기 위한 별칭
+		 - association은 인스턴스를 의미
+		 - collection은 컬렉션(리스트, 맵, 셋 등)을 의미
+		 - property = 필드명
+		 - <result>를 이용하여 DB컬럼과
+		 - column = DB 컬럼명 (snake case)
+		 - property = 클래스 필드명 (camel case)
+		 	( * 표기법이 각각 다르므로 잘 구분해야 함 )
+		 - select = 데이터를 채우기 위해서 필요한 구문
+	 -->
+	 <resultMap type="BuyTotalVO" id="buyTotalVO">
+	 	<!-- 한 개의 클래스와 한 개의 리스트가 있음을 알려줘야 함 -->
+		<association property="buyDto" javaType="BuyDto">
+			<result column="buy_no" property="buyNo"/>
+			<result column="buy_owner" property="buyOwner"/>
+			<result column="buy_tid" property="buyTid"/>
+			<result column="buy_name" property="buyName"/>
+			<result column="buy_total" property="buyTotal"/>
+			<result column="buy_remain" property="buyRemain"/>
+			<result column="buy_time" property="buyTime"/>
+		</association>
+	 			<collection property="buyList" javaType="List" ofType="BuyDetailDto" select="listBuyDetail" column="buy_no">
+	 	<!-- 
+	 		- ofType: 안에 어떤 데이터가 있는지 설명 / 
+	 		- properties에 이미 설정을 해놨기 때문에 javaType과 ofType에 import 하듯이 "java.util.List" 로 쓰지 않아도 됨
+	 		- listBuyDetail에서 buy_no을 통해 데이터를 알아서 찾아서 불러와라
+	 	 -->
+	 		<result column="buy_detail_no" property="buyDetailNo"/>
+			<result column="buy_detail_origin" property="buyDetailOrigin"/>
+			<result column="buy_detail_item" property="buyDetailItem"/>
+			<result column="buy_detail_name" property="buyDetailName"/>
+			<result column="buy_detail_price" property="buyDetailPrice"/>
+			<result column="buy_detail_qty" property="buyDetailQty"/>
+			<result column="buy_detail_status" property="buyDetailStatus"/>
+	 	</collection>
+	 </resultMap>
+	 
+	 <!-- resultMap을 이용한 조회 -->
+	 <select id="listBuyAuto" resultMap="buyTotalVO">
+	 	select * from buy
+	 	<if test="buyOwner != null">
+	 		where buy_owner = #{buyOwner}
+	 	</if>
+	 	order by buy_no desc
+	 </select>
+	 
 </mapper>
