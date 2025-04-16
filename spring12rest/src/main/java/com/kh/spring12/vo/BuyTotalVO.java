@@ -1,4 +1,4 @@
-package com.kh.spring12.vo.kakaopay;
+package com.kh.spring12.vo;
 
 import java.util.List;
 

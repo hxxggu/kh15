@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class kakaoPaySelectedCardInfoVO {
+public class KakaoPaySelectedCardInfoVO {
 	private String cardBin; // 카드BIN
 	private Integer installMonth; // 할부 개월 수
 	private String installmentType; // 할부 유형

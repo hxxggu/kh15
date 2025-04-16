@@ -22,6 +22,8 @@ import com.kh.spring12.dto.ItemDto;
 import com.kh.spring12.vo.kakaopay.KakaoPayApproveResponseVO;
 import com.kh.spring12.vo.kakaopay.KakaoPayApproveVO;
 import com.kh.spring12.vo.kakaopay.KakaoPayBuyVO;
+import com.kh.spring12.vo.kakaopay.KakaoPayCancelResponseVO;
+import com.kh.spring12.vo.kakaopay.KakaoPayCancelVO;
 import com.kh.spring12.vo.kakaopay.KakaoPayOrderResponseVO;
 import com.kh.spring12.vo.kakaopay.KakaoPayOrderVO;
 import com.kh.spring12.vo.kakaopay.KakaoPayReadyResponseVO;
@@ -106,8 +108,22 @@ public class KakaoPayService {
 		
 		HttpEntity entity = new HttpEntity(body, headers);
 		
-		return restTemplate.postForObject(
-							uri, entity, KakaoPayOrderResponseVO.class);
+		return restTemplate.postForObject(uri, entity, KakaoPayOrderResponseVO.class);
+	}
+	
+	// 결제 취소 (cancel)
+	public KakaoPayCancelResponseVO cancel(KakaoPayCancelVO vo) throws URISyntaxException {
+		URI uri = new URI("https://open-api.kakaopay.com/online/v1/payment/cancel");
+		
+		Map<String, String> body = new HashMap<>();
+		body.put("cid", kakaoPayProperties.getCid());
+		body.put("tid", vo.getTid());
+		body.put("cancel_amount", String.valueOf(vo.getCancelAmount()));
+		body.put("cancel_tax_free_amount", "0");
+		
+		HttpEntity entity = new HttpEntity(body, headers);
+		
+		return restTemplate.postForObject(uri, entity, KakaoPayCancelResponseVO.class);
 	}
 	
 	// 결제 DB에 등록
@@ -136,5 +152,4 @@ public class KakaoPayService {
 					.build());
 		}
 	}
-
 }

@@ -12,7 +12,7 @@ import lombok.Data;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class KakaoPayPaymentActionDetailsVO {
-	private String aid; // 고유 번호
+	private String aid; // 요청 고유 번호
 	private LocalDateTime approveAt; // 거래 시간
 	private Integer amount; // 결제/취소 총액
 	private Integer pointAmount; // 결제/취소 포인트 금액

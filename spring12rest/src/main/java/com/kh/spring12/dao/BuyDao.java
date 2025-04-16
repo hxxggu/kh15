@@ -1,7 +1,9 @@
 package com.kh.spring12.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.spring12.dto.BuyDetailDto;
 import com.kh.spring12.dto.BuyDto;
-import com.kh.spring12.vo.kakaopay.BuyTotalVO;
+import com.kh.spring12.vo.BuyTotalVO;
 
 @Repository
 public class BuyDao {
@@ -65,5 +67,20 @@ public class BuyDao {
 	
 	public BuyDto selectOne(long buyNo) {
 		return sqlSession.selectOne("buy.findbuy", buyNo);
+	}
+	
+	public BuyDetailDto selectDetailOne(long buyDetailNo) {
+		return sqlSession.selectOne("buy.findDetail", buyDetailNo);
+	}
+	
+	public boolean cancelDetail(long buyDetailNo) {
+		return sqlSession.update("buy.cancelPart", buyDetailNo) > 0;
+	}
+
+	public boolean updateBuy(long buyNo, long buyRemain) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("buyNo", buyNo);
+		params.put("buyReamin", buyRemain);
+		return sqlSession.update("buy.updateBuy", params) > 0;
 	}
 }

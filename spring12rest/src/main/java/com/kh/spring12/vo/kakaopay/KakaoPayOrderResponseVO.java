@@ -12,24 +12,22 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class KakaoPayOrderResponseVO {
 	
-	private String tid; // 결제 고유 번호
-	private String cid; // 가맹점 코드
-	private String status; // 결제 상태
-	private String partnerOrderId; // 가맹점 주문번호
-	private String partnerUserId; // 가맹점 회원 ID
-	
-	private KakaoPayAmountVO amount; // 결제 금액
-	private KakaoPayAmountVO canceledAmont; // 취소된 금액
-	private KakaoPayAmountVO canceledAvailableAmount; // 취소 가능 금액
-	
-	private String itemName; // 상품 이름
-	private String itemCode; // 상품 코드
-	private int quantity; // 상품 수량
-	private LocalDateTime createAt; // 결제 준비 시각
-	private LocalDateTime approveAt; // 결제 승인 시각
-	private LocalDateTime canceledAt; // 결제 취소 시각
-	private kakaoPaySelectedCardInfoVO selectedCardInfo; // 결제 카드 정보
-	
-	// private KakaoPayPaymentActionDetails[] paymentActionDetails;
-	private List<KakaoPayPaymentActionDetailsVO> paymentActionDetails; // 결제/취소 상세
+	private String tid;//결제 고유번호
+	private String cid;//가맹점번호
+	private String status;//결제상태
+	private String partnerOrderId;//주문번호
+	private String partnerUserId;//주문자
+	private String paymentMethodType;//CARD 또는 MONEY
+	private KakaoPayAmountVO amount;//결제금액
+	private KakaoPayAmountVO canceledAmount;//취소된금액
+	private KakaoPayAmountVO cancelAvailableAmount;//취소 가능 금액
+	private String itemName;//상품명
+	private String itemCode;//상품코드
+	private int quantity;//구매수량(무조건1)
+	private LocalDateTime createdAt;//준비시각
+	private LocalDateTime approvedAt;//승인시각
+	private LocalDateTime canceledAt;//취소시각
+	private KakaoPaySelectedCardInfoVO selectedCardInfo;//결제카드정보
+	//private KakaoPayPaymentActionDetails[] paymentActionDetails;
+	private List<KakaoPayPaymentActionDetailsVO> paymentActionDetails;
 }

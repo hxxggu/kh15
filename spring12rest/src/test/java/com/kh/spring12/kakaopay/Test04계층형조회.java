@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.kh.spring12.dao.BuyDao;
 import com.kh.spring12.dto.BuyDetailDto;
 import com.kh.spring12.dto.BuyDto;
-import com.kh.spring12.vo.kakaopay.BuyTotalVO;
+import com.kh.spring12.vo.BuyTotalVO;
 
 import lombok.extern.slf4j.Slf4j;
 
