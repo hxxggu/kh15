@@ -74,8 +74,8 @@ public class BuyDao {
 	}
 	
 //	public boolean cancelAll(long buyNo) {
-	public boolean cancelAll(long buyDetailNo) {
-		return sqlSession.selectOne("buy.cancelAll", buyDetailNo);
+	public boolean cancelAll(long buyDetailOrigin) {
+		return sqlSession.update("buy.cancelAll", buyDetailOrigin) > 0;
 	}
 	
 	public boolean cancelDetail(long buyDetailNo) {
@@ -85,7 +85,7 @@ public class BuyDao {
 	public boolean updateBuy(long buyNo, long buyRemain) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("buyNo", buyNo);
-		params.put("buyReamin", buyRemain);
+		params.put("buyRemain", buyRemain);
 		return sqlSession.update("buy.updateBuy", params) > 0;
 	}
 }

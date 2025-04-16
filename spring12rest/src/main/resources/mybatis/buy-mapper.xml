@@ -99,15 +99,17 @@
 	 	select * from buy where buy_no = #{buyNo}
 	 </select>
 	 
-	 <!-- 취소 (전체/부분) -->
-	 <update id="cancelAll">
-	 	update buy_detail
-	 	set buy_datail_status = 'N'
-	 	where buy_detail_origin = #{buyDetailOrigin}
-	 </update>
+	<!-- 취소(전체/부분) -->
+	<update id="cancelAll">
+		update buy_detail 
+		set buy_detail_status = 'N' 
+		where buy_detail_origin = #{buyDetailOrigin}
+	</update>
 	 
 	 <update id="cancelPart">
-	 	update buy_detail set buy_detail_status = 'N' where buy_detail_no = #{buyDetailNo}
+	 	update buy_detail
+	 	set buy_detail_status = 'N'
+	 	where buy_detail_no = #{buyDetailNo}
 	 </update>
 	 
 	 <!-- 결제 상세 정보 단일 조회 -->
@@ -115,10 +117,11 @@
 	 	select * from buy_detail where buy_detail_no = #{buyDetailNo}
 	 </select>
 	 
-	 <!-- 결제 잔여 금액 수정 -->
-	 <update id="updateBuy">
-	 	update buy set buy_remain = #{buyRemain}
-	 	where buy_no = #{buyNo}
-	 </update>
+	<!-- 결제잔여금액 수정 -->
+	<update id="updateBuy">
+		update buy 
+		set buy_remain = #{buyRemain} 
+		where buy_no = #{buyNo}
+	</update>
 	 
 </mapper>
