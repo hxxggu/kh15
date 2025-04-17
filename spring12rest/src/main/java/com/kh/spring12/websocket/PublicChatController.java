@@ -1,11 +1,13 @@
 package com.kh.spring12.websocket;
 
 import java.time.LocalDateTime;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Controller;
 
 import com.kh.spring12.vo.websocket.ChatResponseVO;
@@ -20,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller // 컨트롤러로 등록
 //@RequestMapping("/app")
-public class WebSocketController {
+public class PublicChatController {
 	
 //	// ** 원래대로라면
 //	// @RequestMapping("/chat") 처럼 작성해야 하지만 웹소켓은 다름
@@ -39,17 +41,35 @@ public class WebSocketController {
 	// * 장점 : STOMP의 헤더와 바디를 각각 읽어서 처리할 수 있음 (인증 등에 유리함)
 	// * 단점 : 새롭고 어려움
 	@MessageMapping("/chat") // 사용자가 /app/chat 으로 보내면...
-	public void chat(Message<ChatVO> message) { // import 유의할 것 (import org.springframework.messaging.Message;)
+	public void chat(Message<ChatVO> message) { // * import 유의할 것 (import org.springframework.messaging.Message;)
+		// 정보 분석 (header)
+		StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message); // 내가 접근할 수 있는 형태가 되도록 포장하라
+		String uuid = accessor.getFirstNativeHeader("uuid");
+		
+		// 메시지 해석 (body)
 		ChatVO body = message.getPayload();
-		log.debug("payload = {}", body);
+		log.debug("body = {}", body);
 		
 		// ChatVO → ChatResponseVO 변환
-		String content = body.getContent().replaceAll("(시발|개새끼|존나)", "****"); 
+		// (+조건추가) 욕설이 포함되어 있다면 보낸 사람에게 경고 메시지 발송
+		String regex = "(시발|개새끼|존나|ㅈㄴ|tlqkf)";
+		String content = body.getContent();
+		// if(content.matches(regex)) { // 일치해야 하므로 정상 작동을 안함
+		if(Pattern.compile(regex).matcher(content).find()) { // 포함되어도 작동
+			content = content.replaceAll(regex, "****");
+			// 추가로 보낸 사람에게 경고 메시지 발송
+			messagingTemplate.convertAndSend("/private/chat/" + uuid,
+				ChatResponseVO.builder()
+					.content("욕설 금지")
+					.time(LocalDateTime.now())
+				.build()
+			);
+		}
 		
 		ChatResponseVO response = ChatResponseVO.builder()
-					.content(body.getContent()) // 수신한 내용
-					.time(LocalDateTime.now()) // 현재 시각
-				.build();
+						.content(content) // 수신한 내용
+						.time(LocalDateTime.now()) // 현재 시각
+					.build();
 		
 		// 수동으로 메시지를 전송하는 코드
 		// messagingTemplate.convertAndSend("채널명", 데이터);
