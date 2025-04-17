@@ -49,6 +49,28 @@ public class MemberChatController {
 		// 바디 분석
 		MemberChatVO vo = message.getPayload();
 		log.debug("content = {}", vo.getContent());
+		if(vo.isDM()) {
+			// content를 분해하여 받을 사람의 정보를 획득
+			String trim = vo.getContent().substring(3); // 제거 (/w )
+			String targetId = trim.substring(0, trim.indexOf("")); // (0, 첫 띄어쓰기 위치) / 아이디 추출
+			AccountDto targetDto = accountDao.selectOne(targetId); // 존재 확인
+			if(targetDto == null) {
+				 // DM의 대상이 없음 (발신자에게 시스템 메시지 전송 필요)
+				return;
+			}
+			
+			String content = trim.substring(trim.indexOf(" ") + 1);
+			MemberChatResponseVO response = MemberChatResponseVO.builder()
+						.accountId(accountDto.getAccountId())
+						.accountNickname(accountDto.getAccountNickname())
+						.accountLevel(accountDto.getAccountLevel())
+						.content(content)
+						.time(LocalDateTime.now())
+					.build();
+			// DM 채널에 메시지 전송
+			messagingTemplate.convertAndSend("/private/member/dm/" + targetId, response);
+			return; // 더 이상 실행 중지
+		}
 		
 		// MemberChatVO → MemberChatResponseVO 변환
 		MemberChatResponseVO response = MemberChatResponseVO.builder()
