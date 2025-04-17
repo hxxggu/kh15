@@ -57,6 +57,9 @@ public class MemberChatController {
 			if(targetDto == null) {
 				 // DM의 대상이 없음 (발신자에게 시스템 메시지 전송 필요)
 				return;
+			} else if(targetId.equals(accountDto.getAccountId())) {
+				// 동일 인물에게 DM을 보내는 경우 (발신자에게 시스템 메시지)
+				return;
 			}
 			
 			String content = trim.substring(trim.indexOf(" ") + 1);
@@ -69,6 +72,8 @@ public class MemberChatController {
 					.build();
 			// DM 채널에 메시지 전송
 			messagingTemplate.convertAndSend("/private/member/dm/" + targetId, response);
+			// 발신자에게도 메시지 전송
+//			messagingTemplate.convertAndSend("/private/member/", ); // 차일 수정 필요
 			return; // 더 이상 실행 중지
 		}
 		
