@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.kh.spring12.dto.AccountDto;
 import com.kh.spring12.vo.AccountSearchVO;
+import com.kh.spring12.vo.websocket.UserVO;
 
 @Repository
 public class AccountDao {
@@ -28,19 +28,23 @@ public class AccountDao {
 	public AccountDto selectOne(String accountId) {
 		return sqlSession.selectOne("account.find", accountId);
 	}
+	
 	public AccountDto selectOne(AccountDto accountDto) {
 		return sqlSession.selectOne("account.find", accountDto);
 	}
+	
 	public AccountDto selectOneByAccountNickname(String accountNickname) {
 		return sqlSession.selectOne("account.findNickname", accountNickname);
 	}
+	
 	public AccountDto login(AccountDto accountDto) {
 //		AccountDto findDto = sqlSession.selectOne("account.find", accountDto);
 		AccountDto findDto = selectOne(accountDto);
-		if(findDto == null) return null;//false 대신
+		if(findDto == null) return null; // false 대신
 		boolean isValid = encoder.matches(accountDto.getAccountPw(), findDto.getAccountPw());
 		return isValid ? findDto : null;
 	}
+	
 	public boolean update(AccountDto accountDto) {
 		return sqlSession.update("account.editUnit", accountDto) > 0;
 	}
@@ -48,7 +52,12 @@ public class AccountDao {
 	public List<AccountDto> selectList(AccountSearchVO accountSearchVO) {
 		return sqlSession.selectList("account.complexSearch", accountSearchVO);
 	}
+	
 	public long count(AccountSearchVO accountSearchVO) {
 		return sqlSession.selectOne("account.complexSearchCount", accountSearchVO);
+	}
+	
+	public UserVO selectOnePublicInfo(String accountId) {
+		return sqlSession.selectOne("account.find", accountId);
 	}
 }

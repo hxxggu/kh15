@@ -52,7 +52,7 @@ public class MemberChatController {
 		if(vo.isDM()) {
 			// content를 분해하여 받을 사람의 정보를 획득
 			String trim = vo.getContent().substring(3); // 제거 (/w )
-			String targetId = trim.substring(0, trim.indexOf("")); // (0, 첫 띄어쓰기 위치) / 아이디 추출
+			String targetId = trim.substring(0, trim.indexOf(" ")); // (0, 첫 띄어쓰기 위치) / 아이디 추출
 			AccountDto targetDto = accountDao.selectOne(targetId); // 존재 확인
 			if(targetDto == null) {
 				 // DM의 대상이 없음 (발신자에게 시스템 메시지 전송 필요)
@@ -71,7 +71,7 @@ public class MemberChatController {
 						.time(LocalDateTime.now())
 					.build();
 			// DM 채널에 메시지 전송
-			messagingTemplate.convertAndSend("/private/member/dm/" + targetId, response);
+			messagingTemplate.convertAndSend("/private/member/dm/receive/" + targetId, response);
 			// 발신자에게도 메시지 전송
 			messagingTemplate.convertAndSend("/private/member/dm/send/" + accountDto.getAccountId(), 
 						MemberChatResponseVO.builder()
