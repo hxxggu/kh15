@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @Builder @NoArgsConstructor @AllArgsConstructor
-public class MemberChatResponseVO {
+public class MemberChatResponseVO implements MessageVO{
 	private String accountId;
 	private String accountNickname;
 	private String accountLevel;

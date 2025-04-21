@@ -12,27 +12,39 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kh.spring12.dao.websocket.MemberMessageDao;
 import com.kh.spring12.dto.websocket.MemberMessageDto;
 import com.kh.spring12.service.TokenService;
+import com.kh.spring12.util.MemberMessageConverter;
 import com.kh.spring12.vo.ClaimVO;
+import com.kh.spring12.vo.websocket.MessageVO;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/api/member-message")
-public class MemberMessageController {
+public class MemberMessageRestController {
 	
 	@Autowired
 	private MemberMessageDao memberMessageDao;
 	@Autowired
 	private TokenService tokenService;
+	@Autowired
+	private MemberMessageConverter memberMessageConverter;
 	
 	@GetMapping("/")
-	public List<MemberMessageDto> list(
+	public List<MessageVO> list(
 			@RequestHeader(value = "Authorization", required = false) String bearerToken) {
-		if(bearerToken == null) {//비회원
-			return memberMessageDao.selectListForAnonymous();
+		if(bearerToken == null) { // 비회원
+			List<MemberMessageDto> list = 
+					memberMessageDao.selectListForAnonymous();
+			List<MessageVO> convertList = 
+					memberMessageConverter.convertMessageFormat(list);
+			return convertList;
 		}
-		else {//회원
+		else { // 회원
 			ClaimVO claimVO = tokenService.parseBearerToken(bearerToken);
-			return memberMessageDao.selectListForMember(claimVO.getUserId());
+			List<MemberMessageDto> list = 
+				memberMessageDao.selectListForMember(claimVO.getUserId());
+			List<MessageVO> convertList = 
+				memberMessageConverter.convertMessageFormat(list, claimVO.getUserId());
+			return convertList;
 		}
 	}
 	
