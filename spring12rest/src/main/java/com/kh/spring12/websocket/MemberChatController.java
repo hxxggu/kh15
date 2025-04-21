@@ -112,8 +112,8 @@ public class MemberChatController {
 		// 일반메시지 DB 등록
 		memberMessageDao.add(MemberMessageDto.builder()
 					.memberMessageType("CHAT")
+					.memberMessageSender(response.getAccountId())
 					.memberMessageContent(response.getContent())
-					.memberMessageSender(response.getContent())
 					.memberMessageTime(Timestamp.valueOf(response.getTime()))
 				.build());
 	}

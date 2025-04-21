@@ -1,4 +1,4 @@
-package com.kh.spring12.restcontroller;
+package com.kh.spring12.restcontroller.websocket;
 
 import java.util.List;
 
@@ -15,6 +15,7 @@ import com.kh.spring12.dto.websocket.MemberMessageViewDto;
 import com.kh.spring12.service.TokenService;
 import com.kh.spring12.util.MemberMessageConverter;
 import com.kh.spring12.vo.ClaimVO;
+import com.kh.spring12.vo.websocket.MessageListVO;
 import com.kh.spring12.vo.websocket.MessageVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +34,7 @@ public class MemberMessageRestController {
 	private MemberMessageConverter memberMessageConverter;
 	
 	@GetMapping("/")
-	public List<MessageVO> list(
+	public MessageListVO list(
 			@RequestHeader(value = "Authorization", required = false) String bearerToken) {
 		if(bearerToken == null) { // 비회원
 			List<MemberMessageViewDto> list = memberMessageDao.selectListForAnonymousByPaging();
@@ -41,9 +42,10 @@ public class MemberMessageRestController {
 			
 			int count = memberMessageDao.countForAnonymousByPaging();
 			boolean last = count == list.size();
-			log.debug("last = {}", last);
-			
-			return convertList;
+			// log.debug("last = {}", last);
+			return MessageListVO.builder()
+						.last(last).list(convertList)
+					.build();
 			
 		} else { // 회원
 			ClaimVO claimVO = tokenService.parseBearerToken(bearerToken);
@@ -52,14 +54,15 @@ public class MemberMessageRestController {
 			
 			int count = memberMessageDao.countForMemberByPaging(claimVO.getUserId());
 			boolean last = count == list.size();
-			log.debug("last = {}", last);
-			
-			return convertList;
+			// log.debug("last = {}", last);
+			return MessageListVO.builder()
+						.last(last).list(convertList)
+					.build();
 		}
 	}
 	
 	@GetMapping("/{memberMessageNo}")
-	public List<MessageVO> listMore(
+	public MessageListVO listMore(
 			@RequestHeader(value = "Authorization", required = false) String bearerToken,
 			@PathVariable long memberMessageNo) {
 		if(bearerToken == null) { // 비회원
@@ -68,10 +71,11 @@ public class MemberMessageRestController {
 			
 			int count = memberMessageDao.countForAnonymousByPaging(memberMessageNo);
 			boolean last = count == list.size();
-			log.debug("last = {}", last);
-			
-			return convertList;
-			
+			// log.debug("last = {}", last);
+			return MessageListVO.builder()
+					.last(last).list(convertList)
+				.build();
+						
 		} else { // 회원
 			ClaimVO claimVO = tokenService.parseBearerToken(bearerToken);
 			List<MemberMessageViewDto> list = memberMessageDao.selectListForMemberByPaging(claimVO.getUserId(), memberMessageNo);
@@ -79,9 +83,10 @@ public class MemberMessageRestController {
 			
 			int count = memberMessageDao.countForMemberByPaging(claimVO.getUserId(), memberMessageNo);
 			boolean last = count == list.size();
-			log.debug("last = {}", last);
-			
-			return convertList;
+			// log.debug("last = {}", last);
+			return MessageListVO.builder()
+					.last(last).list(convertList)
+				.build();
 		}
 	}
 	
