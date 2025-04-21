@@ -58,6 +58,6 @@ public class AccountDao {
 	}
 	
 	public UserVO selectOnePublicInfo(String accountId) {
-		return sqlSession.selectOne("account.find", accountId);
+		return sqlSession.selectOne("account.findPublicInfo", accountId);
 	}
 }

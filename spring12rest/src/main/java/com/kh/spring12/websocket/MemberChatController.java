@@ -1,5 +1,6 @@
 package com.kh.spring12.websocket;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,9 @@ import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Controller;
 
 import com.kh.spring12.dao.AccountDao;
+import com.kh.spring12.dao.websocket.MemberMessageDao;
 import com.kh.spring12.dto.AccountDto;
+import com.kh.spring12.dto.websocket.MemberMessageDto;
 import com.kh.spring12.service.TokenService;
 import com.kh.spring12.vo.ClaimVO;
 import com.kh.spring12.vo.websocket.MemberChatResponseVO;
@@ -24,12 +27,12 @@ public class MemberChatController {
 	
 	@Autowired
 	private SimpMessagingTemplate messagingTemplate; // 전송도구
-	
 	@Autowired
 	private TokenService tokenService;
-	
 	@Autowired
 	private AccountDao accountDao;
+	@Autowired
+	private MemberMessageDao memberMessageDao;
 	
 	@MessageMapping("/member/chat") // 앞에 /app 이 있다고 생각해야 함
 	public void memberChat(Message<MemberChatVO> message) {
@@ -44,7 +47,6 @@ public class MemberChatController {
 		
 		// (+추가) 회원 정보를 조회
 		AccountDto accountDto = accountDao.selectOne(claimVO.getUserId());
-		
 		
 		// 바디 분석
 		MemberChatVO vo = message.getPayload();
@@ -82,6 +84,16 @@ public class MemberChatController {
 							.time(LocalDateTime.now())
 						.build()
 					);
+			
+			// DM을 DB에 등록 (모든 항목이 다 존재함)
+			memberMessageDao.add(MemberMessageDto.builder()
+						.memberMessageType("DM")
+						.memberMessageSender(accountDto.getAccountId())
+						.memberMessageReceiver(targetDto.getAccountId()) // (*차이) receiver 추가
+						.memberMessageContent(content)
+						.memberMessageTime(Timestamp.valueOf(response.getTime()))
+					.build());
+			
 			return; // 더 이상 실행 중지
 		}
 		
@@ -96,6 +108,14 @@ public class MemberChatController {
 		
 		// 전송
 		messagingTemplate.convertAndSend("/public/member/chat", response);
+		
+		// 일반메시지 DB 등록
+		memberMessageDao.add(MemberMessageDto.builder()
+					.memberMessageType("CHAT")
+					.memberMessageContent(response.getContent())
+					.memberMessageSender(response.getContent())
+					.memberMessageTime(Timestamp.valueOf(response.getTime()))
+				.build());
 	}
 
 }

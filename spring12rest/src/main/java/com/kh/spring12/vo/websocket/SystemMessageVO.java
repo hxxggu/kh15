@@ -7,12 +7,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+//서버에서 사용자에게 시스템 메세지를 보낼 때 사용할 형태
 @Data @Builder @NoArgsConstructor @AllArgsConstructor
-public class MemberChatResponseVO {
-	private String accountId;
-	private String accountNickname;
-	private String accountLevel;
+public class SystemMessageVO {
 	private String content;
-	private String type; // CHAT / DM-SEND / DM-RECEIVE
 	private LocalDateTime time;
+	@Builder.Default
+	private String type = "SYSTEM";
+	
 }
