@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.spring12.dto.websocket.MemberMessageDto;
+import com.kh.spring12.dto.websocket.MemberMessageViewDto;
 
 @Repository
 public class MemberMessageDao {
@@ -21,11 +22,11 @@ public class MemberMessageDao {
 		return memberMessageDto;
 	}
 	
-	public List<MemberMessageDto> selectListForAnonymous() {
+	public List<MemberMessageViewDto> selectListForAnonymous() {
  		return sqlSession.selectList("memberMessage.listForAnonymous");
  	}
 	
-	public List<MemberMessageDto> selectListForMember(String userId) {
+	public List<MemberMessageViewDto> selectListForMember(String userId) {
  		return sqlSession.selectList("memberMessage.listForMember", userId);
  	} 
 

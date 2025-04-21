@@ -22,13 +22,14 @@
 	</insert>
 	
 	<!-- 메세지 조회(회원/비회원) -->
- 	<select id="listForAnonymous" resultType="MemberMessageDto">
- 		select * from member_message
+ 	<select id="listForAnonymous" resultType="MemberMessageViewDto">
+ 		select * from member_message_view
  		where member_message_type in ('CHAT', 'SYSTEM')
  		order by member_message_no desc
  	</select>
- 	<select id="listForMember" resultType="MemberMessageDto">
- 		select * from member_message
+ 	
+ 	<select id="listForMember" resultType="MemberMessageViewDto">
+ 		select * from member_message_view
  		where 
  			member_message_type in ('CHAT', 'SYSTEM')
  			or

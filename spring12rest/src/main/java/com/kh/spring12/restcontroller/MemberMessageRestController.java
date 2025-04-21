@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.spring12.dao.websocket.MemberMessageDao;
 import com.kh.spring12.dto.websocket.MemberMessageDto;
+import com.kh.spring12.dto.websocket.MemberMessageViewDto;
 import com.kh.spring12.service.TokenService;
 import com.kh.spring12.util.MemberMessageConverter;
 import com.kh.spring12.vo.ClaimVO;
@@ -32,7 +33,7 @@ public class MemberMessageRestController {
 	public List<MessageVO> list(
 			@RequestHeader(value = "Authorization", required = false) String bearerToken) {
 		if(bearerToken == null) { // 비회원
-			List<MemberMessageDto> list = 
+			List<MemberMessageViewDto> list = 
 					memberMessageDao.selectListForAnonymous();
 			List<MessageVO> convertList = 
 					memberMessageConverter.convertMessageFormat(list);
@@ -40,7 +41,7 @@ public class MemberMessageRestController {
 		}
 		else { // 회원
 			ClaimVO claimVO = tokenService.parseBearerToken(bearerToken);
-			List<MemberMessageDto> list = 
+			List<MemberMessageViewDto> list = 
 				memberMessageDao.selectListForMember(claimVO.getUserId());
 			List<MessageVO> convertList = 
 				memberMessageConverter.convertMessageFormat(list, claimVO.getUserId());
