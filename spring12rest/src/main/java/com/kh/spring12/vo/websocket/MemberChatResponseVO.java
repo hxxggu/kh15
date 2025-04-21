@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 
 @Data @Builder @NoArgsConstructor @AllArgsConstructor
 public class MemberChatResponseVO implements MessageVO{
+	private Long messageNo; // member_message의 PK
+	
 	private String accountId;
 	private String accountNickname;
 	private String accountLevel;

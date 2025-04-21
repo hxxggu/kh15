@@ -40,6 +40,52 @@
  			member_message_receiver = #{userId})
  		order by member_message_no desc
  	</select>
-
+ 	
+	<!-- 일정 개수만큼만 메세지를 조회(회원/비회원) -->
+	<select id="listForAnonymousByPaging" resultType="MemberMessageViewDto">
+		<include refid="top-n-header"></include>
+		select * from member_message_view
+		where member_message_type in ('CHAT', 'SYSTEM')
+		<if test="memberMessageNo != null">
+			<![CDATA[
+			and member_message_no < #{memberMessageNo}
+			]]>
+		</if>
+		order by member_message_no desc
+		<include refid="top-n-footer"></include>
+	</select>
+	
+	<select id="listForMemberByPaging" resultType="MemberMessageViewDto">
+		<include refid="top-n-header"></include>
+		select * from member_message_view
+		where 
+		(
+			member_message_type in ('CHAT', 'SYSTEM')
+			or
+			member_message_type = 'DM' 
+			and
+				(member_message_sender = #{userId} 
+				or 
+				member_message_receiver = #{userId})
+		)
+		<if test="memberMessageNo != null">
+			<![CDATA[
+			and member_message_no < #{memberMessageNo}
+			]]>
+		</if>
+		order by member_message_no desc
+		<include refid="top-n-footer"></include>
+	</select>
+	
+	<!-- Top N Query 템플릿 -->
+	<sql id="top-n-header">
+		select * from (
+			select rownum rn, TMP.* from (
+	</sql>
+	<sql id="top-n-footer">
+			) TMP
+		) where rn between 1 and 50
+	</sql>
+	 	
 
 </mapper>

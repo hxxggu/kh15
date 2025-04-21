@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 //서버에서 사용자에게 시스템 메세지를 보낼 때 사용할 형태
 @Data @Builder @NoArgsConstructor @AllArgsConstructor
 public class SystemMessageVO implements MessageVO{
+	private Long messageNo; // member_message의 PK
 	private String content;
 	private LocalDateTime time;
 	@Builder.Default
