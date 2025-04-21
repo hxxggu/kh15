@@ -53,5 +53,27 @@ public class MemberMessageDao {
 		return sqlSession.selectList("memberMessage.listForMemberByPaging", params);
 	}
 	
+	// 비회원의 처음과 더보기
+	public int countForAnonymousByPaging() {
+		return sqlSession.selectOne("memberMessage.countForAnonymousByPaging");
+	}
+	public int countForAnonymousByPaging(long memberMessageNo) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("memberMessageNo", memberMessageNo);
+		return sqlSession.selectOne("memberMessage.countForAnonymousByPaging", params); 
+	}
+	
+	// 회원의 처음과 더보기
+	public int countForMemberByPaging(String userId) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("userId", userId);
+		return sqlSession.selectOne("membetMessage.countForMemberByPaging", params);
+	}
+	public int countForMemberByPaging(String userId, long memberMessageNo) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("userId", userId);
+		params.put("memberMessageNo", memberMessageNo);
+		return sqlSession.selectOne("membetMessage.countForMemberByPaging", params);
+	}
 
 }

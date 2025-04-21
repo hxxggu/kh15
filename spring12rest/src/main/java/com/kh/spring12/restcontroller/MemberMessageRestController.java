@@ -17,6 +17,9 @@ import com.kh.spring12.util.MemberMessageConverter;
 import com.kh.spring12.vo.ClaimVO;
 import com.kh.spring12.vo.websocket.MessageVO;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @CrossOrigin
 @RestController
 @RequestMapping("/api/member-message")
@@ -35,11 +38,22 @@ public class MemberMessageRestController {
 		if(bearerToken == null) { // 비회원
 			List<MemberMessageViewDto> list = memberMessageDao.selectListForAnonymousByPaging();
 			List<MessageVO> convertList = memberMessageConverter.convertMessageFormat(list);
+			
+			int count = memberMessageDao.countForAnonymousByPaging();
+			boolean last = count == list.size();
+			log.debug("last = {}", last);
+			
 			return convertList;
+			
 		} else { // 회원
 			ClaimVO claimVO = tokenService.parseBearerToken(bearerToken);
 			List<MemberMessageViewDto> list = memberMessageDao.selectListForMemberByPaging(claimVO.getUserId());
 			List<MessageVO> convertList = memberMessageConverter.convertMessageFormat(list, claimVO.getUserId());
+			
+			int count = memberMessageDao.countForMemberByPaging(claimVO.getUserId());
+			boolean last = count == list.size();
+			log.debug("last = {}", last);
+			
 			return convertList;
 		}
 	}
@@ -49,17 +63,24 @@ public class MemberMessageRestController {
 			@RequestHeader(value = "Authorization", required = false) String bearerToken,
 			@PathVariable long memberMessageNo) {
 		if(bearerToken == null) { // 비회원
-			List<MemberMessageViewDto> list = 
-					memberMessageDao.selectListForAnonymousByPaging(memberMessageNo);
-			List<MessageVO> convertList = 
-					memberMessageConverter.convertMessageFormat(list);
+			List<MemberMessageViewDto> list = memberMessageDao.selectListForAnonymousByPaging(memberMessageNo);
+			List<MessageVO> convertList = memberMessageConverter.convertMessageFormat(list);
+			
+			int count = memberMessageDao.countForAnonymousByPaging(memberMessageNo);
+			boolean last = count == list.size();
+			log.debug("last = {}", last);
+			
 			return convertList;
+			
 		} else { // 회원
 			ClaimVO claimVO = tokenService.parseBearerToken(bearerToken);
-			List<MemberMessageViewDto> list = 
-				memberMessageDao.selectListForMemberByPaging(claimVO.getUserId(), memberMessageNo);
-			List<MessageVO> convertList = 
-				memberMessageConverter.convertMessageFormat(list, claimVO.getUserId());
+			List<MemberMessageViewDto> list = memberMessageDao.selectListForMemberByPaging(claimVO.getUserId(), memberMessageNo);
+			List<MessageVO> convertList = memberMessageConverter.convertMessageFormat(list, claimVO.getUserId());
+			
+			int count = memberMessageDao.countForMemberByPaging(claimVO.getUserId(), memberMessageNo);
+			boolean last = count == list.size();
+			log.debug("last = {}", last);
+			
 			return convertList;
 		}
 	}
