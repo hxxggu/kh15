@@ -18,6 +18,7 @@ import com.kh.spring12.dto.RoomDto;
 import com.kh.spring12.error.TargetNotFoundException;
 import com.kh.spring12.service.TokenService;
 import com.kh.spring12.vo.ClaimVO;
+import com.kh.spring12.vo.websocket.UserVO;
 
 @CrossOrigin
 @RestController
@@ -83,6 +84,24 @@ public class RoomRestController {
 		
 		ClaimVO claimVO = tokenService.parseBearerToken(bearerToken); // 방에 있었는지 아닌지의 유무 + 참여자인지 알려줌
 		return roomDao.checkRoom(roomNo, claimVO.getUserId());
+	}
+	
+	@GetMapping("/users/{roomNo}") // 단체 채팅에서 입장하는 회원 권한 조회
+	public List<UserVO> users(@PathVariable long roomNo,
+			@RequestHeader("Authorization") String bearerToken) {
+		ClaimVO claimVO = tokenService.parseBearerToken(bearerToken);
+		boolean isEnter = roomDao.checkRoom(roomNo, claimVO.getUserId());
+		if(isEnter == false) throw new TargetNotFoundException();
+		return roomDao.getUsers(roomNo);
+	}
+	
+	@DeleteMapping("/leave/{roomNo}")
+	public void leave(@PathVariable long roomNo,
+			@RequestHeader("Authorization") String bearerToken) {
+		ClaimVO claimVO = tokenService.parseBearerToken(bearerToken);
+		boolean isEnter = roomDao.checkRoom(roomNo, claimVO.getUserId());
+		if(isEnter == false) throw new TargetNotFoundException();
+		roomDao.leaveRoom(roomNo, claimVO.getUserId());
 	}
 	
 }

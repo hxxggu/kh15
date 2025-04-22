@@ -60,5 +60,8 @@ public class GroupChatController {
 		
 		// 최종 전송
 		messagingTemplate.convertAndSend("/private/group/chat/" + roomNo, response);
+		
+		//데이터베이스에 메시지 저장
+		
 	}
 }
