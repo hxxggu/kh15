@@ -106,15 +106,16 @@ public class WebSocketEventHandler {
 		if(accessor.getDestination().equals("/public/member/users")) {
 			messagingTemplate.convertAndSend("/public/member/users", users);
 		}
-		// 구독한 채널이 /private/group/users/xxx 라면
-		else if(accessor.getDestination().startsWith("/private/group/users")) {
+		/// 구독한 채널이 /private/group/users/xxx 라면
+		else if(accessor.getDestination().startsWith("/private/group/users/")) {
 			/// 방 번호(xxx)를 추출
-			int position = "/private/group/users".length();
+			int position = "/private/group/users/".length();
 			String roomStr = accessor.getDestination().substring(position); 
 			long roomNo = Long.parseLong(roomStr);
 			
 			/// 엑세스 토큰 추출
 			String accessToken = accessor.getFirstNativeHeader("accessToken");
+			log.debug("accessToken = {}", accessToken);
 			ClaimVO claimVO = tokenService.parseBearerToken(accessToken);
 			
 			messagingTemplate.convertAndSend("/private/group/users/" + roomNo,

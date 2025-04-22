@@ -39,7 +39,7 @@ public class GroupChatController {
 		// 헤더 분석
 		StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
 		String accessToken = accessor.getFirstNativeHeader("accessToken");
-		if(accessToken == null || accessToken.startsWith("Bearer") == false) return;
+		if(accessToken == null || accessToken.startsWith("Bearer ") == false) return;
 		
 		// 회원 정보 조회
 		ClaimVO claimVO = tokenService.parseBearerToken(accessToken);
@@ -59,9 +59,6 @@ public class GroupChatController {
 				.build();
 		
 		// 최종 전송
-		messagingTemplate.convertAndSend("/private/group/chat/" + roomNo, response);
-		
-		//데이터베이스에 메시지 저장
-		
+		messagingTemplate.convertAndSend("/private/group/chat/"+roomNo, response);
 	}
 }
