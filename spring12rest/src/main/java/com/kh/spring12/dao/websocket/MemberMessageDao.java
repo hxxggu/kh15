@@ -54,12 +54,13 @@ public class MemberMessageDao {
 	}
 	
 	public int countForAnonymousByPaging() {
-		return sqlSession.selectOne("memberMessage.countForAnonymouseByPaging");
+		return sqlSession.selectOne("memberMessage.countForAnonymousByPaging");
 	}
+	
 	public int countForAnonymousByPaging(long memberMessageNo) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("memberMessageNo", memberMessageNo);
-		return sqlSession.selectOne("memberMessage.countForAnonymouseByPaging", params);
+		return sqlSession.selectOne("memberMessage.countForAnonymousByPaging", params);
 	}
 	
 	public int countForMemberByPaging(String userId) {
@@ -67,6 +68,7 @@ public class MemberMessageDao {
 		params.put("userId", userId);
 		return sqlSession.selectOne("memberMessage.countForMemberByPaging", params);
 	}
+	
 	public int countForMemberByPaging(String userId, long memberMessageNo) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("userId", userId);

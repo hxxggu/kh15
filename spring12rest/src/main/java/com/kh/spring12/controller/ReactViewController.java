@@ -8,11 +8,11 @@ public class ReactViewController {
 	
 	// react에 연결되어야 할 주소를 지정
 	@RequestMapping(value = {
-			"/", "/pokemon*", "/info", "/country*", "/member/**",
-			"/admin/**", "/item/**", "/pay/**", "/buy/**", "/websocket/**"
+		"/", "/pokemon*", "/info", "/country*", "/member/**",
+		"/admin/**", "/item/**", "/pay/**", "/buy/**", "/websocket/**"
 	})
 	public String forward() {
 		return "forward:/index.html";
 	}
-
+	
 }
