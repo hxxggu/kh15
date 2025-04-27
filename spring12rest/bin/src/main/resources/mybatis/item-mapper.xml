@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="item">
+
+	<select id="list" resultType="ItemDto">
+		select * from item order by item_no asc
+	</select>
+	
+	<select id="find" resultType="ItemDto">
+		select * from item where item_no = #{itemNo}
+	</select>
+	
+	<select id="sequence" resultType="long">
+		select item_seq.nextval from dual
+	</select>
+	
+	<insert id="add">
+		insert into item(
+			item_no, item_name, item_type, item_price, 
+			item_discount_rate, item_qty, item_early
+		)
+		values(
+			#{itemNo}, #{itemName}, #{itemType}, #{itemPrice},
+			#{itemDiscountRate}, #{itemQty}, #{itemEarly}
+		)
+	</insert>
+	
+	<!-- 이미지 연결 -->
+	<insert id="connect">
+		insert into item_image(item_no, attachment_no)
+		values(#{itemNo}, #{attachmentNo})
+	</insert>
+	
+	<!-- 이미지 찾기 -->
+	<select id="findImage" resultType="int">
+		select attachment_no from item_image where item_no = #{itemNo}
+	</select>
+	
+	
+	
+</mapper>

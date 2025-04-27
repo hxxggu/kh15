@@ -15,7 +15,7 @@ import com.kh.spring12.dto.ItemDto;
 public class ItemDao {
 	@Autowired
 	private SqlSession sqlSession;
-	
+	 
 	public List<ItemDto> selectList() {
 		return sqlSession.selectList("item.list");
 	}
