@@ -22,6 +22,7 @@ import com.kh.spring12.dao.websocket.MemberMessageDao;
 import com.kh.spring12.dto.websocket.MemberMessageDto;
 import com.kh.spring12.service.TokenService;
 import com.kh.spring12.vo.ClaimVO;
+import com.kh.spring12.vo.websocket.ActionVO;
 import com.kh.spring12.vo.websocket.SystemMessageVO;
 import com.kh.spring12.vo.websocket.UserVO;
 
@@ -48,6 +49,12 @@ public class WebSocketEventHandler {
 	// - 사용자가 퇴장할 때는 accessToken이 없어 본인 확인이 불가
 	// - 입장할 때 부여된 세션 번호와 UserVO를 이용하여 퇴장 시 정보 확인
 	private Map<String, UserVO> sessions = Collections.synchronizedMap(new HashMap<>());
+	
+	/// 그룹 채팅에서 세션이 어느 방에 속해 있는지를 알기 위한 저장소
+	private Map<String, Long> roomSessions = Collections.synchronizedMap(new HashMap<>());
+	
+	/// 해당 세션의 사용자 ID를 저장
+	private Map<String, String> roomUsers = Collections.synchronizedMap(new HashMap<>());
 	
 	// 편리하게 만들기 위해 이름을 정해둠
 	@EventListener
@@ -99,6 +106,29 @@ public class WebSocketEventHandler {
 		if(accessor.getDestination().equals("/public/member/users")) {
 			messagingTemplate.convertAndSend("/public/member/users", users);
 		}
+		/// 구독한 채널이 /private/group/users/xxx 라면
+		else if(accessor.getDestination().startsWith("/private/group/users/")) {
+			/// 방 번호(xxx)를 추출
+			int position = "/private/group/users/".length();
+			String roomStr = accessor.getDestination().substring(position); 
+			long roomNo = Long.parseLong(roomStr);
+			
+			/// 엑세스 토큰 추출
+			String accessToken = accessor.getFirstNativeHeader("accessToken");
+			log.debug("accessToken = {}", accessToken);
+			ClaimVO claimVO = tokenService.parseBearerToken(accessToken);
+			
+			messagingTemplate.convertAndSend("/private/group/users/" + roomNo,
+					ActionVO.builder()
+						.type("ENTER")
+						.accountId(claimVO.getUserId())
+					.build());
+			
+			// 세션과 방 번호를 기억
+			roomSessions.put(accessor.getSessionId(), roomNo);
+			/// 아이디를 기억
+			roomUsers.put(accessor.getSessionId(), claimVO.getUserId());
+		}
 	}
 	
 	@EventListener
@@ -135,6 +165,24 @@ public class WebSocketEventHandler {
 				.memberMessageTime(Timestamp.valueOf(response.getTime()))
 			.build());
 		
+		/// < 그룹 채팅 내보내기 처리 >
+		/// - 현재 종료하는 세션이 소속된 방 정보를 알 수 있어야 함
+		/// - 기기가 여러 개인 경우, 모든 기기가 채팅방에서 나가져야 함
+		/// - 접속 시점에 세션과 방 번호를 저장할 필요가 있음 (subscribe 이벤트)
+		
+		/// 현재 종료하는 세션에 대한 방 번호 추출
+		Long roomNo = roomSessions.remove(sessionId); // remove: 지우면서 정보 추출, get: 정보 추출만
+		String accountId = roomUsers.remove(sessionId);
+		if(roomNo == null) return;
+		if(accountId == null) return;
+		
+		messagingTemplate.convertAndSend("/private/group/users/" + roomNo,
+				ActionVO.builder()
+					.type("LEAVE")
+					.accountId(accountId)
+				.build());
+		
+		 
 	}
 
 }
