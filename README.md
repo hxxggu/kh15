@@ -39,4 +39,4 @@ Java, JDBC, Spring, Oracle DB 중심의 실습 코드들을 모아두었습니�
 
 ---
 
-감사합니다!
+감사합니다 🥰
